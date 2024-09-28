@@ -1,6 +1,7 @@
 {
   "name": "api.usul.ai",
   "type": "module",
+  "packageManager": "pnpm@9.6.0",
   "scripts": {
     "dev": "pnpm with-env tsup-node --watch --onSuccess \"node dist/index.js\"",
     "start": "pnpm with-env node dist/index.js",
