@@ -31,7 +31,7 @@ FROM base AS runner
 
 # Set production environment
 ENV NODE_ENV="production"
-ENV PORT=8080
+ENV PORT=3000
 
 # Copy built application
 COPY --from=builder /app /app

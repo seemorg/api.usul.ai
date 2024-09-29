@@ -3,6 +3,7 @@
   "type": "module",
   "packageManager": "pnpm@9.6.0",
   "scripts": {
+    "postinstall": "pnpm db:generate",
     "dev": "pnpm with-env tsup-node --watch --onSuccess \"node dist/index.js\"",
     "start": "node dist/index.js",
     "build": "pnpm with-env tsup-node",

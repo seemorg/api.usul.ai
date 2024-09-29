@@ -6,7 +6,7 @@ export const env = createEnv({
   server: {
     DATABASE_URL: z.string().url(),
     NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
-    PORT: z.coerce.number().default(8080),
+    PORT: z.coerce.number().optional(),
   },
   runtimeEnv: process.env,
   emptyStringAsUndefined: true,

@@ -18,7 +18,7 @@ if (env.NODE_ENV !== 'development') {
 serve(
   {
     fetch: app.fetch,
-    port: env.PORT,
+    port: env.PORT ?? 8080,
   },
   ({ address, port }) => {
     setUptime();
