@@ -73,17 +73,12 @@ bookRoutes.get(
       throw new HTTPException(404, { message: 'Could not fetch book content' });
     }
 
-    const paginatedBookContent = paginateBookContent(bookContent, startIndex, size);
-    const pagination = {
-      startIndex,
-      size,
-      ...getPaginationInfo(bookContent),
-    };
+    const paginatedResult = paginateBookContent(bookContent, startIndex, size, fields);
 
     return c.json({
       book: includeBook ? book : undefined,
-      content: paginatedBookContent,
-      pagination,
+      content: paginatedResult.content,
+      pagination: paginatedResult.pagination,
     });
   },
 );
@@ -97,24 +92,63 @@ const paginateBookContent = (
   const end = startIndex + pageSize;
   const fieldsArray = fields?.split(',') ?? [];
 
+  const basePaginationInfo = {
+    startIndex,
+    size: pageSize,
+  };
+
   if (bookContent.source === 'turath') {
     return {
-      source: bookContent.source,
-      versionId: bookContent.versionId,
-      pages: bookContent.turathResponse.pages.slice(startIndex, end),
-      ...(fieldsArray.includes('indices')
-        ? {
-            chapterIndexToPageIndex: bookContent.chapterIndexToPageIndex,
-            pageNumberWithVolumeToIndex: bookContent.pageNumberWithVolumeToIndex,
-          }
-        : {}),
-      ...(fieldsArray.includes('pdf') ? { pdf: bookContent.turathResponse.pdf } : {}),
-      ...(fieldsArray.includes('publication_details')
-        ? { publicationDetails: bookContent.turathResponse.publicationDetails }
-        : {}),
-      ...(fieldsArray.includes('headings')
-        ? { headings: bookContent.turathResponse.headings }
-        : {}),
+      content: {
+        source: bookContent.source,
+        versionId: bookContent.versionId,
+        pages: bookContent.turathResponse.pages.slice(startIndex, end),
+        ...(fieldsArray.includes('indices')
+          ? {
+              chapterIndexToPageIndex: bookContent.chapterIndexToPageIndex,
+              pageNumberWithVolumeToIndex: bookContent.pageNumberWithVolumeToIndex,
+            }
+          : {}),
+        ...(fieldsArray.includes('pdf') ? { pdf: bookContent.turathResponse.pdf } : {}),
+        ...(fieldsArray.includes('publication_details')
+          ? { publicationDetails: bookContent.turathResponse.publicationDetails }
+          : {}),
+        ...(fieldsArray.includes('headings')
+          ? { headings: bookContent.turathResponse.headings }
+          : {}),
+      },
+      pagination: {
+        ...basePaginationInfo,
+        total: bookContent.turathResponse?.pages.length,
+      },
+    };
+  }
+
+  if (bookContent.source === 'openiti') {
+    return {
+      content: {
+        source: bookContent.source,
+        versionId: bookContent.versionId,
+        rawUrl: bookContent.rawUrl,
+        pages: bookContent.content.slice(startIndex, end),
+        ...(fieldsArray.includes('publication_details')
+          ? { publicationDetails: bookContent.metadata }
+          : {}),
+        ...(fieldsArray.includes('headings') ? { headings: bookContent.chapters } : {}),
+      },
+      pagination: {
+        ...basePaginationInfo,
+        total: bookContent.content.length,
+      },
+    };
+  }
+
+  if (bookContent.source === 'external') {
+    return {
+      content: {
+        source: bookContent.source,
+        versionId: bookContent.versionId,
+      },
     };
   }
 
