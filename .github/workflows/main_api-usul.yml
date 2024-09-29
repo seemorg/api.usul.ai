@@ -1,4 +1,7 @@
-name: 🚀 Build and Deploy To Azure
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy Node.js app to Azure Web App - api-usul
 
 on:
   push:
@@ -13,23 +16,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Set up Node.js version
+        uses: actions/setup-node@v3
         with:
-          node-version: 18
-          cache: "pnpm"
+          node-version: '18.x'
 
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Build
-        run: pnpm build
+      - name: npm install, build, and test
+        run: |
+          npm install
+          npm run build --if-present
+          npm run test --if-present
 
       - name: Zip artifact for deployment
-        run: zip release.zip ./* -r --symlinks # --symlinks is required for pnpm
-      
+        run: zip release.zip ./* -r
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
@@ -57,9 +57,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_AFA4F10D2A9C42A7BBAB2C91145CA8B4 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_287D1A8090CB49789952B9AB1A8F022F }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_DD2BD79F45AE440CA2884FEE0DC1EEFF }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_B0557E44588F4829A19DBBB52C5593A9 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_E917332F76EF44FFB205A0A640F1D441 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_B3077ACC1F6141BD83191750AFFCFD7E }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
