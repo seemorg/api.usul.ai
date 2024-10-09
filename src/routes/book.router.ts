@@ -29,7 +29,7 @@ const contentCache = new LRUCache<string, FetchBookResponse>({
 });
 
 const makeCacheKey = (bookSlug: string, versionId?: string, locale?: PathLocale) => {
-  return `${bookSlug}_:_:${versionId ?? ''}_:_:${locale ?? ''}`;
+  return `${bookSlug}_:_${versionId ?? ''}_:_${locale ?? ''}`;
 };
 
 const parseCacheKey = (key: string) => {
