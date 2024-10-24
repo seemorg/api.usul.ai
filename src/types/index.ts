@@ -2,14 +2,41 @@ import { PathLocale } from '@/lib/locale';
 
 declare global {
   namespace PrismaJson {
-    type BookVersion = {
-      source: 'openiti' | 'turath' | 'external';
-      value: string;
-    };
+    namespace PrismaJson {
+      interface BookVersion {
+        source: 'openiti' | 'turath' | 'external' | 'pdf';
+        value: string;
+        publicationDetails?: {
+          investigator?: string;
+          publisher?: string;
+          editionNumber?: string;
+          publicationYear?: number; // hijri
+        };
+      }
 
-    type BookFlags = {
-      aiSupported?: boolean;
-    };
+      interface BookFlags {
+        aiSupported?: boolean;
+        aiVersion?: string;
+      }
+
+      interface AuthorExtraProperties {
+        _airtableReference?: string;
+      }
+
+      interface BookExtraProperties {
+        splitsData?: { start: number; end: number }[];
+        _airtableReference?: string;
+      }
+
+      interface GenreExtraProperties {
+        _airtableReference?: string;
+      }
+
+      interface AdvancedGenreExtraProperties {
+        _airtableReference?: string;
+        simpleGenreId?: string; // id in Genres table
+      }
+    }
   }
 }
 

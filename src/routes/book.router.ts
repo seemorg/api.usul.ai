@@ -8,7 +8,7 @@ import { z } from 'zod';
 import { LRUCache } from 'lru-cache';
 import { PathLocale } from '@/lib/locale';
 
-const bookRoutes = new Hono();
+const bookRoutes = new Hono().basePath('/book');
 
 const contentCache = new LRUCache<string, FetchBookResponse>({
   max: 500,
@@ -40,6 +40,48 @@ const parseCacheKey = (key: string) => {
     locale: locale === '' ? undefined : (locale as PathLocale),
   };
 };
+
+bookRoutes.get(
+  '/details/:bookSlug',
+  zValidator('param', z.object({ bookSlug: z.string() })),
+  zValidator(
+    'query',
+    z.object({
+      locale: localeSchema,
+    }),
+  ),
+  async c => {
+    const { bookSlug } = c.req.valid('param');
+    const { locale } = c.req.valid('query');
+
+    const book = await getBookBySlug(bookSlug, locale);
+    if (!book) {
+      throw new HTTPException(404, { message: 'Book not found' });
+    }
+
+    if (!book.flags.aiSupported || !book.flags.aiVersion) {
+      throw new HTTPException(400, { message: 'AI is not supported for this book' });
+    }
+
+    // get the ai version
+    const versionId = book.flags.aiVersion;
+
+    const bookContent = await contentCache.fetch(
+      makeCacheKey(bookSlug, versionId, locale),
+    );
+
+    if (!bookContent) {
+      throw new HTTPException(404, { message: 'Could not fetch book content' });
+    }
+
+    const details = getVersionDetails(bookContent, ['headings', 'publication_details']);
+
+    return c.json({
+      book,
+      ...details,
+    });
+  },
+);
 
 bookRoutes.get(
   '/:bookSlug',
@@ -83,6 +125,32 @@ bookRoutes.get(
   },
 );
 
+const getVersionDetails = (
+  bookContent: FetchBookResponse,
+  fields: ('headings' | 'publication_details')[],
+) => {
+  const includeHeadings = fields.includes('headings');
+  const includePublicationDetails = fields.includes('publication_details');
+
+  if (bookContent.source === 'turath') {
+    return {
+      ...(includePublicationDetails
+        ? { publicationDetails: bookContent.turathResponse.publicationDetails }
+        : {}),
+      ...(includeHeadings ? { headings: bookContent.turathResponse.headings } : {}),
+    };
+  }
+
+  if (bookContent.source === 'openiti') {
+    return {
+      ...(includePublicationDetails ? { publicationDetails: bookContent.metadata } : {}),
+      ...(includeHeadings ? { headings: bookContent.chapters } : {}),
+    };
+  }
+
+  return {};
+};
+
 const paginateBookContent = (
   bookContent: FetchBookResponse,
   startIndex: number,
@@ -97,6 +165,8 @@ const paginateBookContent = (
     size: pageSize,
   };
 
+  const extraFields = getVersionDetails(bookContent, fieldsArray as any);
+
   if (bookContent.source === 'turath') {
     return {
       content: {
@@ -110,12 +180,7 @@ const paginateBookContent = (
             }
           : {}),
         ...(fieldsArray.includes('pdf') ? { pdf: bookContent.turathResponse.pdf } : {}),
-        ...(fieldsArray.includes('publication_details')
-          ? { publicationDetails: bookContent.turathResponse.publicationDetails }
-          : {}),
-        ...(fieldsArray.includes('headings')
-          ? { headings: bookContent.turathResponse.headings }
-          : {}),
+        ...extraFields,
       },
       pagination: {
         ...basePaginationInfo,
@@ -131,10 +196,7 @@ const paginateBookContent = (
         versionId: bookContent.versionId,
         rawUrl: bookContent.rawUrl,
         pages: bookContent.content.slice(startIndex, end),
-        ...(fieldsArray.includes('publication_details')
-          ? { publicationDetails: bookContent.metadata }
-          : {}),
-        ...(fieldsArray.includes('headings') ? { headings: bookContent.chapters } : {}),
+        ...extraFields,
       },
       pagination: {
         ...basePaginationInfo,
@@ -148,19 +210,12 @@ const paginateBookContent = (
       content: {
         source: bookContent.source,
         versionId: bookContent.versionId,
+        ...extraFields,
       },
     };
   }
 
   return bookContent;
-};
-
-const getPaginationInfo = (bookContent: FetchBookResponse) => {
-  if (bookContent.source === 'turath') {
-    return {
-      total: bookContent.turathResponse?.pages.length,
-    };
-  }
 };
 
 export default bookRoutes;

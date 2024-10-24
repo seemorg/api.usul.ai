@@ -6,6 +6,6 @@ import uptimeRoutes from './uptime.router';
 const routes = new Hono();
 
 routes.route('/', uptimeRoutes);
-routes.route('/book', bookRoutes);
+routes.route('/', bookRoutes);
 
 export default routes;
