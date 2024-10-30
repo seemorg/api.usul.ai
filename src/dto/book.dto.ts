@@ -13,7 +13,7 @@ export const makeBookDto = async (
   } & { genres: { id: string }[] },
   locale: PathLocale,
 ) => {
-  const author = await getAuthorById(book.authorId)!;
+  const author = await getAuthorById(book.authorId, locale)!;
 
   return {
     id: book.id,
@@ -27,6 +27,6 @@ export const makeBookDto = async (
     otherNames: getPrimaryLocalizedText(book.otherNameTranslations, locale),
     secondaryName: getSecondaryLocalizedText(book.primaryNameTranslations, locale),
     secondaryOtherNames: getSecondaryLocalizedText(book.otherNameTranslations, locale),
-    genres: book.genres.map(genre => getGenreById(genre.id)!),
+    genres: book.genres.map(genre => getGenreById(genre.id, locale)!),
   };
 };

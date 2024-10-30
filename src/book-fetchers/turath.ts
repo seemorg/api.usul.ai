@@ -4,6 +4,7 @@ import {
   getTurathPublicationDetails,
 } from '@/lib/turath';
 import { TurathApiBookResponse } from '@/types/turath';
+import { stripHtml } from 'string-strip-html';
 
 export const fetchTurathBook = async (id: string) => {
   const res = await fetchTurathBookById(id);
@@ -60,7 +61,7 @@ export const fetchTurathBook = async (id: string) => {
 
   for (let i = 0; i < res.pages.length; i++) {
     const page = res.pages[i]!;
-    // const realPage = pageNumberToRealNumber[page.page];
+    page.text = stripHtml(page.text, { onlyStripTags: ['a'] }).result;
 
     let didMerge = false;
     if (mergedPages.length > 0) {

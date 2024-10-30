@@ -21,6 +21,7 @@
     "hono": "^4.6.3",
     "lru-cache": "^11.0.1",
     "prisma-json-types-generator": "^3.0.4",
+    "string-strip-html": "^13.4.8",
     "ws": "^8.18.0",
     "zod": "^3.23.8"
   },
