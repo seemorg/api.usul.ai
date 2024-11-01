@@ -87,7 +87,7 @@ export const getBookContentIndexByPage = (
 
   if (bookContent.source === 'openiti') {
     return bookContent.content.findIndex(
-      p => p.page === page && (!volume && !p.volume ? true : String(p.volume) === volume),
+      p => p.page === page && (!volume ? !p.volume : String(p.volume) === volume),
     );
   }
 
@@ -116,12 +116,6 @@ export const paginateBookContent = (
         source: bookContent.source,
         versionId: bookContent.versionId,
         pages: bookContent.turathResponse.pages.slice(startIndex, end),
-        ...(fieldsArray.includes('indices')
-          ? {
-              chapterIndexToPageIndex: bookContent.chapterIndexToPageIndex,
-              pageNumberWithVolumeToIndex: bookContent.pageNumberWithVolumeToIndex,
-            }
-          : {}),
         ...(fieldsArray.includes('pdf') ? { pdf: bookContent.turathResponse.pdf } : {}),
         ...extraFields,
       },

@@ -96,30 +96,17 @@ bookRoutes.get(
   zValidator('param', z.object({ bookSlug: z.string() })),
   zValidator(
     'query',
-    z
-      .object({
-        versionId: z.string().optional(),
-        locale: localeSchema,
-        includeBook: z.coerce.boolean().optional().default(false),
-        fields: z.string().optional(), // comma separated list of fields
-      })
-      .and(
-        z
-          .object({
-            page: z.coerce.number().min(1),
-            volume: z.string(),
-          })
-          .or(
-            z.object({
-              index: z.coerce.number().min(0),
-            }),
-          ),
-      ),
+    z.object({
+      versionId: z.string().optional(),
+      locale: localeSchema,
+      includeBook: z.coerce.boolean().optional().default(false),
+      fields: z.string().optional(), // comma separated list of fields
+      index: z.coerce.number().min(0),
+    }),
   ),
   async c => {
     const { bookSlug } = c.req.valid('param');
-    const queryParams = c.req.valid('query');
-    const { versionId, locale, includeBook, fields } = queryParams;
+    const { versionId, locale, includeBook, fields, index } = c.req.valid('query');
 
     const book = await getBookBySlug(bookSlug, locale);
     if (!book) {
@@ -134,23 +121,49 @@ bookRoutes.get(
       throw new HTTPException(404, { message: 'Could not fetch book content' });
     }
 
-    let paginatedResult: ReturnType<typeof paginateBookContent>;
-    if ('index' in queryParams) {
-      paginatedResult = paginateBookContent(bookContent, queryParams.index, 1, fields);
-    } else {
-      const { page, volume } = queryParams;
-      const index = getBookContentIndexByPage(bookContent, page, volume);
-      if (index === -1) {
-        throw new HTTPException(404, { message: 'Page not found' });
-      }
-
-      paginatedResult = paginateBookContent(bookContent, index, 1, fields);
-    }
+    const paginatedResult = paginateBookContent(bookContent, index, 1, fields);
 
     return c.json({
       book: includeBook ? book : undefined,
       content: paginatedResult.content,
       pagination: paginatedResult.pagination,
+    });
+  },
+);
+
+bookRoutes.get(
+  '/page_index/:bookSlug',
+  zValidator('param', z.object({ bookSlug: z.string() })),
+  zValidator(
+    'query',
+    z.object({
+      versionId: z.string().optional(),
+      page: z.coerce.number().min(1),
+      volume: z.string().optional(),
+    }),
+  ),
+  async c => {
+    const { bookSlug } = c.req.valid('param');
+    const { versionId, page, volume } = c.req.valid('query');
+    const locale = 'en';
+
+    const book = await getBookBySlug(bookSlug, locale);
+    if (!book) {
+      throw new HTTPException(404, { message: 'Book not found' });
+    }
+
+    const bookContent = await contentCache.fetch(
+      makeCacheKey(bookSlug, versionId, locale),
+    );
+
+    if (!bookContent) {
+      throw new HTTPException(404, { message: 'Could not fetch book content' });
+    }
+
+    const index = getBookContentIndexByPage(bookContent, page, volume);
+
+    return c.json({
+      index: index === -1 ? null : index,
     });
   },
 );

@@ -82,11 +82,13 @@ export const fetchTurathBook = async (id: string) => {
     pageNumberWithVolumeToIndex[`${page.vol}-${page.page}`] = mergedPages.length - 1;
   }
 
-  const chapterIndexToPageIndex: Record<number, number> = {};
   Object.entries(res.indexes.page_headings).forEach(curr => {
     const [pageIndex, headingIndices] = curr;
     headingIndices.forEach(i => {
-      chapterIndexToPageIndex[i - 1] = oldIndexToNewIndex[Number(pageIndex) - 1] ?? -1;
+      const heading = headings[i - 1];
+      if (heading) {
+        heading.pageIndex = oldIndexToNewIndex[Number(pageIndex) - 1] ?? -1;
+      }
     });
   });
 
@@ -100,8 +102,8 @@ export const fetchTurathBook = async (id: string) => {
       pages: mergedPages,
       publicationDetails,
     },
-    chapterIndexToPageIndex,
-    pageNumberWithVolumeToIndex,
+    // chapterIndexToPageIndex,
+    // pageNumberWithVolumeToIndex,
   };
 };
 

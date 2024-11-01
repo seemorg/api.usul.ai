@@ -51,6 +51,19 @@ export const fetchOpenitiBook = async ({
   // filter out empty blocks
   final.content = prepareContent(final.content);
 
+  const volAndPageToIndex = final.content.reduce((acc, cur, idx) => {
+    acc[`${cur.volume ?? ''}-${cur.page}`] = idx;
+    return acc;
+  }, {} as Record<string, number>);
+
+  final.chapters = final.chapters.map(chapter => {
+    if (chapter.page) {
+      (chapter as any).pageIndex =
+        volAndPageToIndex[`${chapter.volume ?? ''}-${chapter.page}` as string] ?? -1;
+    }
+    return chapter;
+  });
+
   return {
     ...final,
     rawUrl: finalUrl,
