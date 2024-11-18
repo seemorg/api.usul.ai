@@ -1,5 +1,11 @@
 import { PathLocale } from '@/lib/locale';
 
+declare module '@openiti/markdown-parser' {
+  interface Chapter {
+    pageIndex?: number;
+  }
+}
+
 declare global {
   namespace PrismaJson {
     interface BookVersion {
