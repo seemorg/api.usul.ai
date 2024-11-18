@@ -4,7 +4,7 @@ import { stripHtml } from 'string-strip-html';
 import { get_encoding } from 'tiktoken';
 import { getPageChapters } from './chapters';
 import { createPageToChapterIndex } from './metadata';
-import { convertOpenitiToHtml, splitTextIntoSentences } from './helpers';
+import { convertOpenitiToHtml, deduplicateArray } from './helpers';
 
 /**
  * Steps for tokenization:
@@ -41,12 +41,12 @@ export const prepareBook = (book: BookContent) => {
       // const textTokens = tokenize(preparedText);
 
       return {
+        index: idx,
         page: page.page,
         volume: page.vol,
         chaptersIndices: getPageChapters(idx, book.turathResponse.headings),
         formattedText: page.text,
         plainText: preparedText,
-        // tokenizedText: textTokens,
       };
     });
   }
@@ -55,15 +55,14 @@ export const prepareBook = (book: BookContent) => {
   return book.content.map((page, idx) => {
     const html = convertOpenitiToHtml(page.blocks);
     const preparedText = stripHtml(removeDiacritics(html)).result;
-    // const textTokens = tokenize(preparedText);
 
     return {
+      index: idx,
       page: page.page,
       volume: page.volume,
       formattedText: html,
       plainText: preparedText,
       chaptersIndices: pageToChapterIndex[idx] ?? [],
-      // tokenizedText: textTokens,
     };
   });
 };
@@ -109,119 +108,48 @@ export const splitBookIntoChunks = (book: BookContent) => {
 
   const chunks: Chunk[] = [];
 
-  for (let i = 0; i < level1ChaptersIndices.length; i++) {
-    const pages = pagesByChapter[i];
-    // const chapterIdx = level1ChaptersIndices[i];
-    // const chapter = chapters[chapterIdx];
+  for (let i = 0; i < pagesByChapter.length; i++) {
+    const chapterPages = pagesByChapter[i];
 
-    const sentences: Chunk[] = [];
-
-    pages.forEach((page, idx) => {
-      // Split into sentences
-      const formattedSentences = splitTextIntoSentences(page.formattedText);
-      const plainSentences = splitTextIntoSentences(page.plainText);
-
-      // Ensure that the sentences are aligned
-      if (formattedSentences.length !== plainSentences.length) {
-        // Handle misalignment
-        console.warn(
-          `Mismatch in sentences on page ${page.volume ?? '-'} / ${page.page}`,
-        );
-        // Proceed with the minimum length
-        const minLength = Math.min(formattedSentences.length, plainSentences.length);
-        formattedSentences.splice(minLength);
-        plainSentences.splice(minLength);
-      }
-
-      // Collect sentences with their metadata
-      const pagesRef = [
-        { index: idx, page: String(page.page), volume: String(page.volume) },
-      ];
-      for (let i = 0; i < plainSentences.length; i++) {
-        sentences.push({
-          metadata: {
-            chapterIndices: page.chaptersIndices,
-            pages: pagesRef,
-          },
-          plainText: plainSentences[i],
-          formattedText: formattedSentences[i],
-        });
+    // Collect all tokens and create a token-to-page map
+    const allTokens: number[] = [];
+    const tokenPageMap: number[] = []; // Maps token index to page index
+    chapterPages.forEach(page => {
+      allTokens.push(...tokenize(page.plainText));
+      for (let i = 0; i < page.plainText.length; i++) {
+        tokenPageMap.push(page.index);
       }
     });
 
-    let chunkPlainText = '';
-    let chunkFormattedText = '';
-    let chunkTokens: number[] = [];
-    let chunkPageIndices = new Set<number>();
-    let chunkChapterIndices = new Set<number>();
-    // Additional metadata can be accumulated similarly
+    // Split tokens into chunks with overlap
+    for (let i = 0; i < allTokens.length; i += CHUNK_SIZE - OVERLAP_SIZE) {
+      const chunkTokens = allTokens.slice(i, i + CHUNK_SIZE);
+      const chunkText = detokenize(new Uint32Array(chunkTokens));
 
-    for (let i = 0; i < sentences.length; i++) {
-      const sentence = sentences[i];
-      const sentenceTokens = tokenize(sentence.plainText);
+      // Map chunk token indices to original token indices
+      const chunkTokenIndices = Array.from(
+        { length: chunkTokens.length },
+        (_, idx) => i + idx,
+      );
 
-      // Check if adding this sentence exceeds the token limit
-      if (chunkTokens.length + sentenceTokens.length > CHUNK_SIZE) {
-        // Save the current chunk
-        if (chunkTokens.length > 0) {
-          const chunk: Chunk = {
-            plainText: chunkPlainText.trim(),
-            formattedText: chunkFormattedText.trim(),
-            metadata: {
-              pages: getPagesInfo(Array.from(chunkPageIndices)),
-              chapterIndices: Array.from(chunkChapterIndices),
-              // Include any additional merged metadata here
-            },
-          };
-          chunks.push(chunk);
+      // Determine the page numbers for this chunk
+      const uniquePageIndices = deduplicateArray(
+        chunkTokenIndices.map(tokenIdx => tokenPageMap[tokenIdx]),
+      );
 
-          // Reset the chunk variables
-          chunkPlainText = '';
-          chunkFormattedText = '';
-          chunkTokens = [];
-          chunkPageIndices.clear();
-          chunkChapterIndices.clear();
+      const chapterIndices = deduplicateArray(
+        uniquePageIndices.flatMap(idx => pages[idx].chaptersIndices),
+      );
 
-          // Implement overlap if needed
-          if (OVERLAP_SIZE > 0 && i >= OVERLAP_SIZE) {
-            const overlapStartIndex = i - OVERLAP_SIZE;
-            for (let j = overlapStartIndex; j < i; j++) {
-              const overlapSentence = sentences[j];
-              chunkPlainText += overlapSentence.plainText + ' ';
-              chunkFormattedText += overlapSentence.formattedText + ' ';
-              const overlapTokens = tokenize(overlapSentence.plainText);
-              chunkTokens.push(...overlapTokens);
-              overlapSentence.metadata.pages.forEach(p => chunkPageIndices.add(p.index));
-              overlapSentence.metadata.chapterIndices.forEach(cIdx =>
-                chunkChapterIndices.add(cIdx),
-              );
-              // Merge any additional metadata if needed
-            }
-          }
-        }
-      }
-
-      // Add the sentence to the chunk
-      chunkPlainText += sentence.plainText + ' ';
-      chunkFormattedText += sentence.formattedText + ' ';
-      chunkTokens.push(...sentenceTokens);
-      sentence.metadata.pages.forEach(p => chunkPageIndices.add(p.index));
-      sentence.metadata.chapterIndices.forEach(cIdx => chunkChapterIndices.add(cIdx));
-
-      // Merge any additional metadata if needed
-    }
-
-    // Save any remaining chunk
-    if (chunkTokens.length > 0) {
       const chunk: Chunk = {
-        plainText: chunkPlainText.trim(),
-        formattedText: chunkFormattedText.trim(),
+        plainText: chunkText,
+        formattedText: '',
         metadata: {
-          pages: getPagesInfo(Array.from(chunkPageIndices)),
-          chapterIndices: Array.from(chunkChapterIndices),
-          // Include any additional merged metadata here
+          chapterIndices,
+          pages: getPagesInfo(uniquePageIndices),
         },
       };
+
       chunks.push(chunk);
     }
   }
