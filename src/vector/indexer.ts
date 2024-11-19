@@ -46,6 +46,8 @@ const main = async () => {
       : bookContent.chapters,
   );
 
+  console.log(chunks[chunks.length - 1].metadata);
+
   await fs.writeFile('book.json', JSON.stringify(chunks, null, 2));
   console.log('done');
 };
