@@ -1,19 +1,20 @@
 import { fetchBookContent } from '@/book-fetchers';
 import { getBookBySlug } from '@/services/book';
-import { prepareBook, splitBookIntoChunks } from './tokenization';
 import fs from 'fs/promises';
-// import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters';
-// import { Document } from '@langchain/core/documents';
+import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters';
+import { Document } from '@langchain/core/documents';
+import { prepareBookForChunking } from './prepare';
+import { splitBookIntoChunks } from './chunking';
 
 const locale = 'en';
 const slug = 'sahih';
 const versionId = '735';
 
-// const splitter = new RecursiveCharacterTextSplitter({
-//   chunkSize: 500,
-//   chunkOverlap: 50,
-//   separators: [''],
-// });
+const splitter = new RecursiveCharacterTextSplitter({
+  chunkSize: 500,
+  chunkOverlap: 50,
+  separators: [''],
+});
 
 const main = async () => {
   const book = await getBookBySlug(slug, locale);
@@ -22,24 +23,30 @@ const main = async () => {
   }
 
   const bookContent = await fetchBookContent(book, versionId);
-  if (!bookContent) {
+  if (!bookContent || bookContent.source === 'external') {
     return;
   }
 
-  const preparedBook = prepareBook(bookContent);
+  const preparedBook = prepareBookForChunking(bookContent);
   if (!preparedBook) {
     return;
   }
 
+  // APPROACH 1: Langchain
   // const documents = preparedBook?.map(
-  //   ({ preparedText, formattedText, ...metadata }) =>
-  //     new Document({ pageContent: formattedText, metadata }),
+  //   ({ text, ...metadata }) => new Document({ pageContent: text, metadata }),
   // );
-
   // const chunks = await splitter.splitDocuments(documents);
-  const chunks = splitBookIntoChunks(bookContent);
 
-  await fs.writeFile('chunks-2.json', JSON.stringify(chunks, null, 2));
+  // APPROACH 2: Custom
+  const chunks = splitBookIntoChunks(
+    preparedBook,
+    bookContent.source === 'turath'
+      ? bookContent.turathResponse.headings
+      : bookContent.chapters,
+  );
+
+  await fs.writeFile('book.json', JSON.stringify(chunks, null, 2));
   console.log('done');
 };
 

@@ -41,6 +41,9 @@ importers:
       hono:
         specifier: ^4.6.3
         version: 4.6.3
+      jstoxml:
+        specifier: ^5.0.2
+        version: 5.0.2
       lru-cache:
         specifier: ^11.0.1
         version: 11.0.1
@@ -63,6 +66,9 @@ importers:
         specifier: ^3.23.8
         version: 3.23.8
     devDependencies:
+      '@types/jstoxml':
+        specifier: ^2.0.4
+        version: 2.0.4
       '@types/node':
         specifier: ^20.11.17
         version: 20.16.10
@@ -456,6 +462,9 @@ packages:
   '@types/estree@1.0.6':
     resolution: {integrity: sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==}
 
+  '@types/jstoxml@2.0.4':
+    resolution: {integrity: sha512-XHUMp2t8CfJUsKt8qjlspZWlkVeveFg2eF/kRV8CKiNQ+Fd3mJkfexIDXtZEnG/4aJZRCVNNn46zNddSVIUN0w==}
+
   '@types/lodash-es@4.17.12':
     resolution: {integrity: sha512-0NgftHUcV4v34VhXm8QBSftKVXtbkBG3ViCjs6+eJ5a6y6Mi/jiFGPc1sC7QK+9BFhWrURE3EOggmWaSxL9OzQ==}
 
@@ -754,6 +763,9 @@ packages:
 
   js-tiktoken@1.0.15:
     resolution: {integrity: sha512-65ruOWWXDEZHHbAo7EjOcNxOGasQKbL4Fq3jEr2xsCqSsoOo6VVSqzWQb6PRIqypFSDcma4jO90YP0w5X8qVXQ==}
+
+  jstoxml@5.0.2:
+    resolution: {integrity: sha512-p/Uyi1nSlAcOL+FbWCbTLAHtMbk/QlPMAE/wRLek7W8646jWII3GtLEKSBzf97UitieRWj1VZcbZxs8arq2nbg==}
 
   langsmith@0.2.5:
     resolution: {integrity: sha512-dA+l7ZEh1Q9Q9FcE39PUSSEMfsFo73R2V81fRo5KSlGNcypOEhoQvv6lbjyZP7MHmt3/9pPcfpuRd5Y4RbFYqQ==}
@@ -1515,6 +1527,8 @@ snapshots:
 
   '@types/estree@1.0.6': {}
 
+  '@types/jstoxml@2.0.4': {}
+
   '@types/lodash-es@4.17.12':
     dependencies:
       '@types/lodash': 4.17.12
@@ -1815,6 +1829,8 @@ snapshots:
   js-tiktoken@1.0.15:
     dependencies:
       base64-js: 1.5.1
+
+  jstoxml@5.0.2: {}
 
   langsmith@0.2.5(openai@4.72.0(zod@3.23.8)):
     dependencies:
