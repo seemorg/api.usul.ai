@@ -6,6 +6,7 @@ import { HTTPException } from 'hono/http-exception';
 
 import routes from './routes';
 import './queues/ai-indexer/worker';
+import './queues/keyword-indexer/worker';
 
 const app = new Hono();
 

@@ -22,6 +22,9 @@ declare global {
     interface BookFlags {
       aiSupported?: boolean;
       aiVersion?: string;
+
+      keywordSupported?: boolean;
+      keywordVersion?: string;
     }
 
     interface AuthorExtraProperties {

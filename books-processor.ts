@@ -3,13 +3,16 @@ import type { SandboxedJob } from 'bullmq';
 import type { BookQueueData } from '@/queues/ai-indexer/queue';
 import { indexBook } from '@/vector/splitters/v1';
 
-const updateBookFlags = async (
-  book: {
-    id: string;
-    flags: PrismaJson.BookFlags;
-  },
-  versionId: string,
-) => {
+const updateBookFlags = async (id: string, versionId: string) => {
+  const book = await db.book.findUnique({
+    where: { id },
+    select: { id: true, flags: true, versions: true },
+  });
+
+  if (!book) {
+    throw new Error(`Book not found: ${id}`);
+  }
+
   // update book flags
   await db.book.update({
     where: {
@@ -27,18 +30,6 @@ const updateBookFlags = async (
 
 export default async function booksProcessor(job: SandboxedJob<BookQueueData>) {
   const { id, versionId } = job.data;
-  const book = await db.book.findUnique({
-    where: { id },
-    select: { id: true, flags: true, versions: true },
-  });
-
-  if (!book) {
-    throw new Error(`Book not found: ${id}`);
-  }
-
-  if (!book.versions.some(v => v.value === versionId)) {
-    throw new Error(`Version not found: ${versionId}`);
-  }
 
   const result = await indexBook({ id, versionId });
   if (result.status !== 'success' && result.status !== 'skipped') {
@@ -46,7 +37,7 @@ export default async function booksProcessor(job: SandboxedJob<BookQueueData>) {
   }
 
   if (result.status === 'success') {
-    await updateBookFlags(book, result.versionId!);
+    await updateBookFlags(id, result.versionId!);
   }
 
   return result;

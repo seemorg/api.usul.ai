@@ -10,6 +10,7 @@ export const env = createEnv({
     AZURE_SEARCH_ENDPOINT: z.string().url(),
     AZURE_SEARCH_KEY: z.string(),
     AZURE_SEARCH_INDEX: z.string(),
+    AZURE_KEYWORD_SEARCH_INDEX: z.string(),
     AZURE_OPENAI_KEY: z.string(),
     AZURE_OPENAI_RESOURCE_NAME: z.string(),
     AZURE_EMBEDDINGS_DEPLOYMENT_NAME: z.string(),

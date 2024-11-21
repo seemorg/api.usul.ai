@@ -5,6 +5,8 @@ import { setUptime } from './lib/uptime';
 import { populateAuthors } from './services/author';
 import { populateGenres } from './services/genre';
 import { populateBooks } from './services/book';
+import { createKeywordSearchIndexIfNotExists } from './lib/keyword-search';
+import { createIndexIfNotExists } from './vector/vector-store';
 
 // before the server starts, we need to populate the cache
 console.log('🔄 Populating cache...');
@@ -14,6 +16,9 @@ if (env.NODE_ENV !== 'development') {
   await populateAuthors();
   await populateBooks();
 }
+
+await createKeywordSearchIndexIfNotExists();
+await createIndexIfNotExists();
 
 serve(
   {

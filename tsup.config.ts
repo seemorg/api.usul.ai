@@ -2,7 +2,7 @@ import type { Options } from 'tsup';
 import { defineConfig } from 'tsup';
 
 export default defineConfig((options: Options) => ({
-  entryPoints: ['src/index.ts', 'books-processor.ts'],
+  entryPoints: ['src/index.ts', 'books-processor.ts', 'keyword-indexer.ts'],
   clean: true,
   format: 'esm',
   platform: 'node',

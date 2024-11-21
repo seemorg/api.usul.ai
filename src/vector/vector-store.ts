@@ -9,15 +9,16 @@ import {
 export type BookChunk = {
   id: string;
   book_id: string;
-  prev_id?: string;
-  next_id?: string;
+  book_version_id: string;
+  prev_id?: string | null;
+  next_id?: string | null;
   chunk_content: string;
   chunk_embedding: number[];
   chapters: number[]; // chapter indices
   pages: {
     index: number;
     page: number;
-    volume?: string;
+    volume?: string | null;
   }[];
 };
 

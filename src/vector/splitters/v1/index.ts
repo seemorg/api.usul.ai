@@ -167,6 +167,7 @@ export async function indexBook(
 
         return {
           id: makeChunkId(book.id, versionSource, versionValue, nodeIdx),
+          book_version_id: `${versionSource}:${versionValue}`,
           prev_id: prevId,
           next_id: nextId,
           chunk_embedding: embedding.result,

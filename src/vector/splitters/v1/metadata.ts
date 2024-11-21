@@ -33,19 +33,33 @@ type Chapters =
   | Pick<FetchBookResponseOfType<'turath'>['turathResponse'], 'headings'>['headings']
   | FetchBookResponseOfType<'openiti'>['chapters'];
 
-export const preparePages = (pages: Pages, headings: Chapters) => {
+export const preparePages = (
+  pages: Pages,
+  headings: Chapters,
+  {
+    preprocessUsingSplitter = true,
+    shouldRemoveDiacritics = true,
+  }: {
+    preprocessUsingSplitter?: boolean;
+    shouldRemoveDiacritics?: boolean;
+  } = {},
+) => {
   return pages.map((p, idx) => {
     const isTurath = 'text' in p;
+    const formattedText = isTurath ? p.text : convertOpenitiToHtml(p.blocks);
+
     const pageText = stripHtml(
-      removeDiacritics(isTurath ? p.text : convertOpenitiToHtml(p.blocks)),
+      shouldRemoveDiacritics ? removeDiacritics(formattedText) : formattedText,
     ).result;
 
-    const text = trimSpacesAfterSentenceEndings(
-      splitter
-        .splitText(pageText)
-        .map(t => t.trim())
-        .join(''),
-    );
+    const text = preprocessUsingSplitter
+      ? trimSpacesAfterSentenceEndings(
+          splitter
+            .splitText(pageText)
+            .map(t => t.trim())
+            .join(''),
+        )
+      : pageText;
 
     return {
       index: idx,
