@@ -9,6 +9,7 @@ import { chunk } from '@/lib/utils';
 import { splitter } from './splitter';
 import { embeddings } from '@/vector/openai';
 import { BookChunk, searchClient } from '@/vector/vector-store';
+import { db } from '@/lib/db';
 
 const MAX_RETRIES = 3;
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -47,8 +48,10 @@ export async function indexBook(
     versionId: string;
   },
 ) {
-  const book =
-    'id' in params ? await getBookById(params.id) : await getBookBySlug(params.slug);
+  const book = await db.book.findFirst({
+    where: 'id' in params ? { id: params.id } : { slug: params.slug },
+    select: { id: true, versions: true, flags: true, author: { select: { id: true } } },
+  });
 
   if (!book) {
     return { status: 'not-found' };

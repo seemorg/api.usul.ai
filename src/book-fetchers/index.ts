@@ -18,7 +18,7 @@ export type FetchBookResponseOfType<T extends FetchBookResponse['source']> = Ext
 >;
 
 export const fetchBookContent = async (
-  record: BookDto,
+  record: { versions: PrismaJson.BookVersion[]; id: string; author: { id: string } },
   versionId?: string,
 ): Promise<FetchBookResponse | null> => {
   const allVersions = record.versions;

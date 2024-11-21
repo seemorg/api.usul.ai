@@ -13,7 +13,7 @@ const books = await db.book.findMany({
 // get already indexed books so that we can index them
 const booksToIndex = books.filter(
   book =>
-    book.versions.length > 1 &&
+    book.versions.length > 0 &&
     book.flags.aiSupported &&
     book.flags.aiVersion &&
     book.id !== '0256Bukhari.Sahih', // we already indexed this book
