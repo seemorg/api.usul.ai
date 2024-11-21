@@ -1,7 +1,6 @@
 import { env } from '@/env';
 import {
   AzureKeyCredential,
-  KnownAnalyzerNames,
   SearchClient,
   SearchIndex,
   SearchIndexClient,
@@ -10,6 +9,8 @@ import {
 export type BookChunk = {
   id: string;
   book_id: string;
+  prev_id?: string;
+  next_id?: string;
   chunk_content: string;
   chunk_embedding: number[];
   chapters: number[]; // chapter indices
@@ -43,10 +44,30 @@ const index: SearchIndex = {
       searchable: false,
     },
     {
+      name: 'prev_id',
+      type: 'Edm.String',
+      filterable: true,
+      facetable: true,
+      searchable: false,
+    },
+    {
+      name: 'next_id',
+      type: 'Edm.String',
+      filterable: true,
+      facetable: true,
+      searchable: false,
+    },
+    {
+      name: 'book_version_id',
+      type: 'Edm.String',
+      filterable: true,
+      facetable: true,
+      searchable: false,
+    },
+    {
       name: 'chunk_content',
       type: 'Edm.String',
-      searchable: true,
-      analyzerName: KnownAnalyzerNames.ArLucene,
+      searchable: false,
     },
     {
       name: 'chunk_embedding',

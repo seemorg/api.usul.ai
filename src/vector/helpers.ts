@@ -4,7 +4,7 @@ export const deduplicateArray = <T>(arr: T[]) => [...new Set(arr)];
 
 export function splitTextIntoSentences(text: string): string[] {
   // Arabic punctuation marks: . ! ؟ (Arabic question mark)
-  const sentenceEndings = /(?<=[\.\!\؟\؟\؛\:])\s+|\n\n+/g;
+  const sentenceEndings = /(?<=[\.\!\؟\؟\؛])\s+|\n\n+/g;
   return text.split(sentenceEndings).filter(sentence => sentence.trim().length > 0);
 }
 
@@ -23,5 +23,5 @@ export const convertOpenitiToHtml = (blocks: Block[]) => {
 
       return `<p>${block.content}</p>`;
     })
-    .join('');
+    .join(' ');
 };

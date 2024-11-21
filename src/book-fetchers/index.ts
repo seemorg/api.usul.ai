@@ -12,6 +12,11 @@ export type FetchBookResponse =
   | OpenitiBookResponse
   | ExternalBookResponse;
 
+export type FetchBookResponseOfType<T extends FetchBookResponse['source']> = Extract<
+  FetchBookResponse,
+  { source: T }
+>;
+
 export const fetchBookContent = async (
   record: BookDto,
   versionId?: string,

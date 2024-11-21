@@ -24,6 +24,26 @@ export const getBookBySlug = async (slug: string, locale: PathLocale = 'en') => 
   return makeBookDto(book, locale);
 };
 
+export const getBookById = async (id: string, locale: PathLocale = 'en') => {
+  const book =
+    env.NODE_ENV === 'development'
+      ? await db.book.findFirst({
+          where: { id },
+          include: {
+            genres: {
+              select: { id: true },
+            },
+            primaryNameTranslations: true,
+            otherNameTranslations: true,
+          },
+        })
+      : bookIdToBook?.[id];
+
+  if (!book) return null;
+
+  return makeBookDto(book, locale);
+};
+
 const get = () =>
   db.book.findMany({
     include: {
@@ -38,14 +58,18 @@ const get = () =>
 type RawBook = Awaited<ReturnType<typeof get>>[number];
 
 let bookSlugToBook: Record<string, RawBook> | null = null;
+let bookIdToBook: Record<string, RawBook> | null = null;
 export const populateBooks = async () => {
-  if (bookSlugToBook) return;
+  if (bookSlugToBook && bookIdToBook) return;
 
   const books = await get();
-  bookSlugToBook = books.reduce((acc, book) => {
-    acc[book.slug] = book;
-    return acc;
-  }, {} as Record<string, RawBook>);
+  for (const book of books) {
+    if (!bookSlugToBook) bookSlugToBook = {};
+    if (!bookIdToBook) bookIdToBook = {};
+
+    bookSlugToBook[book.slug] = book;
+    bookIdToBook[book.id] = book;
+  }
 };
 
 export const getBookVersionDetails = (
