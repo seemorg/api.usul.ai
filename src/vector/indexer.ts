@@ -8,9 +8,8 @@ const versionId = '735';
 const main = async () => {
   await createIndexIfNotExists();
   const result = await indexBook({ slug, versionId });
-  console.log(result);
 
-  // await fs.writeFile('book.json', JSON.stringify(chunks, null, 2));
+  // await fs.writeFile('book.json', JSON.stringify(result, null, 2));
   console.log('done');
 };
 

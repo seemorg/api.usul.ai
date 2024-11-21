@@ -1,4 +1,7 @@
-import { SentenceSplitter } from 'llamaindex';
+import { SentenceSplitter, Settings } from 'llamaindex';
+
+Settings.chunkSize = 512;
+Settings.chunkOverlap = 24;
 
 export const splitter = new SentenceSplitter({
   chunkSize: 512,

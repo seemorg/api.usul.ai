@@ -36,7 +36,7 @@ ENV PORT=3000
 # Copy built application
 COPY --from=builder /app /app
 
-RUN find /app -type d -name "src" -exec rm -rf {} +
+RUN rm -rf /app/src
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE ${PORT}
