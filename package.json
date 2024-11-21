@@ -4,8 +4,8 @@
   "packageManager": "pnpm@9.6.0",
   "scripts": {
     "postinstall": "pnpm db:generate",
-    "dev": "pnpm with-env tsup-node --watch --onSuccess \"node dist/index.js\"",
-    "start": "node dist/index.js",
+    "dev": "pnpm with-env tsup-node --watch --onSuccess \"node dist/src/index.js\"",
+    "start": "node dist/src/index.js",
     "build": "pnpm with-env tsup-node",
     "db:generate": "prisma generate",
     "with-env": "dotenv -e ../../.env --"

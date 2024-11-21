@@ -117,6 +117,7 @@ const index: SearchIndex = {
           deploymentId: env.AZURE_EMBEDDINGS_DEPLOYMENT_NAME,
           modelName: 'text-embedding-3-large',
         },
+        // TODO: change auth strategy on azure to api
       },
     ],
     profiles: [
