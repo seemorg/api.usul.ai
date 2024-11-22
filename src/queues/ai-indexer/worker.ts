@@ -1,12 +1,51 @@
-import path from 'path';
 import { Worker } from 'bullmq';
 
 import type { BookQueueData } from './queue';
 import { BOOKS_QUEUE_NAME, BOOKS_QUEUE_REDIS } from './queue';
+import { db } from '@/lib/db';
+import { indexBook } from '@/vector/splitters/v1';
+
+const updateBookFlags = async (id: string, versionId: string) => {
+  const book = await db.book.findUnique({
+    where: { id },
+    select: { id: true, flags: true, versions: true },
+  });
+
+  if (!book) {
+    throw new Error(`Book not found: ${id}`);
+  }
+
+  // update book flags
+  await db.book.update({
+    where: {
+      id: book.id,
+    },
+    data: {
+      flags: {
+        ...book.flags,
+        aiSupported: true,
+        aiVersion: versionId,
+      } as PrismaJson.BookFlags,
+    },
+  });
+};
 
 export const worker = new Worker<BookQueueData>(
   BOOKS_QUEUE_NAME,
-  path.resolve(`dist/books-processor.js`),
+  async job => {
+    const { id, versionId } = job.data;
+
+    const result = await indexBook({ id, versionId });
+    if (result.status !== 'success' && result.status !== 'skipped') {
+      throw new Error(JSON.stringify(result));
+    }
+
+    if (result.status === 'success') {
+      await updateBookFlags(id, result.versionId!);
+    }
+
+    return result;
+  },
   {
     connection: BOOKS_QUEUE_REDIS,
     concurrency: 5,

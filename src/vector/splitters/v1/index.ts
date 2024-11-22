@@ -9,7 +9,6 @@ import { chunk } from '@/lib/utils';
 import { splitter } from './splitter';
 import { embeddings } from '@/vector/openai';
 import { BookChunk, searchClient } from '@/vector/vector-store';
-import { db } from '@/lib/db';
 
 const MAX_RETRIES = 3;
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -48,10 +47,9 @@ export async function indexBook(
     versionId: string;
   },
 ) {
-  const book = await db.book.findFirst({
-    where: 'id' in params ? { id: params.id } : { slug: params.slug },
-    select: { id: true, versions: true, flags: true, author: { select: { id: true } } },
-  });
+  const book = await ('id' in params
+    ? getBookById(params.id)
+    : getBookBySlug(params.slug));
 
   if (!book) {
     return { status: 'not-found' };
@@ -62,7 +60,14 @@ export async function indexBook(
     return { status: 'not-found' };
   }
 
-  const bookContent = await fetchBookContent(book, versionToIndex.value);
+  const bookContent = await fetchBookContent(
+    {
+      id: book.id,
+      author: { id: book.author!.id },
+      versions: book.versions,
+    },
+    versionToIndex.value,
+  );
   if (!bookContent || bookContent.source === 'external') {
     return { status: 'skipped' };
   }
