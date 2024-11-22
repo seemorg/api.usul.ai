@@ -1,6 +1,5 @@
 import { fetchTurathBook, type TurathBookResponse } from './turath';
 import { fetchOpenitiBook, type OpenitiBookResponse } from './openiti';
-import { BookDto } from '@/dto/book.dto';
 
 export type ExternalBookResponse = {
   source: 'external';
