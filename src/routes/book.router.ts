@@ -1,4 +1,4 @@
-import { fetchBookContent, type FetchBookResponse } from '@/book-fetchers';
+import { getCachedBookContent } from '@/lib/content';
 import {
   getBookBySlug,
   getBookContentIndexByPage,
@@ -10,41 +10,8 @@ import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
 import { HTTPException } from 'hono/http-exception';
 import { z } from 'zod';
-import { LRUCache } from 'lru-cache';
-import type { PathLocale } from '@/lib/locale';
 
 const bookRoutes = new Hono().basePath('/book');
-
-const contentCache = new LRUCache<string, FetchBookResponse>({
-  max: 500,
-  fetchMethod: async key => {
-    const { slug, versionId, locale } = parseCacheKey(key);
-    const book = await getBookBySlug(slug, locale);
-    if (!book) {
-      return;
-    }
-
-    const bookContent = await fetchBookContent(book, versionId);
-    if (!bookContent) {
-      return;
-    }
-
-    return bookContent;
-  },
-});
-
-const makeCacheKey = (bookSlug: string, versionId?: string, locale?: PathLocale) => {
-  return `${bookSlug}_:_${versionId ?? ''}_:_${locale ?? ''}`;
-};
-
-const parseCacheKey = (key: string) => {
-  const [slug, versionId, locale] = key.split('_:_');
-  return {
-    slug,
-    versionId: versionId === '' ? undefined : versionId,
-    locale: locale === '' ? undefined : (locale as PathLocale),
-  };
-};
 
 bookRoutes.get(
   '/details/:bookSlug',
@@ -71,9 +38,7 @@ bookRoutes.get(
     // get the ai version
     const versionId = book.flags.aiVersion;
 
-    const bookContent = await contentCache.fetch(
-      makeCacheKey(bookSlug, versionId, locale),
-    );
+    const bookContent = await getCachedBookContent(bookSlug, versionId, locale);
 
     if (!bookContent) {
       throw new HTTPException(404, { message: 'Could not fetch book content' });
@@ -113,9 +78,7 @@ bookRoutes.get(
       throw new HTTPException(404, { message: 'Book not found' });
     }
 
-    const bookContent = await contentCache.fetch(
-      makeCacheKey(bookSlug, versionId, locale),
-    );
+    const bookContent = await getCachedBookContent(bookSlug, versionId, locale);
 
     if (!bookContent) {
       throw new HTTPException(404, { message: 'Could not fetch book content' });
@@ -152,9 +115,7 @@ bookRoutes.get(
       throw new HTTPException(404, { message: 'Book not found' });
     }
 
-    const bookContent = await contentCache.fetch(
-      makeCacheKey(bookSlug, versionId, locale),
-    );
+    const bookContent = await getCachedBookContent(bookSlug, versionId, locale);
 
     if (!bookContent) {
       throw new HTTPException(404, { message: 'Could not fetch book content' });
@@ -192,9 +153,7 @@ bookRoutes.get(
       throw new HTTPException(404, { message: 'Book not found' });
     }
 
-    const bookContent = await contentCache.fetch(
-      makeCacheKey(bookSlug, versionId, locale),
-    );
+    const bookContent = await getCachedBookContent(bookSlug, versionId, locale);
 
     if (!bookContent) {
       throw new HTTPException(404, { message: 'Could not fetch book content' });

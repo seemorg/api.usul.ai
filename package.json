@@ -8,6 +8,7 @@
     "start": "node dist/index.js",
     "build": "pnpm with-env tsup-node",
     "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {

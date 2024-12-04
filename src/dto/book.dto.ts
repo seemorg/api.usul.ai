@@ -13,7 +13,7 @@ export const makeBookDto = async (
   } & { genres: { id: string }[] },
   locale: PathLocale,
 ) => {
-  const author = await getAuthorById(book.authorId, locale)!;
+  const author = (await getAuthorById(book.authorId, locale))!;
 
   return {
     id: book.id,

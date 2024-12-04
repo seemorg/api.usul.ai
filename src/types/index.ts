@@ -6,18 +6,31 @@ declare module '@openiti/markdown-parser' {
   }
 }
 
+interface PublicationDetails {
+  investigator?: string;
+  publisher?: string;
+  publisherLocation?: string;
+  editionNumber?: string;
+  publicationYear?: number; // hijri
+}
+
+type SplitsData = { start: number; end: number }[];
+
 declare global {
   namespace PrismaJson {
-    interface BookVersion {
-      source: 'openiti' | 'turath' | 'external' | 'pdf';
-      value: string;
-      publicationDetails?: {
-        investigator?: string;
-        publisher?: string;
-        editionNumber?: string;
-        publicationYear?: number; // hijri
-      };
-    }
+    type BookVersion =
+      | {
+          source: 'openiti' | 'turath' | 'external';
+          value: string;
+          publicationDetails?: PublicationDetails;
+        }
+      | {
+          source: 'pdf';
+          value: string;
+          publicationDetails?: PublicationDetails;
+          ocrBookId?: string;
+          splitsData?: SplitsData;
+        };
 
     interface BookFlags {
       aiSupported?: boolean;
@@ -32,7 +45,19 @@ declare global {
     }
 
     interface BookExtraProperties {
-      splitsData?: { start: number; end: number }[];
+      physicalDetails?:
+        | {
+            type: 'published';
+            investigator?: string;
+            publisher?: string;
+            publisherLocation?: string;
+            editionNumber?: string;
+            publicationYear?: number; // hijri
+          }
+        | {
+            type: 'manuscript';
+          };
+      splitsData?: SplitsData;
       _airtableReference?: string;
     }
 
