@@ -8,7 +8,7 @@ import { indexBook } from '@/vector/splitters/v1';
 const updateBookFlags = async (id: string, versionId: string) => {
   const book = await db.book.findUnique({
     where: { id },
-    select: { id: true, flags: true, versions: true },
+    select: { id: true, versions: true },
   });
 
   if (!book) {
@@ -21,11 +21,10 @@ const updateBookFlags = async (id: string, versionId: string) => {
       id: book.id,
     },
     data: {
-      flags: {
-        ...book.flags,
-        aiSupported: true,
-        aiVersion: versionId,
-      } as PrismaJson.BookFlags,
+      versions: book.versions.map(version => ({
+        ...version,
+        ...(version.value === versionId ? { aiSupported: true } : {}),
+      })),
     },
   });
 };

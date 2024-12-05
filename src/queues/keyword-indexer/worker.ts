@@ -20,7 +20,7 @@ const makeId = (
 const updateBookFlags = async (id: string, versionId: string) => {
   const book = await db.book.findUnique({
     where: { id },
-    select: { id: true, flags: true, versions: true },
+    select: { id: true, versions: true },
   });
 
   if (!book) {
@@ -33,11 +33,10 @@ const updateBookFlags = async (id: string, versionId: string) => {
       id: book.id,
     },
     data: {
-      flags: {
-        ...book.flags,
-        keywordSupported: true,
-        keywordVersion: versionId,
-      } as PrismaJson.BookFlags,
+      versions: book.versions.map(version => ({
+        ...version,
+        ...(version.value === versionId ? { keywordSupported: true } : {}),
+      })),
     },
   });
 };
