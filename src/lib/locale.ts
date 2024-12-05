@@ -1,21 +1,21 @@
-const locales = [
-  'en-US', // english
-  'ar-SA', // arabic
-  'bn-BD', // bengali
-  'fr-FR', // french
-  'hi-IN', // hindi
-  'ha-NG', // hausa
-  'ms-MY', // malay
-  'ps-AF', // pashto
-  'fa-IR', // persian
-  'ru-RU', // russian
-  'so-SO', // somali
-  'es-ES', // spanish
-  'tr-TR', // turkish
-  'ur-PK', // urdu
+export const locales = [
+  { code: 'en-US', name: 'English' },
+  { code: 'ar-SA', name: 'Arabic' },
+  { code: 'bn-BD', name: 'Bengali' },
+  { code: 'fr-FR', name: 'French' },
+  { code: 'hi-IN', name: 'Hindi' },
+  { code: 'ha-NG', name: 'Hausa' },
+  { code: 'ms-MY', name: 'Malay' },
+  { code: 'ps-AF', name: 'Pashto' },
+  { code: 'fa-IR', name: 'Persian' },
+  { code: 'ru-RU', name: 'Russian' },
+  { code: 'so-SO', name: 'Somali' },
+  { code: 'es-ES', name: 'Spanish' },
+  { code: 'tr-TR', name: 'Turkish' },
+  { code: 'ur-PK', name: 'Urdu' },
 ] as const;
 
-type AppLocale = (typeof locales)[number];
+export type AppLocale = (typeof locales)[number]['code'];
 
 const pathLocaleToSupportedBcp47LocaleMap = {
   en: 'en-US',

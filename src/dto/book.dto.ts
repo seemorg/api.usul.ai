@@ -22,11 +22,12 @@ export const makeBookDto = async (
     transliteration: book.transliteration,
     versions: book.versions,
     numberOfVersions: book.versions.length,
-    flags: book.flags,
     primaryName: getPrimaryLocalizedText(book.primaryNameTranslations, locale),
     otherNames: getPrimaryLocalizedText(book.otherNameTranslations, locale),
     secondaryName: getSecondaryLocalizedText(book.primaryNameTranslations, locale),
     secondaryOtherNames: getSecondaryLocalizedText(book.otherNameTranslations, locale),
     genres: book.genres.map(genre => getGenreById(genre.id, locale)!),
+    aiSupported: book.versions.some(version => version.aiSupported),
+    aiVersion: book.versions.find(version => version.aiSupported)?.value ?? null,
   };
 };

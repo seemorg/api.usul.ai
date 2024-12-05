@@ -18,48 +18,41 @@ type SplitsData = { start: number; end: number }[];
 
 declare global {
   namespace PrismaJson {
-    type BookVersion =
+    type BookVersion = (
       | {
           source: 'openiti' | 'turath' | 'external';
-          value: string;
-          publicationDetails?: PublicationDetails;
         }
       | {
           source: 'pdf';
-          value: string;
-          publicationDetails?: PublicationDetails;
           ocrBookId?: string;
           splitsData?: SplitsData;
-        };
-
-    interface BookFlags {
+        }
+    ) & {
+      id: string;
+      value: string;
+      publicationDetails?: PublicationDetails;
       aiSupported?: boolean;
-      aiVersion?: string;
-
       keywordSupported?: boolean;
-      keywordVersion?: string;
-    }
+    };
 
     interface AuthorExtraProperties {
       _airtableReference?: string;
     }
 
     interface BookExtraProperties {
-      physicalDetails?:
-        | {
-            type: 'published';
-            investigator?: string;
-            publisher?: string;
-            publisherLocation?: string;
-            editionNumber?: string;
-            publicationYear?: number; // hijri
-          }
-        | {
-            type: 'manuscript';
-          };
-      splitsData?: SplitsData;
       _airtableReference?: string;
     }
+
+    type BookPhysicalDetails = (
+      | {
+          type: 'manuscript';
+        }
+      | ({
+          type: 'published';
+        } & PublicationDetails)
+    ) & {
+      notes?: string;
+    };
 
     interface GenreExtraProperties {
       _airtableReference?: string;

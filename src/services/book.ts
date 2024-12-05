@@ -13,6 +13,7 @@ export const getBookBySlug = async (slug: string, locale: PathLocale = 'en') => 
             genres: {
               select: { id: true },
             },
+
             primaryNameTranslations: true,
             otherNameTranslations: true,
           },

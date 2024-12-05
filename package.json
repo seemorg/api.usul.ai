@@ -8,8 +8,10 @@
     "start": "node dist/index.js",
     "build": "pnpm with-env tsup-node",
     "db:generate": "prisma generate",
+    "db:deploy": "prisma migrate deploy",
     "db:migrate": "prisma migrate dev",
-    "with-env": "dotenv -e ../../.env --"
+    "with-env": "dotenv -e ../../.env --",
+    "run:script": "pnpm with-env pnpm dlx tsx"
   },
   "dependencies": {
     "@azure/search-documents": "^12.1.0",
@@ -25,7 +27,7 @@
     "ioredis": "^5.4.1",
     "llamaindex": "^0.8.19",
     "lru-cache": "^11.0.1",
-    "openai": "^4.72.0",
+    "nanoid": "^5.0.9",
     "prisma-json-types-generator": "^3.0.4",
     "string-strip-html": "^13.4.8",
     "tiktoken": "^1.0.17",
@@ -33,8 +35,11 @@
   },
   "devDependencies": {
     "@types/node": "^20.11.17",
+    "airtable": "^0.12.2",
     "dotenv-cli": "^7.4.2",
+    "openai": "^4.72.0",
     "prisma": "^5.20.0",
+    "slugify": "^1.6.6",
     "tsup": "^8.0.2",
     "tsx": "^4.7.1",
     "typescript": "^5.1.6"

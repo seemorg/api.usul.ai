@@ -5,13 +5,12 @@ import { getBookById, getBookBySlug } from '@/services/book';
 import { fetchBookContent } from '@/book-fetchers';
 
 import { JOIN_PAGES_DELIMITER } from './utils';
-import { chunk } from '@/lib/utils';
+import { chunk, sleep } from '@/lib/utils';
 import { splitter } from './splitter';
 import { embeddings } from '@/vector/openai';
 import { BookChunk, searchClient } from '@/vector/vector-store';
 
 const MAX_RETRIES = 3;
-const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 const makeChunkId = (
   bookId: string,
