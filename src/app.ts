@@ -5,6 +5,7 @@ import { secureHeaders } from 'hono/secure-headers';
 import { HTTPException } from 'hono/http-exception';
 
 import routes from './routes';
+import { env } from './env';
 // import './queues/ai-indexer/worker';
 // import './queues/keyword-indexer/worker';
 
@@ -17,11 +18,34 @@ app.use(cors());
 app.route('/', routes);
 
 app.onError(err => {
-  if (err instanceof HTTPException) {
-    return err.getResponse();
+  let extra = {};
+  if (env.NODE_ENV === 'development') {
+    extra = {
+      name: err.name,
+      cause: err.cause,
+      stack: err.stack,
+    };
   }
 
-  return new Response('Internal Server Error', { status: 500 });
+  if (err instanceof HTTPException) {
+    return Response.json(
+      {
+        status: err.status,
+        message: err.message,
+        ...extra,
+      },
+      { status: err.status },
+    );
+  }
+
+  return Response.json(
+    {
+      status: 500,
+      message: 'Internal Server Error',
+      ...extra,
+    },
+    { status: 500 },
+  );
 });
 
 export default app;
