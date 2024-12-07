@@ -1,5 +1,7 @@
 import { getCachedBookContent } from '@/lib/content';
+import { getBookByAlternateSlug } from '@/services/alternate-slugs';
 import {
+  getBookById,
   getBookBySlug,
   getBookContentIndexByPage,
   paginateBookContent,
@@ -31,6 +33,14 @@ pageRoutes.get(
 
     const book = await getBookBySlug(bookSlug, locale);
     if (!book) {
+      const alternateSlugBookId = getBookByAlternateSlug(bookSlug);
+      if (alternateSlugBookId) {
+        const primarySlug = (await getBookById(alternateSlugBookId, locale))?.slug;
+        if (primarySlug) {
+          return c.json({ type: 'alternate-slug', primarySlug });
+        }
+      }
+
       throw new HTTPException(404, { message: 'Book not found' });
     }
 
@@ -68,6 +78,14 @@ pageRoutes.get(
 
     const book = await getBookBySlug(bookSlug, locale);
     if (!book) {
+      const alternateSlugBookId = getBookByAlternateSlug(bookSlug);
+      if (alternateSlugBookId) {
+        const primarySlug = (await getBookById(alternateSlugBookId, locale))?.slug;
+        if (primarySlug) {
+          return c.json({ type: 'alternate-slug', primarySlug });
+        }
+      }
+
       throw new HTTPException(404, { message: 'Book not found' });
     }
 

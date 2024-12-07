@@ -1,3 +1,4 @@
+import { localeQueryValidator } from '@/lib/locale';
 import { getAllRegions, getRegionBySlug } from '@/services/region';
 import { localeSchema } from '@/validators/locale';
 import { zValidator } from '@hono/zod-validator';
@@ -7,43 +8,33 @@ import { z } from 'zod';
 
 const regionRoutes = new Hono().basePath('/region');
 
-regionRoutes.get(
-  '/',
-  zValidator(
-    'query',
-    z.object({
-      locale: localeSchema,
-    }),
-  ),
-  async c => {
-    const { locale } = c.req.valid('query');
+regionRoutes.get('/', localeQueryValidator, c => {
+  const { locale } = c.req.valid('query');
+  const regions = getAllRegions(locale);
 
-    const regions = await getAllRegions(locale);
+  return c.json(regions);
+});
 
-    return c.json(regions);
-  },
-);
-
-regionRoutes.get('/count', async c => {
-  const regions = await getAllRegions();
+regionRoutes.get('/count', c => {
+  const regions = getAllRegions();
   return c.json({ total: regions.length });
 });
 
 regionRoutes.get(
   '/:slug',
   zValidator('param', z.object({ slug: z.string() })),
+  localeQueryValidator,
   zValidator(
     'query',
     z.object({
-      locale: localeSchema,
       locations: z.coerce.boolean().optional().default(false),
     }),
   ),
-  async c => {
+  c => {
     const { slug } = c.req.valid('param');
     const { locale, locations } = c.req.valid('query');
 
-    const region = await getRegionBySlug(slug, { includeLocations: locations }, locale);
+    const region = getRegionBySlug(slug, { includeLocations: locations }, locale);
     if (!region) {
       throw new HTTPException(404, { message: 'Region not found' });
     }

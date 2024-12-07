@@ -9,6 +9,18 @@ export const getGenreById = (id: string, locale: PathLocale = 'en') => {
   return makeGenreDto(genre, locale);
 };
 
+export const getGenreBySlug = (slug: string, locale: PathLocale = 'en') => {
+  const genre = genreSlugToGenre?.[slug];
+  if (!genre) return null;
+
+  return makeGenreDto(genre, locale);
+};
+
+export const getAllGenres = (locale: PathLocale = 'en') => {
+  const genres = Object.values(genreIdToGenre ?? {});
+  return genres.map(genre => makeGenreDto(genre, locale));
+};
+
 const get = () =>
   db.genre.findMany({
     include: {
@@ -19,12 +31,15 @@ const get = () =>
 type RawGenre = Awaited<ReturnType<typeof get>>[number];
 
 let genreIdToGenre: Record<string, RawGenre> | null = null;
+let genreSlugToGenre: Record<string, RawGenre> | null = null;
 export const populateGenres = async () => {
-  if (genreIdToGenre) return;
-
   const genres = await get();
-  genreIdToGenre = genres.reduce((acc, genre) => {
-    acc[genre.id] = genre;
-    return acc;
-  }, {} as Record<string, RawGenre>);
+
+  if (!genreIdToGenre) genreIdToGenre = {};
+  if (!genreSlugToGenre) genreSlugToGenre = {};
+
+  for (const genre of genres) {
+    genreIdToGenre[genre.id] = genre;
+    genreSlugToGenre[genre.slug] = genre;
+  }
 };

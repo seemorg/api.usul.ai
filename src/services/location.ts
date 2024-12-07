@@ -1,38 +1,17 @@
-import { LocationDto, makeLocationDto } from '@/dto/location.dto';
-import { env } from '@/env';
+import { makeLocationDto } from '@/dto/location.dto';
 import { db } from '@/lib/db';
 import { PathLocale } from '@/lib/locale';
 
-export const getLocationById = async (id: string, locale: PathLocale = 'en') => {
-  const location =
-    env.NODE_ENV === 'development'
-      ? await db.location.findUnique({
-          where: { id },
-          include: {
-            cityNameTranslations: true,
-          },
-        })
-      : locationIdToLocation?.[id];
+export const getLocationById = (id: string, locale: PathLocale = 'en') => {
+  const location = locationIdToLocation?.[id];
   if (!location) return null;
 
   return makeLocationDto(location, locale);
 };
 
-export const getLocationsByRegionId = async (
-  regionId: string,
-  locale: PathLocale = 'en',
-) => {
-  const locations = locationIdToLocation
-    ? Object.values(locationIdToLocation)
-    : await get();
-
-  const results: LocationDto[] = [];
-  for (const location of locations) {
-    if (location.regionId !== regionId) continue;
-    results.push(makeLocationDto(location, locale));
-  }
-
-  return results;
+export const getLocationsByRegionId = (regionId: string, locale: PathLocale = 'en') => {
+  const locations = regionIdToLocations?.[regionId] ?? [];
+  return locations.map(location => makeLocationDto(location, locale));
 };
 
 const get = () =>
@@ -45,12 +24,19 @@ const get = () =>
 type RawLocation = Awaited<ReturnType<typeof get>>[number];
 
 let locationIdToLocation: Record<string, RawLocation> | null = null;
+let regionIdToLocations: Record<string, RawLocation[]> | null = null;
 export const populateLocations = async () => {
-  if (locationIdToLocation) return;
-
   const locations = await get();
-  locationIdToLocation = locations.reduce((acc, location) => {
-    acc[location.id] = location;
-    return acc;
-  }, {} as Record<string, RawLocation>);
+  if (!locationIdToLocation) locationIdToLocation = {};
+  if (!regionIdToLocations) regionIdToLocations = {};
+
+  for (const location of locations) {
+    locationIdToLocation[location.id] = location;
+
+    if (location.regionId) {
+      if (!regionIdToLocations[location.regionId])
+        regionIdToLocations[location.regionId] = [];
+      regionIdToLocations[location.regionId].push(location);
+    }
+  }
 };

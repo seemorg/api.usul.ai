@@ -61,13 +61,12 @@ type RawBook = Awaited<ReturnType<typeof get>>[number];
 let bookSlugToBook: Record<string, RawBook> | null = null;
 let bookIdToBook: Record<string, RawBook> | null = null;
 export const populateBooks = async () => {
-  if (bookSlugToBook && bookIdToBook) return;
-
   const books = await get();
-  for (const book of books) {
-    if (!bookSlugToBook) bookSlugToBook = {};
-    if (!bookIdToBook) bookIdToBook = {};
 
+  if (!bookSlugToBook) bookSlugToBook = {};
+  if (!bookIdToBook) bookIdToBook = {};
+
+  for (const book of books) {
     bookSlugToBook[book.slug] = book;
     bookIdToBook[book.id] = book;
   }

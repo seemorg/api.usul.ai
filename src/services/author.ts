@@ -20,6 +20,23 @@ export const getAuthorById = async (id: string, locale: PathLocale = 'en') => {
   return makeAuthorDto(author, locale);
 };
 
+export const getAuthorBySlug = async (slug: string, locale: PathLocale = 'en') => {
+  const author =
+    env.NODE_ENV === 'development'
+      ? await db.author.findUnique({
+          where: { slug },
+          include: {
+            primaryNameTranslations: true,
+            otherNameTranslations: true,
+            bioTranslations: true,
+          },
+        })
+      : authorSlugToAuthor?.[slug];
+  if (!author) return null;
+
+  return makeAuthorDto(author, locale);
+};
+
 const get = () =>
   db.author.findMany({
     include: {
@@ -32,12 +49,15 @@ const get = () =>
 type RawAuthor = Awaited<ReturnType<typeof get>>[number];
 
 let authorIdToAuthor: Record<string, RawAuthor> | null = null;
+let authorSlugToAuthor: Record<string, RawAuthor> | null = null;
 export const populateAuthors = async () => {
-  if (authorIdToAuthor) return;
-
   const authors = await get();
-  authorIdToAuthor = authors.reduce((acc, author) => {
-    acc[author.id] = author;
-    return acc;
-  }, {} as Record<string, RawAuthor>);
+
+  if (!authorIdToAuthor) authorIdToAuthor = {};
+  if (!authorSlugToAuthor) authorSlugToAuthor = {};
+
+  for (const author of authors) {
+    authorIdToAuthor[author.id] = author;
+    authorSlugToAuthor[author.slug] = author;
+  }
 };

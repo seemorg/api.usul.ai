@@ -1,6 +1,9 @@
+import { getAuthorByAlternateSlug } from '@/services/alternate-slugs';
+import { getAuthorById, getAuthorBySlug } from '@/services/author';
 import { localeSchema } from '@/validators/locale';
 import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
+import { HTTPException } from 'hono/http-exception';
 import { z } from 'zod';
 
 const authorRoutes = new Hono().basePath('/author');
@@ -18,7 +21,20 @@ authorRoutes.get(
     const { slug } = c.req.valid('param');
     const { locale } = c.req.valid('query');
 
-    return c.json({ slug });
+    const author = await getAuthorBySlug(slug, locale);
+    if (!author) {
+      const alternateSlugAuthorId = getAuthorByAlternateSlug(slug);
+      if (alternateSlugAuthorId) {
+        const primarySlug = (await getAuthorById(alternateSlugAuthorId, locale))?.slug;
+        if (primarySlug) {
+          return c.json({ type: 'alternate-slug', primarySlug });
+        }
+      }
+
+      throw new HTTPException(404, { message: 'Author not found' });
+    }
+
+    return c.json(author);
   },
 );
 

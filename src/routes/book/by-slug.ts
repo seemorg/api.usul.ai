@@ -1,5 +1,6 @@
 import { getCachedBookContent } from '@/lib/content';
-import { getBookBySlug, paginateBookContent } from '@/services/book';
+import { getBookByAlternateSlug } from '@/services/alternate-slugs';
+import { getBookById, getBookBySlug, paginateBookContent } from '@/services/book';
 import { localeSchema } from '@/validators/locale';
 import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
@@ -29,6 +30,14 @@ bySlugRoutes.get(
 
     const book = await getBookBySlug(bookSlug, locale);
     if (!book) {
+      const alternateSlugBookId = getBookByAlternateSlug(bookSlug);
+      if (alternateSlugBookId) {
+        const primarySlug = (await getBookById(alternateSlugBookId, locale))?.slug;
+        if (primarySlug) {
+          return c.json({ type: 'alternate-slug', primarySlug });
+        }
+      }
+
       throw new HTTPException(404, { message: 'Book not found' });
     }
 
