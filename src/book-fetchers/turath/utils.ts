@@ -55,6 +55,13 @@ export const getTurathPdfDetails = (response: TurathApiBookResponse) => {
     };
   }
 
+  if (pdf.files.length === 1) {
+    return {
+      fullBookUrl: prepareTurathPdfUrl(pdf, pdf.files[0]),
+      sizeInMb: pdf?.size ? bytesToMB(pdf.size) : undefined,
+    };
+  }
+
   const entries = Object.fromEntries(
     pdf.files.map(e => {
       const key = e.includes('|') ? e.split('|')[1] : e.match(/0*(\d+)/)?.[1];
