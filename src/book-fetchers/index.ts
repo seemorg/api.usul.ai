@@ -2,14 +2,24 @@ import { fetchTurathBook, type TurathBookResponse } from './turath';
 import { fetchOpenitiBook, type OpenitiBookResponse } from './openiti';
 
 export type ExternalBookResponse = {
+  id: string;
   source: 'external';
-  versionId: string;
+  url: string;
+  publicationDetails: PrismaJson.BookVersion['publicationDetails'];
+};
+
+export type PdfBookResponse = {
+  id: string;
+  source: 'pdf';
+  url: string;
+  publicationDetails: PrismaJson.BookVersion['publicationDetails'];
 };
 
 export type FetchBookResponse =
   | TurathBookResponse
   | OpenitiBookResponse
-  | ExternalBookResponse;
+  | ExternalBookResponse
+  | PdfBookResponse;
 
 export type FetchBookResponseOfType<T extends FetchBookResponse['source']> = Extract<
   FetchBookResponse,
@@ -24,7 +34,7 @@ export const fetchBookContent = async (
 
   let version: PrismaJson.BookVersion | undefined;
   if (versionId) {
-    version = allVersions.find(v => v.value === versionId);
+    version = allVersions.find(v => v.id === versionId);
   }
 
   if (!version) {
@@ -42,19 +52,23 @@ export const fetchBookContent = async (
   }
 
   const baseResponse = {
+    id: version.id,
     source: version.source,
-    versionId: version.value,
+    publicationDetails: version.publicationDetails,
   };
 
   if (version.source === 'external') {
-    return {
-      ...baseResponse,
-    } as FetchBookResponse;
+    return { ...baseResponse, url: version.value } as FetchBookResponse;
+  }
+
+  if (version.source === 'pdf') {
+    return { ...baseResponse, url: version.value } as FetchBookResponse;
   }
 
   if (version.source === 'turath') {
     const turathBook = await fetchTurathBook(version.value);
     return {
+      version: version.value,
       ...baseResponse,
       ...turathBook,
     } as TurathBookResponse;
@@ -71,6 +85,7 @@ export const fetchBookContent = async (
   }
 
   return {
+    version: version.value,
     ...baseResponse,
     ...openitiBook,
   } as FetchBookResponse;

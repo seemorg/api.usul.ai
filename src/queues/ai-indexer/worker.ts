@@ -23,7 +23,7 @@ const updateBookFlags = async (id: string, versionId: string) => {
     data: {
       versions: book.versions.map(version => ({
         ...version,
-        ...(version.value === versionId ? { aiSupported: true } : {}),
+        ...(version.id === versionId ? { aiSupported: true } : {}),
       })),
     },
   });

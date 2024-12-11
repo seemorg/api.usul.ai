@@ -1,7 +1,5 @@
-import { localeQueryValidator } from '@/lib/locale';
+import { localeQueryValidator } from '@/validators/locale';
 import { getAllGenres, getGenreBySlug } from '@/services/genre';
-import { getAllRegions, getRegionBySlug } from '@/services/region';
-import { localeSchema } from '@/validators/locale';
 import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
 import { HTTPException } from 'hono/http-exception';

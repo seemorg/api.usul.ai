@@ -14,9 +14,11 @@
     "run:script": "pnpm with-env pnpm dlx tsx"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.709.0",
     "@azure/search-documents": "^12.1.0",
     "@bull-board/api": "^6.5.3",
     "@bull-board/hono": "^6.5.3",
+    "@cantoo/pdf-lib": "^2.2.4",
     "@hono/node-server": "^1.13.1",
     "@hono/zod-validator": "^0.3.0",
     "@openiti/markdown-parser": "^1.2.2",

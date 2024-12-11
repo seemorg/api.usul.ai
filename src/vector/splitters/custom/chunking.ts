@@ -1,8 +1,8 @@
 import { TurathBookResponse } from '@/book-fetchers/turath';
-import { deduplicateArray, splitTextIntoSentences } from './helpers';
 import { prepareBookForChunking } from './prepare';
 import { detokenize, tokenize } from './tokenization';
 import { ParseResult } from '@openiti/markdown-parser';
+import { deduplicateArray, splitTextIntoSentences } from '@/vector/helpers';
 
 export const CHUNK_SIZE = 512;
 export const OVERLAP_SIZE = 48;
@@ -21,9 +21,7 @@ interface Chunk {
 }
 
 type BookContent = ReturnType<typeof prepareBookForChunking>;
-type Chapters =
-  | TurathBookResponse['turathResponse']['headings']
-  | ParseResult['chapters'];
+type Chapters = TurathBookResponse['headings'] | ParseResult['chapters'];
 
 export const splitBookIntoChunks = (pages: BookContent, chapters: Chapters) => {
   if (!pages) return [];

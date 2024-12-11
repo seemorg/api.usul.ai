@@ -1,3 +1,5 @@
+import { zValidator } from '@hono/zod-validator';
+
 import { PATH_LOCALES, PathLocale } from '@/lib/locale';
 import { z } from 'zod';
 
@@ -8,3 +10,10 @@ export const localeSchema = z
   .optional()
   .default('en')
   .catch('en');
+
+export const localeQueryValidator = zValidator(
+  'query',
+  z.object({
+    locale: localeSchema,
+  }),
+);

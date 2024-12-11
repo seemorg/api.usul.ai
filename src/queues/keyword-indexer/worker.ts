@@ -35,7 +35,7 @@ const updateBookFlags = async (id: string, versionId: string) => {
     data: {
       versions: book.versions.map(version => ({
         ...version,
-        ...(version.value === versionId ? { keywordSupported: true } : {}),
+        ...(version.id === versionId ? { keywordSupported: true } : {}),
       })),
     },
   });
@@ -52,7 +52,7 @@ export const worker = new Worker<KeywordIndexerQueueData>(
       throw new Error(`Book not found: ${id}`);
     }
 
-    const versionToIndex = book.versions.find(v => v.value === versionId);
+    const versionToIndex = book.versions.find(v => v.id === versionId);
     if (!versionToIndex) {
       throw new Error(`Version not found: ${versionId}`);
     }
@@ -65,20 +65,21 @@ export const worker = new Worker<KeywordIndexerQueueData>(
       },
       versionToIndex.value,
     );
-    if (!bookContent || bookContent.source === 'external') {
+
+    if (
+      !bookContent ||
+      bookContent.source === 'external' ||
+      bookContent.source === 'pdf'
+    ) {
       throw new Error(`Book content not found: ${id}`);
     }
 
     let preparedPages: ReturnType<typeof preparePages>;
     if (bookContent.source === 'turath') {
-      preparedPages = preparePages(
-        bookContent.turathResponse.pages,
-        bookContent.turathResponse.headings,
-        {
-          preprocessUsingSplitter: false,
-          shouldRemoveDiacritics: false,
-        },
-      );
+      preparedPages = preparePages(bookContent.pages, bookContent.headings, {
+        preprocessUsingSplitter: false,
+        shouldRemoveDiacritics: false,
+      });
     } else {
       // version.source === 'openiti'
       preparedPages = preparePages(bookContent.content, bookContent.chapters, {

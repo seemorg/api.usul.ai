@@ -1,11 +1,10 @@
 import { fetchBookContent } from '@/book-fetchers';
 import { getBookBySlug } from '@/services/book';
-import { embeddings } from './openai';
-import { searchClient } from './vector-store';
 import { stripHtml } from 'string-strip-html';
 import { removeDiacritics } from '@/lib/diacritics';
-import { TurathBookResponse } from '@/book-fetchers/turath';
-import { getPageChapters } from './chapters';
+import { embeddings } from '@/vector/openai';
+import { getPageChapters } from '@/vector/chapters';
+import { searchClient } from '@/vector/vector-store';
 
 const getPageId = (
   bookId: string,
@@ -44,8 +43,8 @@ const main = async () => {
   }
 
   if (bookContent.source === 'turath') {
-    const chapters = bookContent.turathResponse.headings;
-    const batches = chunk(bookContent.turathResponse.pages, CHUNK_SIZE);
+    const chapters = bookContent.headings;
+    const batches = chunk(bookContent.pages, CHUNK_SIZE);
 
     let i = 0;
     for (const batch of batches) {

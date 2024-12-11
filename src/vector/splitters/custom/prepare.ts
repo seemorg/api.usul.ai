@@ -16,14 +16,14 @@ export const prepareBookForChunking = (book: BookContent) => {
   if (book.source === 'external') return null;
 
   if (book.source === 'turath') {
-    return book.turathResponse.pages.map((page, idx) => {
+    return book.pages.map((page, idx) => {
       const text = prepareText(page.text);
 
       return {
         index: idx,
         page: page.page,
         volume: page.vol,
-        chaptersIndices: getPageChapters(idx, book.turathResponse.headings),
+        chaptersIndices: getPageChapters(idx, book.headings),
         text,
       };
     });

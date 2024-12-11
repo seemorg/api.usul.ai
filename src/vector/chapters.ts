@@ -2,7 +2,7 @@ import { fetchBookContent } from '@/book-fetchers';
 
 type Book = NonNullable<Awaited<ReturnType<typeof fetchBookContent>>>;
 type Headings =
-  | Extract<Book, { source: 'turath' }>['turathResponse']['headings']
+  | Extract<Book, { source: 'turath' }>['headings']
   | (Extract<Book, { source: 'openiti' }>['chapters'][number] & { pageIndex?: number })[];
 
 export const getPageChapters = (pageIdx: number, headings: Headings) => {

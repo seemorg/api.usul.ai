@@ -1,5 +1,4 @@
-# Adjust NODE_VERSION as desired
-ARG NODE_VERSION=18.17.1
+ARG NODE_VERSION=20.10.0
 ARG PNPM_VERSION=9.6.0
 FROM node:${NODE_VERSION}-slim as base
 
@@ -7,7 +6,7 @@ FROM node:${NODE_VERSION}-slim as base
 WORKDIR /app
 
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential
+    apt-get install --no-install-recommends -y build-essential libcairo2-dev libpango1.0-dev
 
 # Throw-away build stage to reduce size of final image
 FROM base as builder
@@ -20,8 +19,8 @@ RUN npm install -g pnpm@$PNPM_VERSION
 
 COPY . .
   
-RUN pnpm install
-
+RUN pnpm install --frozen-lockfile
+# Set production environment
 ENV NODE_ENV="production"
 
 RUN pnpm build
@@ -29,14 +28,15 @@ RUN pnpm build
 # Final stage for app image
 FROM base AS runner
 
-# Set production environment
-ENV NODE_ENV="production"
 ENV PORT=3000
 
 # Copy built application
 COPY --from=builder /app /app
 
 RUN rm -rf /app/src
+
+# Set production environment
+ENV NODE_ENV="production"
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE ${PORT}

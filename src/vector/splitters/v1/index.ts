@@ -54,7 +54,7 @@ export async function indexBook(
     return { status: 'not-found' };
   }
 
-  const versionToIndex = book.versions.find(v => v.value === params.versionId);
+  const versionToIndex = book.versions.find(v => v.id === params.versionId);
   if (!versionToIndex) {
     return { status: 'not-found' };
   }
@@ -67,7 +67,7 @@ export async function indexBook(
     },
     versionToIndex.value,
   );
-  if (!bookContent || bookContent.source === 'external') {
+  if (!bookContent || bookContent.source === 'external' || bookContent.source === 'pdf') {
     return { status: 'skipped' };
   }
 
@@ -77,8 +77,8 @@ export async function indexBook(
   let pages;
   let preparedPages;
   if (bookContent.source === 'turath') {
-    chapters = bookContent.turathResponse.headings;
-    pages = bookContent.turathResponse.pages;
+    chapters = bookContent.headings;
+    pages = bookContent.pages;
     preparedPages = preparePages(pages, chapters);
   } else {
     // version.source === 'openiti'
@@ -192,5 +192,5 @@ export async function indexBook(
     i++;
   }
 
-  return { status: 'success', versionId: versionToIndex.value };
+  return { status: 'success', versionId: versionToIndex.id };
 }

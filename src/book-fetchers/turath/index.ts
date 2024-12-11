@@ -1,10 +1,10 @@
+import { TurathApiBookResponse } from '@/types/turath';
+import { stripHtml } from 'string-strip-html';
 import {
   fetchTurathBookById,
   getTurathPdfDetails,
   getTurathPublicationDetails,
-} from '@/lib/turath';
-import { TurathApiBookResponse } from '@/types/turath';
-import { stripHtml } from 'string-strip-html';
+} from './utils';
 
 export const fetchTurathBook = async (id: string) => {
   const res = await fetchTurathBookById(id);
@@ -92,22 +92,19 @@ export const fetchTurathBook = async (id: string) => {
     });
   });
 
-  const publicationDetails = getTurathPublicationDetails(res.meta.info);
+  const publicationDetails = getTurathPublicationDetails(res);
+  const pdf = getTurathPdfDetails(res);
 
-  // fetch from turath
   return {
-    turathResponse: {
-      pdf: getTurathPdfDetails(res.meta.pdf_links),
-      headings,
-      pages: mergedPages,
-      publicationDetails,
-    },
-    // chapterIndexToPageIndex,
-    // pageNumberWithVolumeToIndex,
+    pdf,
+    headings,
+    pages: mergedPages,
+    publicationDetails,
   };
 };
 
 export type TurathBookResponse = {
+  id: string;
   source: 'turath';
-  versionId: string;
+  version: string;
 } & Awaited<ReturnType<typeof fetchTurathBook>>;

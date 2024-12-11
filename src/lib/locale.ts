@@ -1,7 +1,3 @@
-import { localeSchema } from '@/validators/locale';
-import { zValidator } from '@hono/zod-validator';
-import { z } from 'zod';
-
 export const locales = [
   { code: 'en-US', name: 'English' },
   { code: 'ar-SA', name: 'Arabic' },
@@ -43,10 +39,3 @@ export const PATH_LOCALES = Object.keys(
 ) as (keyof typeof pathLocaleToSupportedBcp47LocaleMap)[];
 
 export type PathLocale = (typeof PATH_LOCALES)[number];
-
-export const localeQueryValidator = zValidator(
-  'query',
-  z.object({
-    locale: localeSchema,
-  }),
-);

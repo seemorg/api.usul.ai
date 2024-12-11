@@ -28,6 +28,8 @@ export const makeBookDto = async (
     secondaryOtherNames: getSecondaryLocalizedText(book.otherNameTranslations, locale),
     genres: book.genres.map(genre => getGenreById(genre.id, locale)!),
     aiSupported: book.versions.some(version => version.aiSupported),
-    aiVersion: book.versions.find(version => version.aiSupported)?.value ?? null,
+    aiVersion: book.versions.find(version => version.aiSupported)?.id ?? null,
+    keywordSupported: book.versions.some(version => version.keywordSupported),
+    keywordVersion: book.versions.find(version => version.keywordSupported)?.id ?? null,
   };
 };

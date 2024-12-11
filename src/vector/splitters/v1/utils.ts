@@ -1,7 +1,7 @@
 import { FetchBookResponseOfType } from '@/book-fetchers';
 
-type BookHeadings = FetchBookResponseOfType<'turath'>['turathResponse']['headings'];
-type BookPages = FetchBookResponseOfType<'turath'>['turathResponse']['pages'];
+type BookHeadings = FetchBookResponseOfType<'turath'>['headings'];
+type BookPages = FetchBookResponseOfType<'turath'>['pages'];
 
 export const createPageToChapterIndex = (pageHeadings: BookHeadings) => {
   const index = pageHeadings.reduce((acc, curr, idx) => {

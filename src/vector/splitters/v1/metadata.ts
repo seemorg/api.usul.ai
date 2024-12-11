@@ -26,11 +26,11 @@ const trimSpacesAfterSentenceEndings = (text: string): string => {
 };
 
 type Pages =
-  | Pick<FetchBookResponseOfType<'turath'>['turathResponse'], 'pages'>['pages']
+  | FetchBookResponseOfType<'turath'>['pages']
   | FetchBookResponseOfType<'openiti'>['content'];
 
 type Chapters =
-  | Pick<FetchBookResponseOfType<'turath'>['turathResponse'], 'headings'>['headings']
+  | FetchBookResponseOfType<'turath'>['headings']
   | FetchBookResponseOfType<'openiti'>['chapters'];
 
 export const preparePages = (

@@ -1,4 +1,5 @@
 import { parseMarkdown, type ContentItem } from '@openiti/markdown-parser';
+import { getOpenitiPublicationDetails } from './utils';
 
 const prepareContent = (content: ContentItem[]): ContentItem[] => {
   const newItems: ContentItem[] = [];
@@ -64,13 +65,16 @@ export const fetchOpenitiBook = async ({
     return chapter;
   });
 
+  const publicationDetails = getOpenitiPublicationDetails(final.metadata);
+
   return {
     ...final,
-    rawUrl: finalUrl,
+    publicationDetails,
   };
 };
 
 export type OpenitiBookResponse = {
+  id: string;
   source: 'openiti';
-  versionId: string;
+  version: string;
 } & Awaited<ReturnType<typeof fetchOpenitiBook>>;

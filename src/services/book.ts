@@ -79,23 +79,24 @@ export const getBookVersionDetails = (
   const includeHeadings = fields.includes('headings');
   const includePublicationDetails = fields.includes('publication_details');
 
-  if (bookContent.source === 'turath') {
-    return {
-      ...(includePublicationDetails
-        ? { publicationDetails: bookContent.turathResponse.publicationDetails }
-        : {}),
-      ...(includeHeadings ? { headings: bookContent.turathResponse.headings } : {}),
-    };
+  const final: { publicationDetails?: PrismaJson.PublicationDetails; headings?: any } =
+    {};
+
+  if (includePublicationDetails) {
+    final.publicationDetails = bookContent.publicationDetails ?? {};
   }
 
-  if (bookContent.source === 'openiti') {
-    return {
-      ...(includePublicationDetails ? { publicationDetails: bookContent.metadata } : {}),
-      ...(includeHeadings ? { headings: bookContent.chapters } : {}),
-    };
+  if (includeHeadings) {
+    if (bookContent.source === 'turath') {
+      final.headings = bookContent.headings;
+    }
+
+    if (bookContent.source === 'openiti') {
+      final.headings = bookContent.chapters;
+    }
   }
 
-  return {};
+  return final;
 };
 
 export const getBookContentIndexByPage = (
@@ -104,9 +105,7 @@ export const getBookContentIndexByPage = (
   volume?: string,
 ) => {
   if (bookContent.source === 'turath') {
-    return bookContent.turathResponse.pages.findIndex(
-      p => p.vol === volume && p.page === page,
-    );
+    return bookContent.pages.findIndex(p => p.vol === volume && p.page === page);
   }
 
   if (bookContent.source === 'openiti') {
@@ -137,15 +136,15 @@ export const paginateBookContent = (
   if (bookContent.source === 'turath') {
     return {
       content: {
+        id: bookContent.id,
         source: bookContent.source,
-        versionId: bookContent.versionId,
-        pages: bookContent.turathResponse.pages.slice(startIndex, end),
-        ...(fieldsArray.includes('pdf') ? { pdf: bookContent.turathResponse.pdf } : {}),
+        pages: bookContent.pages.slice(startIndex, end),
+        ...(fieldsArray.includes('pdf') ? { pdf: bookContent.pdf } : {}),
         ...extraFields,
       },
       pagination: {
         ...basePaginationInfo,
-        total: bookContent.turathResponse?.pages.length,
+        total: bookContent?.pages.length,
       },
     };
   }
@@ -153,9 +152,9 @@ export const paginateBookContent = (
   if (bookContent.source === 'openiti') {
     return {
       content: {
+        id: bookContent.id,
+        version: bookContent.version,
         source: bookContent.source,
-        versionId: bookContent.versionId,
-        rawUrl: bookContent.rawUrl,
         pages: bookContent.content.slice(startIndex, end),
         ...extraFields,
       },
@@ -169,8 +168,19 @@ export const paginateBookContent = (
   if (bookContent.source === 'external') {
     return {
       content: {
+        id: bookContent.id,
         source: bookContent.source,
-        versionId: bookContent.versionId,
+        url: bookContent.url,
+        ...extraFields,
+      },
+    };
+  }
+
+  if (bookContent.source === 'pdf') {
+    return {
+      content: {
+        id: bookContent.id,
+        source: bookContent.source,
         ...extraFields,
       },
     };
