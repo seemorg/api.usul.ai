@@ -73,12 +73,28 @@ export const getTurathPdfDetails = (response: TurathApiBookResponse) => {
   if (volumes.length === 0) return null;
 
   const volumeToUrl = volumes.map(volume => {
+    if (!entries[volume]) return null;
+
     const url = prepareTurathPdfUrl(pdf, entries[volume]);
     return {
       volume,
       url,
     };
   });
+
+  const withoutNulls = volumeToUrl.filter(e => e !== null);
+
+  // return the entries directly
+  if (withoutNulls.length === 0) {
+    return Object.values(entries).map(e => ({
+      volume: e,
+      url: prepareTurathPdfUrl(pdf, e),
+    }));
+  }
+
+  if (withoutNulls.length !== volumeToUrl.length) {
+    throw new Error(`Volume to url mapping failed for book ${response.meta.id}`);
+  }
 
   return volumeToUrl;
 };
