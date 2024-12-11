@@ -93,7 +93,16 @@ export const getTurathPdfDetails = (response: TurathApiBookResponse) => {
   }
 
   if (withoutNulls.length !== volumeToUrl.length) {
-    throw new Error(`Volume to url mapping failed for book ${response.meta.id}`);
+    return Object.keys(entries)
+      .sort((a, b) => {
+        if (a === 'الغلاف') return -1;
+        if (b === 'الغلاف') return 1;
+        return 0;
+      })
+      .map(e => ({
+        volume: e,
+        url: prepareTurathPdfUrl(pdf, entries[e]),
+      }));
   }
 
   return volumeToUrl;
