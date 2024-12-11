@@ -9,7 +9,7 @@ import { env } from './env';
 
 // import './queues/ai-indexer/worker';
 // import './queues/keyword-indexer/worker';
-// import './queues/flatten-metadata/worker';
+import './queues/flatten-metadata/worker';
 
 const app = new Hono();
 
@@ -36,7 +36,7 @@ app.onError(err => {
         message: err.message,
         ...extra,
       },
-      { status: err.status },
+      { status: err.status, headers: err.getResponse().headers },
     );
   }
 
