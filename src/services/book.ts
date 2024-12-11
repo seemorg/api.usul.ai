@@ -137,6 +137,7 @@ export const paginateBookContent = (
     return {
       content: {
         id: bookContent.id,
+        version: bookContent.version,
         source: bookContent.source,
         pages: bookContent.pages.slice(startIndex, end),
         ...(fieldsArray.includes('pdf') ? { pdf: bookContent.pdf } : {}),

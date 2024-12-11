@@ -5,7 +5,7 @@ import uptimeRoutes from './uptime.router';
 import authorRoutes from './author';
 import regionRoutes from './region';
 import genreRoutes from './genre';
-// import bullmqUIRoutes from './bullmq-ui.router';
+import bullmqUIRoutes from './bullmq-ui.router';
 
 const routes = new Hono();
 
@@ -14,6 +14,6 @@ routes.route('/', bookRoutes);
 routes.route('/', authorRoutes);
 routes.route('/', regionRoutes);
 routes.route('/', genreRoutes);
-// routes.route('/', bullmqUIRoutes);
+routes.route('/', bullmqUIRoutes);
 
 export default routes;
