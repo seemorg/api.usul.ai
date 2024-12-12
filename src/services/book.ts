@@ -189,6 +189,7 @@ export const paginateBookContent = (
       content: {
         id: bookContent.id,
         source: bookContent.source,
+        url: bookContent.url,
         ...extraFields,
       },
     };
