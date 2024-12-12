@@ -68,9 +68,10 @@ export const fetchBookContent = async (
   if (version.source === 'turath') {
     const turathBook = await fetchTurathBook(version.value);
     return {
-      version: version.value,
       ...baseResponse,
       ...turathBook,
+      version: version.value,
+      pdfUrl: version.pdfUrl,
     } as TurathBookResponse;
   }
 
@@ -85,8 +86,9 @@ export const fetchBookContent = async (
   }
 
   return {
-    version: version.value,
     ...baseResponse,
     ...openitiBook,
+    version: version.value,
+    pdfUrl: version.pdfUrl,
   } as FetchBookResponse;
 };

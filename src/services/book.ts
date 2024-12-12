@@ -74,16 +74,24 @@ export const populateBooks = async () => {
 
 export const getBookVersionDetails = (
   bookContent: FetchBookResponse,
-  fields: ('headings' | 'publication_details')[],
+  fields: string[],
 ) => {
   const includeHeadings = fields.includes('headings');
   const includePublicationDetails = fields.includes('publication_details');
+  const includePdf = fields.includes('pdf');
 
-  const final: { publicationDetails?: PrismaJson.PublicationDetails; headings?: any } =
-    {};
+  const final: {
+    publicationDetails?: PrismaJson.PublicationDetails;
+    pdfUrl?: string;
+    headings?: any;
+  } = {};
 
   if (includePublicationDetails) {
     final.publicationDetails = bookContent.publicationDetails ?? {};
+  }
+
+  if (includePdf && 'pdfUrl' in bookContent) {
+    final.pdfUrl = bookContent.pdfUrl;
   }
 
   if (includeHeadings) {
@@ -131,7 +139,7 @@ export const paginateBookContent = (
     size: pageSize,
   };
 
-  const extraFields = getBookVersionDetails(bookContent, fieldsArray as any);
+  const extraFields = getBookVersionDetails(bookContent, fieldsArray);
 
   if (bookContent.source === 'turath') {
     return {
@@ -140,7 +148,6 @@ export const paginateBookContent = (
         version: bookContent.version,
         source: bookContent.source,
         pages: bookContent.pages.slice(startIndex, end),
-        ...(fieldsArray.includes('pdf') ? { pdf: bookContent.pdf } : {}),
         ...extraFields,
       },
       pagination: {
