@@ -34,7 +34,7 @@ const main = async () => {
         author: { id: book.authorId },
         versions: book.versions,
       },
-      versionToFlatten.value,
+      versionToFlatten.id,
     );
 
     if (!bookContent) {

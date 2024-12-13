@@ -65,7 +65,7 @@ export async function indexBook(
       author: { id: book.author!.id },
       versions: book.versions,
     },
-    versionToIndex.value,
+    versionToIndex.id,
   );
   if (!bookContent || bookContent.source === 'external' || bookContent.source === 'pdf') {
     return { status: 'skipped' };

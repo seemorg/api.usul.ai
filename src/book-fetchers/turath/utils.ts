@@ -113,6 +113,19 @@ const splitAndTrim = (s: string, separator: string) => {
   return [parts.slice(0, -1).join(separator), parts[parts.length - 1]];
 };
 
+const preprocessValue = (value: string) => {
+  let newValue = value;
+
+  // if it has one parenthesis, remove it
+  if (newValue.includes('(') && !newValue.includes(')'))
+    newValue = newValue.replaceAll('(', '');
+
+  if (newValue.includes(')') && !newValue.includes('('))
+    newValue = newValue.replaceAll(')', '');
+
+  return newValue;
+};
+
 export const getTurathPublicationDetails = (response: TurathApiBookResponse) => {
   const info = response.meta.info;
   const publicationDetails: PrismaJson.PublicationDetails = {};
@@ -143,11 +156,11 @@ export const getTurathPublicationDetails = (response: TurathApiBookResponse) => 
       if (trimmedValue.includes('،')) {
         const [publisher, publisherLocation] = splitAndTrim(trimmedValue, '،');
         newValue = publisher;
-        publicationDetails.publisherLocation = publisherLocation;
+        publicationDetails.publisherLocation = preprocessValue(publisherLocation);
       } else if (trimmedValue.includes('-')) {
         const [publisher, publisherLocation] = splitAndTrim(trimmedValue, '-');
         newValue = publisher;
-        publicationDetails.publisherLocation = publisherLocation;
+        publicationDetails.publisherLocation = preprocessValue(publisherLocation);
       }
     } else if (trimmedKey === 'الطبعة') {
       newKey = 'editionNumber';
@@ -155,11 +168,11 @@ export const getTurathPublicationDetails = (response: TurathApiBookResponse) => 
       if (trimmedValue.includes('،')) {
         const [editionNumber, publicationYear] = splitAndTrim(trimmedValue, '،');
         newValue = editionNumber;
-        publicationDetails.publicationYear = publicationYear;
+        publicationDetails.publicationYear = preprocessValue(publicationYear);
       } else if (trimmedValue.includes('-')) {
         const [editionNumber, publicationYear] = splitAndTrim(trimmedValue, '-');
         newValue = editionNumber;
-        publicationDetails.publicationYear = publicationYear;
+        publicationDetails.publicationYear = preprocessValue(publicationYear);
       }
     }
 
@@ -168,18 +181,7 @@ export const getTurathPublicationDetails = (response: TurathApiBookResponse) => 
     }
 
     if (newKey) {
-      let processedValue = newValue;
-
-      // if it has one parenthesis, remove it
-      if (processedValue.includes('(') && !processedValue.includes(')')) {
-        processedValue = processedValue.replaceAll('(', '');
-      }
-
-      if (processedValue.includes(')') && !processedValue.includes('(')) {
-        processedValue = processedValue.replaceAll(')', '');
-      }
-
-      publicationDetails[newKey] = processedValue;
+      publicationDetails[newKey] = preprocessValue(newValue);
     }
   });
 

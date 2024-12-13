@@ -63,7 +63,7 @@ export const worker = new Worker<KeywordIndexerQueueData>(
         author: { id: book.author!.id },
         versions: book.versions,
       },
-      versionToIndex.value,
+      versionToIndex.id,
     );
 
     if (
