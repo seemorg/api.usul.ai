@@ -57,13 +57,9 @@ export const metadataWorker = async (job: SandboxedJob<FlattenMetadataQueueData>
       throw new Error(`Book content source not supported: ${bookContent.source}`);
     }
 
-    if (bookContent.pdfUrl) {
-      oldPdfKeys.push(bookContent.pdfUrl.replace('https://assets.usul.ai/', ''));
-    }
-
     const pdfKey = `pdfs/${versionToFlatten.id}.pdf`;
     const publicationDetails = bookContent.sourcePublicationDetails;
-    let pdfUrl: string | undefined;
+    let finalPdfUrl: string | undefined;
 
     if ('sourcePdf' in bookContent && bookContent.sourcePdf) {
       if ('fullBookUrl' in bookContent.sourcePdf) {
@@ -78,7 +74,7 @@ export const metadataWorker = async (job: SandboxedJob<FlattenMetadataQueueData>
           contentType: 'application/pdf',
         });
 
-        pdfUrl = `https://assets.usul.ai/${pdfKey}`;
+        finalPdfUrl = `https://assets.usul.ai/${pdfKey}`;
       }
 
       if (Array.isArray(bookContent.sourcePdf)) {
@@ -95,13 +91,19 @@ export const metadataWorker = async (job: SandboxedJob<FlattenMetadataQueueData>
           contentType: 'application/pdf',
         });
 
-        pdfUrl = `https://assets.usul.ai/${pdfKey}`;
+        finalPdfUrl = `https://assets.usul.ai/${pdfKey}`;
       }
+    }
+
+    // if there is an existing pdf url and it is different from the final pdf url, we need to remove the old pdf
+    // otherwise, it'll get overwritten by the new pdf
+    if (bookContent.pdfUrl && (!finalPdfUrl || bookContent.pdfUrl !== finalPdfUrl)) {
+      oldPdfKeys.push(bookContent.pdfUrl.replace('https://assets.usul.ai/', ''));
     }
 
     newVersions.push({
       ...versionToFlatten,
-      pdfUrl,
+      pdfUrl: finalPdfUrl,
       publicationDetails,
     });
   }

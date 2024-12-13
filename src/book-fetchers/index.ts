@@ -84,7 +84,7 @@ export const fetchBookContent = async (
   const openitiBook = await fetchOpenitiBook({
     authorId: record.author!.id,
     bookId: record.id,
-    versionId: version.value,
+    version: version.value,
   }).catch(() => null);
 
   if (!openitiBook) {

@@ -19,13 +19,13 @@ const prepareContent = (content: ContentItem[]): ContentItem[] => {
 export const fetchOpenitiBook = async ({
   authorId,
   bookId,
-  versionId,
+  version,
 }: {
   authorId: string;
   bookId: string;
-  versionId: string;
+  version: string;
 }) => {
-  const baseUrl = `https://raw.githubusercontent.com/OpenITI/RELEASE/2385733573ab800b5aea09bc846b1d864f475476/data/${authorId}/${bookId}/${versionId}`;
+  const baseUrl = `https://raw.githubusercontent.com/OpenITI/RELEASE/2385733573ab800b5aea09bc846b1d864f475476/data/${authorId}/${bookId}/${version}`;
   let finalUrl = baseUrl;
 
   const options: RequestInit = {
