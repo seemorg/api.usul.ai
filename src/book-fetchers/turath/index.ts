@@ -2,6 +2,8 @@ import { TurathApiBookResponse } from '@/types/turath';
 import { stripHtml } from 'string-strip-html';
 import {
   fetchTurathBookById,
+  getTurathPdfDetails,
+  getTurathPublicationDetails,
   // getTurathPdfDetails,
   // getTurathPublicationDetails,
 } from './utils';
@@ -93,14 +95,14 @@ export const fetchTurathBook = async (id: string) => {
   });
 
   // TODO: uncomment to get this info from their api and not our DB
-  // const publicationDetails = getTurathPublicationDetails(res);
-  // const pdf = getTurathPdfDetails(res);
+  const publicationDetails = getTurathPublicationDetails(res);
+  const pdf = getTurathPdfDetails(res);
 
   return {
     headings,
     pages: mergedPages,
-    // pdf,
-    // publicationDetails,
+    sourcePdf: pdf,
+    sourcePublicationDetails: publicationDetails,
   };
 };
 
@@ -110,4 +112,6 @@ export type TurathBookResponse = {
   version: string;
   pdfUrl?: string;
   publicationDetails?: PrismaJson.PublicationDetails;
+  sourcePublicationDetails?: PrismaJson.PublicationDetails;
+  sourcePdf?: ReturnType<typeof getTurathPdfDetails>;
 } & Awaited<ReturnType<typeof fetchTurathBook>>;

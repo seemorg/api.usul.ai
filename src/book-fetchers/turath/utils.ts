@@ -168,7 +168,18 @@ export const getTurathPublicationDetails = (response: TurathApiBookResponse) => 
     }
 
     if (newKey) {
-      publicationDetails[newKey] = newValue;
+      let processedValue = newValue;
+
+      // if it has one parenthesis, remove it
+      if (processedValue.includes('(') && !processedValue.includes(')')) {
+        processedValue = processedValue.replaceAll('(', '');
+      }
+
+      if (processedValue.includes(')') && !processedValue.includes('(')) {
+        processedValue = processedValue.replaceAll(')', '');
+      }
+
+      publicationDetails[newKey] = processedValue;
     }
   });
 

@@ -5,7 +5,7 @@
   "scripts": {
     "postinstall": "pnpm db:generate",
     "dev": "pnpm with-env tsup-node --watch --onSuccess \"pnpm start\"",
-    "start": "node dist/index.js",
+    "start": "node dist/src/index.js",
     "build": "pnpm with-env tsup-node",
     "db:generate": "prisma generate",
     "db:deploy": "prisma migrate deploy",

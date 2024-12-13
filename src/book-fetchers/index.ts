@@ -72,6 +72,8 @@ export const fetchBookContent = async (
       ...turathBook,
       version: version.value,
       pdfUrl: version.pdfUrl,
+      sourcePdf: turathBook.sourcePdf,
+      sourcePublicationDetails: turathBook.sourcePublicationDetails,
     } as TurathBookResponse;
   }
 
@@ -90,5 +92,6 @@ export const fetchBookContent = async (
     ...openitiBook,
     version: version.value,
     pdfUrl: version.pdfUrl,
+    sourcePublicationDetails: openitiBook.sourcePublicationDetails,
   } as FetchBookResponse;
 };

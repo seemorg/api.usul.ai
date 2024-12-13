@@ -5,7 +5,7 @@ import { fetchBookContent } from '@/book-fetchers';
 import { db } from '@/lib/db';
 
 const main = async () => {
-  const id = '0852IbnHajarCasqalani.BulughMaram';
+  const id = '0776LisanDinIbnKhatib.Ihata';
 
   const book = await db.book.findUnique({
     where: {

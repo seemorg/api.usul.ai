@@ -34,6 +34,9 @@ ENV PORT=3000
 COPY --from=builder /app /app
 
 RUN rm -rf /app/src
+RUN rm -rf /app/backups
+RUN rm -rf /app/workers
+RUN rm -rf /app/scripts
 
 # Set production environment
 ENV NODE_ENV="production"

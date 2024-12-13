@@ -1,4 +1,5 @@
 import { parseMarkdown, type ContentItem } from '@openiti/markdown-parser';
+import { getOpenitiPublicationDetails } from './utils';
 // import { getOpenitiPublicationDetails } from './utils';
 
 const prepareContent = (content: ContentItem[]): ContentItem[] => {
@@ -66,11 +67,11 @@ export const fetchOpenitiBook = async ({
   });
 
   // TODO: uncomment to get this info from their api and not our DB
-  // const publicationDetails = getOpenitiPublicationDetails(final.metadata);
+  const publicationDetails = getOpenitiPublicationDetails(final.metadata);
 
   return {
     ...final,
-    // publicationDetails,
+    sourcePublicationDetails: publicationDetails,
   };
 };
 
@@ -80,4 +81,5 @@ export type OpenitiBookResponse = {
   version: string;
   pdfUrl?: string;
   publicationDetails?: PrismaJson.PublicationDetails;
+  sourcePublicationDetails?: PrismaJson.PublicationDetails;
 } & Awaited<ReturnType<typeof fetchOpenitiBook>>;

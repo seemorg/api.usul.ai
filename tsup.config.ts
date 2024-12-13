@@ -2,7 +2,7 @@ import type { Options } from 'tsup';
 import { defineConfig } from 'tsup';
 
 export default defineConfig((options: Options) => ({
-  entryPoints: ['src/index.ts'],
+  entryPoints: ['src/index.ts', 'workers/metadata.worker.ts'],
   clean: true,
   format: 'esm',
   platform: 'node',

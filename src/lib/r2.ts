@@ -25,3 +25,10 @@ export const uploadToR2 = async (
     ACL: 'public-read',
   });
 };
+
+export const removeFromR2 = async (key: string) => {
+  await s3.deleteObject({
+    Bucket: env.R2_BUCKET,
+    Key: key,
+  });
+};
