@@ -45,7 +45,7 @@ export const metadataWorker = async (job: SandboxedJob<FlattenMetadataQueueData>
         author: { id: book.authorId },
         versions: book.versions,
       },
-      versionToFlatten.value,
+      versionToFlatten.id,
     );
 
     if (!bookContent) {
@@ -119,8 +119,7 @@ export const metadataWorker = async (job: SandboxedJob<FlattenMetadataQueueData>
         await removeFromR2(key);
       }
     } catch (error) {
-      console.error(error);
-      await job.log('Failed to remove old PDFs from R2');
+      job.log('Failed to remove old PDFs from R2');
     }
   }
 

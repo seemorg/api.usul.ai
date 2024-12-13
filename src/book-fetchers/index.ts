@@ -35,14 +35,18 @@ export const fetchBookContent = async (
   let version: PrismaJson.BookVersion | undefined;
   if (versionId) {
     version = allVersions.find(v => v.id === versionId);
-  }
-
-  if (!version) {
-    // if the first 2 versions are turath, use the 2nd one
-    // otherwise, just use the first version
-    if (allVersions[0]?.source === 'turath' && allVersions[1]?.source === 'turath') {
-      version = allVersions[1];
-    } else {
+    if (!version) {
+      return null;
+    }
+  } else {
+    // if no version is specified, use the first one that supports ai
+    // if no version supports ai, use the first one that supports turath
+    // if no version supports turath, use the first one
+    version = allVersions.find(v => v.aiSupported);
+    if (!version) {
+      version = allVersions.find(v => v.source === 'turath');
+    }
+    if (!version) {
       version = allVersions[0];
     }
   }
