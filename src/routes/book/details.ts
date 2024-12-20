@@ -43,7 +43,7 @@ bookDetailsRoutes.get(
 
     const bookContent = await getCachedBookContent(
       book.id,
-      aiSupportedVersion.value,
+      aiSupportedVersion.id,
       locale,
     );
 
