@@ -21,8 +21,8 @@ let authorSlugToId: Record<string, string> | null = null;
 export const populateAlternateSlugs = async () => {
   const [bookSlugs, authorSlugs] = await get();
 
-  if (!bookSlugToId) bookSlugToId = {};
-  if (!authorSlugToId) authorSlugToId = {};
+  bookSlugToId = {};
+  authorSlugToId = {};
 
   for (const slug of bookSlugs) {
     bookSlugToId[slug.slug] = slug.bookId;

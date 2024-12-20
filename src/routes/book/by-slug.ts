@@ -41,7 +41,7 @@ bySlugRoutes.get(
       throw new HTTPException(404, { message: 'Book not found' });
     }
 
-    const bookContent = await getCachedBookContent(bookSlug, versionId, locale);
+    const bookContent = await getCachedBookContent(book.id, versionId, locale);
 
     if (!bookContent) {
       throw new HTTPException(404, { message: 'Could not fetch book content' });

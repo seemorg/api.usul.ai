@@ -59,6 +59,8 @@ export const fetchBookContent = async (
     id: version.id,
     source: version.source,
     publicationDetails: version.publicationDetails,
+    aiSupported: version.aiSupported,
+    keywordSupported: version.keywordSupported,
   };
 
   if (version.source === 'external') {

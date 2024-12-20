@@ -22,7 +22,8 @@ bookDetailsRoutes.get(
     const { bookSlug } = c.req.valid('param');
     const { locale } = c.req.valid('query');
 
-    const book = await getBookBySlug(bookSlug, locale);
+    const book =
+      (await getBookBySlug(bookSlug, locale)) ?? (await getBookById(bookSlug, locale));
     if (!book) {
       const alternateSlugBookId = getBookByAlternateSlug(bookSlug);
       if (alternateSlugBookId) {
@@ -41,7 +42,7 @@ bookDetailsRoutes.get(
     }
 
     const bookContent = await getCachedBookContent(
-      bookSlug,
+      book.id,
       aiSupportedVersion.value,
       locale,
     );

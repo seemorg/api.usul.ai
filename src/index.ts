@@ -13,12 +13,12 @@ import { populateAlternateSlugs } from './services/alternate-slugs';
 
 // before the server starts, we need to populate the cache
 console.log('🔄 Populating cache...');
-await populateGenres();
-await populateRegions();
-await populateLocations();
-await populateAlternateSlugs();
 
-if (env.NODE_ENV !== 'development') {
+if (env.NODE_ENV === 'production') {
+  await populateGenres();
+  await populateLocations();
+  await populateRegions();
+  await populateAlternateSlugs();
   await populateAuthors();
   await populateBooks();
 }

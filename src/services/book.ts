@@ -63,8 +63,8 @@ let bookIdToBook: Record<string, RawBook> | null = null;
 export const populateBooks = async () => {
   const books = await get();
 
-  if (!bookSlugToBook) bookSlugToBook = {};
-  if (!bookIdToBook) bookIdToBook = {};
+  bookSlugToBook = {};
+  bookIdToBook = {};
 
   for (const book of books) {
     bookSlugToBook[book.slug] = book;

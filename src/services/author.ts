@@ -53,8 +53,8 @@ let authorSlugToAuthor: Record<string, RawAuthor> | null = null;
 export const populateAuthors = async () => {
   const authors = await get();
 
-  if (!authorIdToAuthor) authorIdToAuthor = {};
-  if (!authorSlugToAuthor) authorSlugToAuthor = {};
+  authorIdToAuthor = {};
+  authorSlugToAuthor = {};
 
   for (const author of authors) {
     authorIdToAuthor[author.id] = author;

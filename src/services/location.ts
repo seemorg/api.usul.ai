@@ -27,8 +27,9 @@ let locationIdToLocation: Record<string, RawLocation> | null = null;
 let regionIdToLocations: Record<string, RawLocation[]> | null = null;
 export const populateLocations = async () => {
   const locations = await get();
-  if (!locationIdToLocation) locationIdToLocation = {};
-  if (!regionIdToLocations) regionIdToLocations = {};
+
+  locationIdToLocation = {};
+  regionIdToLocations = {};
 
   for (const location of locations) {
     locationIdToLocation[location.id] = location;

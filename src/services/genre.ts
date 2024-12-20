@@ -35,8 +35,8 @@ let genreSlugToGenre: Record<string, RawGenre> | null = null;
 export const populateGenres = async () => {
   const genres = await get();
 
-  if (!genreIdToGenre) genreIdToGenre = {};
-  if (!genreSlugToGenre) genreSlugToGenre = {};
+  genreIdToGenre = {};
+  genreSlugToGenre = {};
 
   for (const genre of genres) {
     genreIdToGenre[genre.id] = genre;

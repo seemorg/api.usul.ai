@@ -1,55 +1,58 @@
 // import { db } from '@/lib/db';
 // import { fetchTurathBookById, getTurathPdfDetails } from '@/book-fetchers/turath';
 
-import { fetchBookContent } from '@/book-fetchers';
-import { db } from '@/lib/db';
+// import { fetchBookContent } from '@/book-fetchers';
+import { fetchTurathBook } from '@/book-fetchers/turath';
+// import { db } from '@/lib/db';
 
 const main = async () => {
-  const id = '0776LisanDinIbnKhatib.Ihata';
+  // const id = '0776LisanDinIbnKhatib.Ihata';
 
-  const book = await db.book.findUnique({
-    where: {
-      id,
-    },
-    select: {
-      id: true,
-      versions: true,
-      authorId: true,
-    },
-  });
+  // const book = await db.book.findUnique({
+  //   where: {
+  //     id,
+  //   },
+  //   select: {
+  //     id: true,
+  //     versions: true,
+  //     authorId: true,
+  //   },
+  // });
 
-  if (!book) {
-    throw new Error(`Book not found: ${id}`);
-  }
+  // if (!book) {
+  //   throw new Error(`Book not found: ${id}`);
+  // }
 
-  for (const version of book.versions) {
-    if (version.source !== 'openiti' && version.source !== 'turath') {
-      continue;
-    }
+  // for (const version of book.versions) {
+  //   if (version.source !== 'openiti' && version.source !== 'turath') {
+  //     continue;
+  //   }
 
-    const versionToFlatten = structuredClone(version);
-    const bookContent = await fetchBookContent(
-      {
-        id: book.id,
-        author: { id: book.authorId },
-        versions: book.versions,
-      },
-      versionToFlatten.id,
-    );
+  //   const versionToFlatten = structuredClone(version);
+  //   const bookContent = await fetchBookContent(
+  //     {
+  //       id: book.id,
+  //       author: { id: book.authorId },
+  //       versions: book.versions,
+  //     },
+  //     versionToFlatten.id,
+  //   );
 
-    if (!bookContent) {
-      throw new Error(`Book content not found: ${book.id}`);
-    }
+  //   if (!bookContent) {
+  //     throw new Error(`Book content not found: ${book.id}`);
+  //   }
 
-    const publicationDetails = bookContent.publicationDetails;
-    let pdfUrl: string | undefined;
+  //   const publicationDetails = bookContent.publicationDetails;
+  //   let pdfUrl: string | undefined;
 
-    if ('pdf' in bookContent && bookContent.pdf) {
-      pdfUrl = bookContent.pdf;
-    }
+  //   if ('pdf' in bookContent && bookContent.pdf) {
+  //     pdfUrl = bookContent.pdf;
+  //   }
 
-    console.log({ publicationDetails, pdfUrl });
-  }
+  //   console.log({ publicationDetails, pdfUrl });
+  // }
+
+  console.log((await fetchTurathBook('1681')).sourcePdf);
 
   // const booksToFlatten = books.filter(book =>
   //   book.versions.some(

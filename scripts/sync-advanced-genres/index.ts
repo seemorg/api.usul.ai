@@ -27,8 +27,14 @@ const simpleGenres = await db.genre.findMany({
 const airtableAdvancedGenres = await getAirtableAdvancedGenres();
 const existingAdvancedGenres = await db.advancedGenre.findMany({
   select: {
+    id: true,
     extraProperties: true,
     slug: true,
+    nameTranslations: {
+      where: {
+        locale: 'ar',
+      },
+    },
   },
 });
 const existingAdvancedGenresSet = new Set(
@@ -41,9 +47,22 @@ let count = 0;
 for (const advancedGenre of airtableAdvancedGenres) {
   console.log(`Processing ${++count} of ${airtableAdvancedGenres.length}`);
 
+  let type: 'update' | 'create' = 'create';
+  let existingAdvancedGenreToUpdate: (typeof existingAdvancedGenres)[number] | null =
+    null;
   if (existingAdvancedGenresSet.has(advancedGenre._airtableReference)) {
-    console.log('Skipping because it already exists');
-    continue;
+    // check if arabic name is changed
+    const existingAdvancedGenre = existingAdvancedGenres.find(
+      g => g.extraProperties._airtableReference === advancedGenre._airtableReference,
+    );
+    const arabicName = existingAdvancedGenre?.nameTranslations[0]?.text;
+
+    if (existingAdvancedGenre && arabicName !== advancedGenre.name) {
+      type = 'update';
+      existingAdvancedGenreToUpdate = existingAdvancedGenre;
+    } else {
+      continue;
+    }
   }
 
   const englishName = await translateAndTransliterateName(
@@ -68,34 +87,114 @@ for (const advancedGenre of airtableAdvancedGenres) {
     g => g.extraProperties._airtableReference === advancedGenre.simpleGenreId,
   );
 
-  try {
-    await db.advancedGenre.create({
-      data: {
-        id: slug,
-        slug,
-        transliteration: englishName.transliteration,
-        nameTranslations: {
-          createMany: {
-            data: [
+  if (type === 'create') {
+    try {
+      await db.advancedGenre.create({
+        data: {
+          id: slug,
+          slug,
+          transliteration: englishName.transliteration,
+          nameTranslations: {
+            createMany: {
+              data: [
+                {
+                  locale: 'en',
+                  text: englishName.translation,
+                },
+                {
+                  locale: 'ar',
+                  text: advancedGenre.name,
+                },
+              ],
+            },
+          },
+          extraProperties: {
+            _airtableReference: advancedGenre._airtableReference,
+            ...(simpleGenre ? { simpleGenreId: simpleGenre.id } : {}),
+          },
+        },
+      });
+    } catch (e) {
+      console.log(e);
+      continue;
+    }
+  } else {
+    console.dir(existingAdvancedGenreToUpdate, { depth: null });
+
+    try {
+      await db.advancedGenre.update({
+        where: { id: existingAdvancedGenreToUpdate!.id },
+        data: {
+          transliteration: englishName.transliteration,
+          slug,
+          nameTranslations: {
+            upsert: [
               {
-                locale: 'en',
-                text: englishName.translation,
+                where: {
+                  genreId_locale: {
+                    genreId: existingAdvancedGenreToUpdate!.id,
+                    locale: 'en',
+                  },
+                },
+                create: {
+                  locale: 'en',
+                  text: englishName.translation,
+                },
+                update: {
+                  text: englishName.translation,
+                },
               },
               {
-                locale: 'ar',
-                text: advancedGenre.name,
+                where: {
+                  genreId_locale: {
+                    genreId: existingAdvancedGenreToUpdate!.id,
+                    locale: 'ar',
+                  },
+                },
+                create: {
+                  locale: 'ar',
+                  text: advancedGenre.name,
+                },
+                update: {
+                  text: advancedGenre.name,
+                },
               },
             ],
           },
+          extraProperties: {
+            ...(existingAdvancedGenreToUpdate!.extraProperties ?? {}),
+            ...(simpleGenre ? { simpleGenreId: simpleGenre.id } : {}),
+          },
         },
-        extraProperties: {
-          _airtableReference: advancedGenre._airtableReference,
-          ...(simpleGenre ? { simpleGenreId: simpleGenre.id } : {}),
-        },
-      },
-    });
-  } catch (e) {
-    console.log(e);
-    continue;
+      });
+    } catch (e) {
+      console.log(e);
+      continue;
+    }
   }
 }
+
+// // Check for deleted genres
+// const deletedGenres = existingAdvancedGenres.filter(
+//   existingGenre =>
+//     existingGenre.extraProperties._airtableReference &&
+//     !airtableAdvancedGenres.some(
+//       airtableGenre =>
+//         airtableGenre._airtableReference ===
+//         existingGenre.extraProperties._airtableReference,
+//     ),
+// );
+
+// if (deletedGenres.length > 0) {
+//   console.log(`Found ${deletedGenres.length} deleted genres`);
+
+//   for (const deletedGenre of deletedGenres) {
+//     console.log(
+//       `Genre ${deletedGenre.nameTranslations[0]?.text} was deleted from Airtable`,
+//     );
+//     // Uncomment to actually delete from database:
+//     // await db.advancedGenre.delete({
+//     //   where: { slug: deletedGenre.slug }
+//     // });
+//   }
+// }
