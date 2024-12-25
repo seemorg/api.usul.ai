@@ -1,6 +1,6 @@
 import { parseMarkdown, type ContentItem } from '@openiti/markdown-parser';
 import { getOpenitiPublicationDetails } from './utils';
-// import { getOpenitiPublicationDetails } from './utils';
+import { chunk } from '@/lib/utils';
 
 const prepareContent = (content: ContentItem[]): ContentItem[] => {
   const newItems: ContentItem[] = [];
@@ -65,6 +65,16 @@ export const fetchOpenitiBook = async ({
     }
     return chapter;
   });
+
+  if (final.content.length === 1) {
+    // the book is not split into pages, we need to split it into pages
+    const finalContent = chunk(final.content[0].blocks, 10);
+    final.content = finalContent.map(blocks => ({
+      page: final.content[0].page,
+      volume: final.content[0].volume,
+      blocks,
+    }));
+  }
 
   // TODO: uncomment to get this info from their api and not our DB
   const publicationDetails = getOpenitiPublicationDetails(final.metadata);
