@@ -13,12 +13,23 @@ const authors = await db.author.findMany({
   },
 });
 
+const existingAlternateSlugs = new Set(
+  (
+    await db.authorAlternateSlug.findMany({
+      select: {
+        slug: true,
+      },
+    })
+  ).map(slug => slug.slug),
+);
+
 const alternateAuthorsSlugs: Record<string, string> = {};
 for (const author of authors) {
   if (!oldAuthorsMap.has(author.id)) continue;
 
   const oldSlug = oldAuthorsMap.get(author.id);
   if (oldSlug !== author.slug) {
+    if (existingAlternateSlugs.has(oldSlug!)) continue;
     alternateAuthorsSlugs[author.id] = oldSlug!;
   }
 }

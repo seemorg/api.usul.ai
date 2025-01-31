@@ -13,12 +13,19 @@ const books = await db.book.findMany({
   },
 });
 
+const existingAlternateSlugs = new Set(
+  (await db.bookAlternateSlug.findMany({ select: { slug: true } })).map(
+    slug => slug.slug,
+  ),
+);
+
 const alternateBooksSlugs: Record<string, string> = {};
 for (const book of books) {
   if (!oldBooksMap.has(book.id)) continue;
 
   const oldSlug = oldBooksMap.get(book.id);
   if (oldSlug !== book.slug) {
+    if (existingAlternateSlugs.has(oldSlug!)) continue;
     alternateBooksSlugs[book.id] = oldSlug!;
   }
 }

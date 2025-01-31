@@ -38,6 +38,12 @@ export const metadataWorker = async (job: SandboxedJob<FlattenMetadataQueueData>
       continue;
     }
 
+    // if the version already has a pdf url, we don't need to flatten it
+    if (version.pdfUrl) {
+      newVersions.push(version);
+      continue;
+    }
+
     const versionToFlatten = structuredClone(version);
     const bookContent = await fetchBookContent(
       {
@@ -58,7 +64,7 @@ export const metadataWorker = async (job: SandboxedJob<FlattenMetadataQueueData>
     }
 
     const pdfKey = `pdfs/${versionToFlatten.id}.pdf`;
-    const publicationDetails = bookContent.sourcePublicationDetails;
+
     let finalPdfUrl: string | undefined;
 
     if ('sourcePdf' in bookContent && bookContent.sourcePdf) {
@@ -104,7 +110,8 @@ export const metadataWorker = async (job: SandboxedJob<FlattenMetadataQueueData>
     newVersions.push({
       ...versionToFlatten,
       pdfUrl: finalPdfUrl,
-      publicationDetails,
+      publicationDetails:
+        versionToFlatten.publicationDetails ?? bookContent.sourcePublicationDetails,
     });
   }
 

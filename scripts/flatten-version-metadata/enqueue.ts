@@ -13,7 +13,8 @@ const main = async () => {
   // if it has turath or openiti version, enqueue it
   const booksToEnqueue = books.filter(book =>
     book.versions.some(
-      version => version.source === 'openiti' || version.source === 'turath',
+      // version => version.source === 'openiti' || version.source === 'turath',
+      version => version.source === 'turath',
     ),
   );
 

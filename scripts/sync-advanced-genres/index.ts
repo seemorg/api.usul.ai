@@ -174,27 +174,27 @@ for (const advancedGenre of airtableAdvancedGenres) {
   }
 }
 
-// // Check for deleted genres
-// const deletedGenres = existingAdvancedGenres.filter(
-//   existingGenre =>
-//     existingGenre.extraProperties._airtableReference &&
-//     !airtableAdvancedGenres.some(
-//       airtableGenre =>
-//         airtableGenre._airtableReference ===
-//         existingGenre.extraProperties._airtableReference,
-//     ),
-// );
+// Check for deleted genres
+const deletedGenres = existingAdvancedGenres.filter(
+  existingGenre =>
+    existingGenre.extraProperties._airtableReference &&
+    !airtableAdvancedGenres.some(
+      airtableGenre =>
+        airtableGenre._airtableReference ===
+        existingGenre.extraProperties._airtableReference,
+    ),
+);
 
-// if (deletedGenres.length > 0) {
-//   console.log(`Found ${deletedGenres.length} deleted genres`);
+if (deletedGenres.length > 0) {
+  console.log(`Found ${deletedGenres.length} deleted genres`);
 
-//   for (const deletedGenre of deletedGenres) {
-//     console.log(
-//       `Genre ${deletedGenre.nameTranslations[0]?.text} was deleted from Airtable`,
-//     );
-//     // Uncomment to actually delete from database:
-//     // await db.advancedGenre.delete({
-//     //   where: { slug: deletedGenre.slug }
-//     // });
-//   }
-// }
+  for (const deletedGenre of deletedGenres) {
+    console.log(
+      `Genre ${deletedGenre.nameTranslations[0]?.text} was deleted from Airtable`,
+    );
+    // Uncomment to actually delete from database:
+    await db.advancedGenre.delete({
+      where: { slug: deletedGenre.slug },
+    });
+  }
+}

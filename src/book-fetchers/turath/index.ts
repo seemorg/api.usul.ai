@@ -8,7 +8,7 @@ import {
   // getTurathPublicationDetails,
 } from './utils';
 
-export const fetchTurathBook = async (id: string) => {
+export const fetchTurathBook = async (id: string | number) => {
   const res = await fetchTurathBookById(id);
 
   const headerPageToVolumeAndPage = Object.entries(res.indexes.print_pg_to_pg).reduce(
