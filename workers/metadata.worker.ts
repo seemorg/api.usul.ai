@@ -119,6 +119,7 @@ export const metadataWorker = async (job: SandboxedJob<FlattenMetadataQueueData>
     where: { id: bookId },
     data: {
       versions: newVersions,
+      numberOfVersions: newVersions.length,
     },
   });
 
