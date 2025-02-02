@@ -7,12 +7,12 @@ import { HTTPException } from 'hono/http-exception';
 import routes from './routes';
 import { env } from './env';
 
-if (env.NODE_ENV === 'production') {
-  console.log('Starting workers');
-  // import './queues/ai-indexer/worker';
-  // import './queues/keyword-indexer/worker';
-  await import('./queues/flatten-metadata/worker');
-}
+// if (env.NODE_ENV === 'production') {
+//   console.log('Starting workers');
+//   // import './queues/ai-indexer/worker';
+//   // import './queues/keyword-indexer/worker';
+//   await import('./queues/flatten-metadata/worker');
+// }
 
 const app = new Hono();
 
