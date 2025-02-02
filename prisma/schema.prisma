@@ -97,7 +97,9 @@ model Book {
   /// [BookPhysicalDetails]
   physicalDetails Json?
 
-  genres         Genre[]
+  genres       Genre[]
+  bookVersions BookVersion[]
+
   advancedGenres AdvancedGenre[]
   author         Author          @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   authorId       String
@@ -106,6 +108,38 @@ model Book {
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
+}
+
+model BookVersion {
+  id     String            @id
+  source BookVersionSource
+  value  String
+
+  // publication details
+  investigator      String?
+  publisher         String?
+  publisherLocation String?
+  editionNumber     String?
+  publicationYear   String? // hijri
+
+  aiSupported      Boolean @default(false)
+  keywordSupported Boolean @default(false)
+
+  pdfUrl    String?
+  ocrBookId String?
+
+  /// [BookVersionSplitsData]
+  splitsData Json?
+
+  bookId String
+  book   Book   @relation(fields: [bookId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+enum BookVersionSource {
+  Turath
+  Openiti
+  Pdf
+  External
 }
 
 model BookAlternateSlug {

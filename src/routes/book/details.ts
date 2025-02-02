@@ -36,7 +36,9 @@ bookDetailsRoutes.get(
       throw new HTTPException(404, { message: 'Book not found' });
     }
 
-    const aiSupportedVersion = book.versions.find(version => version.aiSupported);
+    const aiSupportedVersion = book.versions.find(
+      version => version.aiSupported || version.keywordSupported,
+    );
     if (!aiSupportedVersion) {
       throw new HTTPException(400, { message: 'AI is not supported for this book' });
     }
