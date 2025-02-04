@@ -4,7 +4,7 @@ import { fetchBookContent, type FetchBookResponse } from '@/book-fetchers';
 import { getBookById } from '@/services/book';
 
 const contentCache = new LRUCache<string, FetchBookResponse>({
-  max: 500,
+  max: 750,
   fetchMethod: async key => {
     const { bookId, versionId, locale } = parseCacheKey(key);
     const book = await getBookById(bookId, locale);

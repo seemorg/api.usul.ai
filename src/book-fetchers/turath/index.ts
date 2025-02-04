@@ -4,8 +4,6 @@ import {
   fetchTurathBookById,
   getTurathPdfDetails,
   getTurathPublicationDetails,
-  // getTurathPdfDetails,
-  // getTurathPublicationDetails,
 } from './utils';
 
 export const fetchTurathBook = async (id: string | number) => {

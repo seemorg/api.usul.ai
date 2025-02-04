@@ -1,5 +1,8 @@
 import { fetchTurathBook, type TurathBookResponse } from './turath';
 import { fetchOpenitiBook, type OpenitiBookResponse } from './openiti';
+import _uploadedVersions from './uploaded-versions.json';
+
+const uploadedVersions = _uploadedVersions as Record<string, boolean>;
 
 export type ExternalBookResponse = {
   id: string;
@@ -71,8 +74,13 @@ export const fetchBookContent = async (
     return { ...baseResponse, url: version.value } as FetchBookResponse;
   }
 
+  const key = `book-content/${version.source}/${version.value}.json`;
+
   if (version.source === 'turath') {
-    const turathBook = await fetchTurathBook(version.value);
+    const turathBook = uploadedVersions[key]
+      ? await (await fetch(`https://assets.usul.ai/${key}`)).json()
+      : await fetchTurathBook(version.value);
+
     return {
       ...baseResponse,
       ...turathBook,
@@ -83,11 +91,13 @@ export const fetchBookContent = async (
     } as TurathBookResponse;
   }
 
-  const openitiBook = await fetchOpenitiBook({
-    authorId: record.author!.id,
-    bookId: record.id,
-    version: version.value,
-  }).catch(() => null);
+  const openitiBook = uploadedVersions[key]
+    ? await (await fetch(`https://assets.usul.ai/${key}`)).json()
+    : await fetchOpenitiBook({
+        authorId: record.author!.id,
+        bookId: record.id,
+        version: version.value,
+      }).catch(() => null);
 
   if (!openitiBook) {
     return null;
