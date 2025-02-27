@@ -1,11 +1,61 @@
 import { localeQueryValidator } from '@/validators/locale';
-import { getAllGenres, getGenreBySlug } from '@/services/genre';
+import { getAllGenres, getGenreById, getGenreBySlug } from '@/services/genre';
 import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
 import { HTTPException } from 'hono/http-exception';
 import { z } from 'zod';
 
 const genreRoutes = new Hono().basePath('/genre');
+
+const homepageGenres = [
+  {
+    id: 'quranic-sciences',
+    color: 'gray',
+    pattern: 1,
+  },
+  {
+    id: 'ulum-al-hadith',
+    color: 'red',
+    pattern: 2,
+  },
+  {
+    id: 'fiqh',
+    color: 'green',
+    pattern: 3,
+  },
+  {
+    id: 'creeds-and-sects',
+    color: 'yellow',
+    pattern: 4,
+  },
+  {
+    id: 'history',
+    color: 'indigo',
+    pattern: 5,
+  },
+
+  {
+    id: 'philosophy',
+    color: 'green',
+    pattern: 7,
+  },
+  {
+    id: 'literature',
+    color: 'gray',
+    pattern: 9,
+  },
+];
+
+genreRoutes.get('/homepage', localeQueryValidator, c => {
+  const { locale } = c.req.valid('query');
+
+  const genres = homepageGenres.map(genre => ({
+    ...genre,
+    ...(getGenreById(genre.id, locale) ?? {}),
+  }));
+
+  return c.json(genres);
+});
 
 genreRoutes.get('/', localeQueryValidator, c => {
   const { locale } = c.req.valid('query');
