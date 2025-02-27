@@ -21,6 +21,14 @@ export const getAllGenres = (locale: PathLocale = 'en') => {
   return genres.map(genre => makeGenreDto(genre, locale));
 };
 
+export const getGenreCount = async () => {
+  if (genreIdToGenre) {
+    return Object.keys(genreIdToGenre).length;
+  }
+
+  return db.genre.count();
+};
+
 const get = () =>
   db.genre.findMany({
     include: {

@@ -41,6 +41,14 @@ export const getAllRegions = (locale: PathLocale = 'en') => {
   return regions.map(region => makeRegionDto(region, locale));
 };
 
+export const getRegionCount = async () => {
+  if (regionIdToRegion) {
+    return Object.keys(regionIdToRegion).length;
+  }
+
+  return db.region.count();
+};
+
 const get = () =>
   db.region.findMany({
     include: {

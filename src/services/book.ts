@@ -45,6 +45,14 @@ export const getBookById = async (id: string, locale: PathLocale = 'en') => {
   return makeBookDto(book, locale);
 };
 
+export const getBookCount = async () => {
+  if (bookIdToBook) {
+    return Object.keys(bookIdToBook).length;
+  }
+
+  return db.book.count();
+};
+
 const get = () =>
   db.book.findMany({
     include: {

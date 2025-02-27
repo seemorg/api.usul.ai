@@ -37,6 +37,14 @@ export const getAuthorBySlug = async (slug: string, locale: PathLocale = 'en') =
   return makeAuthorDto(author, locale);
 };
 
+export const getAuthorCount = async () => {
+  if (authorIdToAuthor) {
+    return Object.keys(authorIdToAuthor).length;
+  }
+
+  return db.author.count();
+};
+
 const get = () =>
   db.author.findMany({
     include: {

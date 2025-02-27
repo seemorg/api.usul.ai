@@ -1,5 +1,5 @@
 import { getAuthorByAlternateSlug } from '@/services/alternate-slugs';
-import { getAuthorById, getAuthorBySlug } from '@/services/author';
+import { getAuthorById, getAuthorBySlug, getAuthorCount } from '@/services/author';
 import { localeSchema } from '@/validators/locale';
 import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
@@ -7,6 +7,11 @@ import { HTTPException } from 'hono/http-exception';
 import { z } from 'zod';
 
 const authorRoutes = new Hono().basePath('/author');
+
+authorRoutes.get('/count', async c => {
+  const count = await getAuthorCount();
+  return c.json({ total: count });
+});
 
 authorRoutes.get(
   '/:slug',

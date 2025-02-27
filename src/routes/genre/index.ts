@@ -1,5 +1,10 @@
 import { localeQueryValidator } from '@/validators/locale';
-import { getAllGenres, getGenreById, getGenreBySlug } from '@/services/genre';
+import {
+  getAllGenres,
+  getGenreById,
+  getGenreBySlug,
+  getGenreCount,
+} from '@/services/genre';
 import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
 import { HTTPException } from 'hono/http-exception';
@@ -64,9 +69,9 @@ genreRoutes.get('/', localeQueryValidator, c => {
   return c.json(genres);
 });
 
-genreRoutes.get('/count', c => {
-  const genres = getAllGenres();
-  return c.json({ total: genres.length });
+genreRoutes.get('/count', async c => {
+  const count = await getGenreCount();
+  return c.json({ total: count });
 });
 
 genreRoutes.get(

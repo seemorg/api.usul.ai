@@ -1,5 +1,5 @@
 import { localeQueryValidator } from '@/validators/locale';
-import { getAllRegions, getRegionBySlug } from '@/services/region';
+import { getAllRegions, getRegionBySlug, getRegionCount } from '@/services/region';
 import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
 import { HTTPException } from 'hono/http-exception';
@@ -14,9 +14,9 @@ regionRoutes.get('/', localeQueryValidator, c => {
   return c.json(regions);
 });
 
-regionRoutes.get('/count', c => {
-  const regions = getAllRegions();
-  return c.json({ total: regions.length });
+regionRoutes.get('/count', async c => {
+  const count = await getRegionCount();
+  return c.json({ total: count });
 });
 
 regionRoutes.get(
