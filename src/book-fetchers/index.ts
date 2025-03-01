@@ -11,12 +11,35 @@ export type ExternalBookResponse = {
   publicationDetails: PrismaJson.BookVersion['publicationDetails'];
 };
 
-export type PdfBookResponse = {
-  id: string;
-  source: 'pdf';
-  url: string;
-  publicationDetails: PrismaJson.BookVersion['publicationDetails'];
-};
+export type PdfBookResponse =
+  | {
+      id: string;
+      source: 'pdf';
+      url: string;
+      publicationDetails: PrismaJson.BookVersion['publicationDetails'];
+    }
+  | {
+      id: string;
+      source: 'pdf';
+      publicationDetails: PrismaJson.BookVersion['publicationDetails'];
+      url: string;
+      pages: {
+        volume: number | null;
+        page: number | null;
+        content: string | null;
+        footnotes: string | null;
+        editorialNotes: string | null;
+      }[];
+      headings: {
+        title: string;
+        level: number;
+        page: {
+          volume: number | null;
+          page: number | null;
+        };
+        pageIndex: number;
+      }[];
+    };
 
 export type FetchBookResponse =
   | TurathBookResponse
@@ -71,6 +94,18 @@ export const fetchBookContent = async (
   }
 
   if (version.source === 'pdf') {
+    if (version.ocrBookId) {
+      const key = `book-content/ocr/${version.ocrBookId}.json`;
+      if (uploadedVersions[key]) {
+        const ocrBook = await (await fetch(`https://assets.usul.ai/${key}`)).json();
+        return {
+          ...baseResponse,
+          url: version.value,
+          ...ocrBook,
+        } as FetchBookResponse;
+      }
+    }
+
     return { ...baseResponse, url: version.value } as FetchBookResponse;
   }
 

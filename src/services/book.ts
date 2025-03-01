@@ -110,6 +110,10 @@ export const getBookVersionDetails = (
     if (bookContent.source === 'openiti') {
       final.headings = bookContent.chapters;
     }
+
+    if (bookContent.source === 'pdf' && 'headings' in bookContent) {
+      final.headings = bookContent.headings;
+    }
   }
 
   return final;
@@ -181,18 +185,28 @@ export const paginateBookContent = (
     };
   }
 
-  if (bookContent.source === 'external') {
+  if (bookContent.source === 'pdf') {
+    const isDigital = 'pages' in bookContent;
     return {
       content: {
         id: bookContent.id,
         source: bookContent.source,
         url: bookContent.url,
+        ...(isDigital && {
+          pages: bookContent.pages.slice(startIndex, end),
+        }),
         ...extraFields,
       },
+      ...(isDigital && {
+        pagination: {
+          ...basePaginationInfo,
+          total: bookContent.pages.length,
+        },
+      }),
     };
   }
 
-  if (bookContent.source === 'pdf') {
+  if (bookContent.source === 'external') {
     return {
       content: {
         id: bookContent.id,

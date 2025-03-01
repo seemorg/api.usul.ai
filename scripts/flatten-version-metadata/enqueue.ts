@@ -14,7 +14,7 @@ const main = async () => {
   const booksToEnqueue = books.filter(book =>
     book.versions.some(
       // version => version.source === 'openiti' || version.source === 'turath',
-      version => version.source === 'turath',
+      version => version.source === 'turath' && !version.pdfUrl,
     ),
   );
 

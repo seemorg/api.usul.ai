@@ -8,7 +8,7 @@ import { uploadToR2 } from '@/lib/r2';
 import { loadPdf, mergePdfs } from '@/lib/pdf';
 import _turathBooks from './turath_books.json';
 import _turathAuthorIdToUsulId from './turath-author-id-to-usul.json';
-
+import fs from 'fs';
 // const existingSlugs = new Set<string>(
 //   await db.book
 //     .findMany({ select: { slug: true, alternateSlugs: true } })
@@ -91,100 +91,124 @@ const newBooks = books
     };
   });
 
-const validBooks = newBooks.filter(book => !!book.usulAuthorId);
+const invalidBooks = newBooks.filter(book => !book.usulAuthorId);
+const invalidBooksData = invalidBooks.reduce((acc, book) => {
+  const turathAuthorId = turathBookIdToAuthorId[book.turathId];
+  if (!acc[turathAuthorId]) {
+    acc[turathAuthorId] = {
+      name: turathAuthorsData[turathAuthorId].name,
+      url: `https://app.turath.io/author/${turathAuthorId}`,
+      usulUrl: '',
+      books: [],
+    };
+  }
+  acc[turathAuthorId].books.push({
+    turathId: book.turathId,
+    arabicName: book.primaryNames.find(name => name.locale === 'ar')?.text,
+    url: `https://app.turath.io/book/${book.turathId}`,
+    usulUrl: '',
+  });
+  return acc;
+}, {} as Record<number, { name: string; url: string; usulUrl: string; books: { turathId: number; arabicName: string | undefined; url: string; usulUrl: string }[] }>);
 
-const batches = chunk(validBooks, 5);
+console.log(`Found ${Object.keys(invalidBooksData).length} invalid authors`);
+fs.writeFileSync(
+  'scripts/add-turath-books/invalid-books.json',
+  JSON.stringify(invalidBooksData, null, 2),
+);
 
+// const validBooks = newBooks.filter(book => !!book.usulAuthorId);
+// const batches = chunk(validBooks, 5);
 // log ones with same slug in existingSlugs
 // console.dir(
 //   validBooks.filter(book => existingSlugs.has(book.slug)),
 //   { depth: null },
 // );
 
-let i = 0;
-for (const batch of batches) {
-  i++;
-  console.log(`Processing batch ${i} / ${batches.length}`);
+// let i = 0;
+// for (const batch of batches) {
+//   i++;
+//   console.log(`Processing batch ${i} / ${batches.length}`);
 
-  const bookIdToVersion = (
-    await Promise.all(
-      batch.map(async book => {
-        const turathData = await fetchTurathBook(book.turathId);
-        const versionId = nanoid(10);
+//   const bookIdToVersion = (
+//     await Promise.all(
+//       batch.map(async book => {
+//         const turathData = await fetchTurathBook(book.turathId);
+//         const versionId = nanoid(10);
 
-        // let finalPdfUrl: string | undefined;
-        // const pdfKey = `pdfs/${versionId}.pdf`;
+//         // let finalPdfUrl: string | undefined;
+//         // const pdfKey = `pdfs/${versionId}.pdf`;
 
-        // if (turathData.sourcePdf) {
-        //   if ('fullBookUrl' in turathData.sourcePdf) {
-        //     const response = await fetch(turathData.sourcePdf.fullBookUrl);
-        //     if (!response.ok || response.status >= 300) {
-        //       throw new Error(`Failed to fetch PDF: ${turathData.sourcePdf.fullBookUrl}`);
-        //     }
+//         // if (turathData.sourcePdf) {
+//         //   if ('fullBookUrl' in turathData.sourcePdf) {
+//         //     const response = await fetch(turathData.sourcePdf.fullBookUrl);
+//         //     if (!response.ok || response.status >= 300) {
+//         //       throw new Error(`Failed to fetch PDF: ${turathData.sourcePdf.fullBookUrl}`);
+//         //     }
 
-        //     const pdfBuffer = await response.arrayBuffer();
+//         //     const pdfBuffer = await response.arrayBuffer();
 
-        //     await uploadToR2(pdfKey, Buffer.from(pdfBuffer), {
-        //       contentType: 'application/pdf',
-        //     });
+//         //     await uploadToR2(pdfKey, Buffer.from(pdfBuffer), {
+//         //       contentType: 'application/pdf',
+//         //     });
 
-        //     finalPdfUrl = `https://assets.usul.ai/${pdfKey}`;
-        //   }
+//         //     finalPdfUrl = `https://assets.usul.ai/${pdfKey}`;
+//         //   }
 
-        //   if (Array.isArray(turathData.sourcePdf)) {
-        //     const pdfs = [];
-        //     for (const pdfUrl of turathData.sourcePdf) {
-        //       if (!pdfUrl) continue;
-        //       pdfs.push(await loadPdf(pdfUrl.url));
-        //     }
+//         //   if (Array.isArray(turathData.sourcePdf)) {
+//         //     const pdfs = [];
+//         //     for (const pdfUrl of turathData.sourcePdf) {
+//         //       if (!pdfUrl) continue;
+//         //       pdfs.push(await loadPdf(pdfUrl.url));
+//         //     }
 
-        //     const mergedPdf = await mergePdfs(pdfs);
-        //     const pdfBuffer = await mergedPdf.save();
+//         //     const mergedPdf = await mergePdfs(pdfs);
+//         //     const pdfBuffer = await mergedPdf.save();
 
-        //     await uploadToR2(pdfKey, Buffer.from(pdfBuffer), {
-        //       contentType: 'application/pdf',
-        //     });
+//         //     await uploadToR2(pdfKey, Buffer.from(pdfBuffer), {
+//         //       contentType: 'application/pdf',
+//         //     });
 
-        //     finalPdfUrl = `https://assets.usul.ai/${pdfKey}`;
-        //   }
-        // }
+//         //     finalPdfUrl = `https://assets.usul.ai/${pdfKey}`;
+//         //   }
+//         // }
 
-        return [
-          {
-            id: versionId,
-            source: 'turath',
-            value: book.turathId.toString(),
-            publicationDetails: turathData.sourcePublicationDetails,
-            // ...(finalPdfUrl ? { pdfUrl: finalPdfUrl } : {}),
-          },
-        ] satisfies PrismaJson.BookVersion[];
-      }, {} as Record<number, PrismaJson.BookVersion[]>),
-    )
-  ).reduce((acc, curr) => {
-    acc[curr[0]!.value] = curr;
-    return acc;
-  }, {} as Record<string, PrismaJson.BookVersion[]>);
+//         return [
+//           {
+//             id: versionId,
+//             source: 'turath',
+//             value: book.turathId.toString(),
+//             publicationDetails: turathData.sourcePublicationDetails,
+//             // ...(finalPdfUrl ? { pdfUrl: finalPdfUrl } : {}),
+//           },
+//         ] satisfies PrismaJson.BookVersion[];
+//       }, {} as Record<number, PrismaJson.BookVersion[]>),
+//     )
+//   ).reduce((acc, curr) => {
+//     acc[curr[0]!.value] = curr;
+//     return acc;
+//   }, {} as Record<string, PrismaJson.BookVersion[]>);
 
-  await db.$transaction(
-    batch.map(book =>
-      db.book.create({
-        data: {
-          id: createId(),
-          author: { connect: { id: book.usulAuthorId! } },
-          slug: book.slug,
-          coverImageUrl: book.cover,
-          transliteration: book.transliteration,
-          primaryNameTranslations: {
-            createMany: {
-              data: book.primaryNames.map(name => ({
-                locale: name.locale,
-                text: name.text,
-              })),
-            },
-          },
-          versions: bookIdToVersion[book.turathId.toString()],
-        },
-      }),
-    ),
-  );
-}
+//   await db.$transaction(
+//     batch.map(book =>
+//       db.book.create({
+//         data: {
+//           id: createId(),
+//           author: { connect: { id: book.usulAuthorId! } },
+//           slug: book.slug,
+//           coverImageUrl: book.cover,
+//           transliteration: book.transliteration,
+//           primaryNameTranslations: {
+//             createMany: {
+//               data: book.primaryNames.map(name => ({
+//                 locale: name.locale,
+//                 text: name.text,
+//               })),
+//             },
+//           },
+//           versions: bookIdToVersion[book.turathId.toString()],
+//         },
+//       }),
+//     ),
+//   );
+// }

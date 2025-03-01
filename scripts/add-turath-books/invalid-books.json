@@ -1,0 +1,2829 @@
+{
+  "17": {
+    "name": "الشعراوي",
+    "url": "https://app.turath.io/author/17",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 1120,
+        "arabicName": "معجزة القرآن",
+        "url": "https://app.turath.io/book/1120",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 1083,
+        "arabicName": "تفسير الشعراوي",
+        "url": "https://app.turath.io/book/1083",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "50": {
+    "name": "الرازي، أبو الفضل",
+    "url": "https://app.turath.io/author/50",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 26462,
+        "arabicName": "أحاديث في ذم الكلام وأهله",
+        "url": "https://app.turath.io/book/26462",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 1600,
+        "arabicName": "فضائل القرآن وتلاوته للرازي",
+        "url": "https://app.turath.io/book/1600",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "113": {
+    "name": "أبو زيد الثعالبي",
+    "url": "https://app.turath.io/author/113",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 23618,
+        "arabicName": "تفسير الثعالبي = الجواهر الحسان في تفسير القرآن",
+        "url": "https://app.turath.io/book/23618",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "127": {
+    "name": "أبو بكر الجزائري",
+    "url": "https://app.turath.io/author/127",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 12913,
+        "arabicName": "الإنصاف فيما قيل في المولد من الغلو والإجحاف",
+        "url": "https://app.turath.io/book/12913",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 8546,
+        "arabicName": "المدينة المنورة النبوية فضلها، فضل ساكنيها، زيارتها",
+        "url": "https://app.turath.io/book/8546",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 12109,
+        "arabicName": "نداءات الرحمن لأهل الإيمان",
+        "url": "https://app.turath.io/book/12109",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 11277,
+        "arabicName": "عظات وعبر من أحاديث سيد البشر صلى الله عليه وسلم",
+        "url": "https://app.turath.io/book/11277",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 11261,
+        "arabicName": "عباد الله اسلمو تسلموا",
+        "url": "https://app.turath.io/book/11261",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 8624,
+        "arabicName": "النكاح والطلاق أو الزواج والفراق",
+        "url": "https://app.turath.io/book/8624",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 3255,
+        "arabicName": "اقتربت الساعة فتوبوا أيها المذنبون",
+        "url": "https://app.turath.io/book/3255",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "174": {
+    "name": "البرذعي",
+    "url": "https://app.turath.io/author/174",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 810,
+        "arabicName": "سؤالات البرذعي لأبي زرعة الرازي - ت الهاشمي",
+        "url": "https://app.turath.io/book/810",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "179": {
+    "name": "كاملة الكواري",
+    "url": "https://app.turath.io/author/179",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 37660,
+        "arabicName": "تفسير غريب القرآن - الكواري",
+        "url": "https://app.turath.io/book/37660",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 6942,
+        "arabicName": "المجلى في شرح القواعد المثلى في صفات الله وأسمائه الحسنى",
+        "url": "https://app.turath.io/book/6942",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 9933,
+        "arabicName": "قدم العالم وتسلسل الحوادث",
+        "url": "https://app.turath.io/book/9933",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "192": {
+    "name": "مصطفى يونس الراقي الفاخري",
+    "url": "https://app.turath.io/author/192",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 2034,
+        "arabicName": "الوجيز في أسباب ونتائج قتل عثمان",
+        "url": "https://app.turath.io/book/2034",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "193": {
+    "name": "الكناني، أبو الحسن",
+    "url": "https://app.turath.io/author/193",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 7610,
+        "arabicName": "الحيدة والاعتذار في الرد على من قال بخلق القرآن",
+        "url": "https://app.turath.io/book/7610",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "255": {
+    "name": "الأشناني",
+    "url": "https://app.turath.io/author/255",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 9106,
+        "arabicName": "جزء القاضي الأشناني",
+        "url": "https://app.turath.io/book/9106",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "278": {
+    "name": "الماليني",
+    "url": "https://app.turath.io/author/278",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 8247,
+        "arabicName": "الأربعون في شيوخ الصوفية للماليني",
+        "url": "https://app.turath.io/book/8247",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "342": {
+    "name": "إبراهيم المطلق",
+    "url": "https://app.turath.io/author/342",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 30918,
+        "arabicName": "التدرج في دعوة النبي",
+        "url": "https://app.turath.io/book/30918",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "419": {
+    "name": "البرقاني",
+    "url": "https://app.turath.io/author/419",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 11237,
+        "arabicName": "سؤالات البرقاني للدارقطني ت القشقري",
+        "url": "https://app.turath.io/book/11237",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 1060,
+        "arabicName": "سؤالات البرقاني للدارقطني ت مجدي السيد",
+        "url": "https://app.turath.io/book/1060",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "420": {
+    "name": "الكشميري",
+    "url": "https://app.turath.io/author/420",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 119,
+        "arabicName": "العرف الشذي شرح سنن الترمذي",
+        "url": "https://app.turath.io/book/119",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 98124,
+        "arabicName": "فيض الباري على صحيح البخاري",
+        "url": "https://app.turath.io/book/98124",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 21788,
+        "arabicName": "إكفار الملحدين في ضروريات الدين",
+        "url": "https://app.turath.io/book/21788",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 8575,
+        "arabicName": "التصريح بما تواتر في نزول المسيح",
+        "url": "https://app.turath.io/book/8575",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "527": {
+    "name": "حصة بنت عبد الكريم",
+    "url": "https://app.turath.io/author/527",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 10898,
+        "arabicName": "أهمية دراسة السيرة النبوية للمعلمين",
+        "url": "https://app.turath.io/book/10898",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 1220,
+        "arabicName": "موقف الصحابة من أحداث العنف في عهد الخلفاء الراشدين",
+        "url": "https://app.turath.io/book/1220",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "529": {
+    "name": "أبو بكر القطيعي",
+    "url": "https://app.turath.io/author/529",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 10515,
+        "arabicName": "الجزء الرابع من الفوائد المنتقاة العوالي من حديث القطيعي",
+        "url": "https://app.turath.io/book/10515",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "572": {
+    "name": "الخرشي = الخراشي",
+    "url": "https://app.turath.io/author/572",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 320,
+        "arabicName": "حاشية الخرشي منتهى الرغبة في حل ألفاظ النخبة",
+        "url": "https://app.turath.io/book/320",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 91,
+        "arabicName": "شرح الخرشي على مختصر خليل - ومعه حاشية العدوي",
+        "url": "https://app.turath.io/book/91",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "657": {
+    "name": "أبو ذر القلموني",
+    "url": "https://app.turath.io/author/657",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 14251,
+        "arabicName": "ماذا تعرف عن الله",
+        "url": "https://app.turath.io/book/14251",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 7807,
+        "arabicName": "أحكام الصيام والقيام وزكاة الفطر",
+        "url": "https://app.turath.io/book/7807",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "759": {
+    "name": "لطيفة الراشد",
+    "url": "https://app.turath.io/author/759",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 893,
+        "arabicName": "الحديث الموضوعي المنهج والتأصيل والتمثيل",
+        "url": "https://app.turath.io/book/893",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "770": {
+    "name": "ابن الوردي الجد، زين الدين",
+    "url": "https://app.turath.io/author/770",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 632,
+        "arabicName": "منظومة البهجة الوردية - ضمن مجموع «الرفعة»",
+        "url": "https://app.turath.io/book/632",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "912": {
+    "name": "صلاح الدين الزعبلاوي",
+    "url": "https://app.turath.io/author/912",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 2120,
+        "arabicName": "دراسات في النحو",
+        "url": "https://app.turath.io/book/2120",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "920": {
+    "name": "شريفة سلامة أبو مريفة",
+    "url": "https://app.turath.io/author/920",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 30935,
+        "arabicName": "سلسلة أهل الذكر",
+        "url": "https://app.turath.io/book/30935",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "925": {
+    "name": "راشد العبد الكريم",
+    "url": "https://app.turath.io/author/925",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 98096,
+        "arabicName": "الدروس اليومية من السنن والأحكام الشرعية",
+        "url": "https://app.turath.io/book/98096",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "926": {
+    "name": "عقيل المقطري",
+    "url": "https://app.turath.io/author/926",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 1876,
+        "arabicName": "الدعوة الفردية وأهميتها في تربية الأجيال",
+        "url": "https://app.turath.io/book/1876",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "932": {
+    "name": "عبد الراضي عبد المحسن",
+    "url": "https://app.turath.io/author/932",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 8519,
+        "arabicName": "الغارة التنصيرية على أصالة القرآن الكريم",
+        "url": "https://app.turath.io/book/8519",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "942": {
+    "name": "فؤاد الشلهوب",
+    "url": "https://app.turath.io/author/942",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 1936,
+        "arabicName": "المعلم الأول صلى الله عليه وسلم",
+        "url": "https://app.turath.io/book/1936",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "971": {
+    "name": "الشاهد البوشيخي",
+    "url": "https://app.turath.io/author/971",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 12108,
+        "arabicName": "نحو معجم تاريخي للمصطلحات القرآنية المعرفة",
+        "url": "https://app.turath.io/book/12108",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "997": {
+    "name": "مناع القطان",
+    "url": "https://app.turath.io/author/997",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 7511,
+        "arabicName": "اعتماد دعوة الشيخ محمد بن عبد الوهاب على الكتاب والسنة - مناع القطان",
+        "url": "https://app.turath.io/book/7511",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 11368,
+        "arabicName": "مباحث في علوم القرآن لمناع القطان",
+        "url": "https://app.turath.io/book/11368",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 9995,
+        "arabicName": "تاريخ التشريع الإسلامي",
+        "url": "https://app.turath.io/book/9995",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 8644,
+        "arabicName": "نزول القرآن على سبعة أحرف",
+        "url": "https://app.turath.io/book/8644",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "999": {
+    "name": "محمد بن محمد العواجي",
+    "url": "https://app.turath.io/author/999",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 10899,
+        "arabicName": "أهمية دراسة السيرة النبوية والعناية بها في حياة المسلمين",
+        "url": "https://app.turath.io/book/10899",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 2700,
+        "arabicName": "مرويات الإمام الزهري في المغازي",
+        "url": "https://app.turath.io/book/2700",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1004": {
+    "name": "مسفر الدميني",
+    "url": "https://app.turath.io/author/1004",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 11393,
+        "arabicName": "مرويات السيرة لمسفر الدميني",
+        "url": "https://app.turath.io/book/11393",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1089": {
+    "name": "أبو الصلت الأندلسي",
+    "url": "https://app.turath.io/author/1089",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 957,
+        "arabicName": "الرسالة المصرية - ضمن نوادر المخطوطات",
+        "url": "https://app.turath.io/book/957",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1123": {
+    "name": "محمد صالح الشنطي",
+    "url": "https://app.turath.io/author/1123",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 2037,
+        "arabicName": "فن التحرير العربي",
+        "url": "https://app.turath.io/book/2037",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1145": {
+    "name": "أحمد شاكر",
+    "url": "https://app.turath.io/author/1145",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 14240,
+        "arabicName": "الكتاب والسنة يجب أن يكونا مصدر القوانين في مصر ومعه «الشرع واللغة»",
+        "url": "https://app.turath.io/book/14240",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1177": {
+    "name": "مصطفى حلمي",
+    "url": "https://app.turath.io/author/1177",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 1382,
+        "arabicName": "منهج علماء الحديث والسنة في أصول الدين",
+        "url": "https://app.turath.io/book/1382",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1179": {
+    "name": "عائشة عبد الرحمن بنت الشاطئ",
+    "url": "https://app.turath.io/author/1179",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 12759,
+        "arabicName": "الإعجاز البياني للقرآن ومسائل ابن الأزرق",
+        "url": "https://app.turath.io/book/12759",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 1389,
+        "arabicName": "التفسير البياني للقرآن الكريم",
+        "url": "https://app.turath.io/book/1389",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1186": {
+    "name": "أبو القاسم الكرماني",
+    "url": "https://app.turath.io/author/1186",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 36,
+        "arabicName": "لباب التفاسير للكرماني (ناقص)",
+        "url": "https://app.turath.io/book/36",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1187": {
+    "name": "عبد العظيم المطعني",
+    "url": "https://app.turath.io/author/1187",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 1410,
+        "arabicName": "المجاز عند الإمام ابن تيمية وتلاميذه بين الإنكار والإقرار",
+        "url": "https://app.turath.io/book/1410",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 21785,
+        "arabicName": "خصائص التعبير القرآني وسماته البلاغية",
+        "url": "https://app.turath.io/book/21785",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 1412,
+        "arabicName": "عقوبة الارتداد عن الدين بين الأدلة الشرعية وشبهات المنكرين",
+        "url": "https://app.turath.io/book/1412",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 1411,
+        "arabicName": "سماحة الإسلام في الدعوة إلى الله",
+        "url": "https://app.turath.io/book/1411",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 1408,
+        "arabicName": "أخطاء وأوهام في أضخم مشروع تعسفي لهدم السنة",
+        "url": "https://app.turath.io/book/1408",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 1409,
+        "arabicName": "الشبهات الثلاثون المثارة لإنكار السنة النبوية عرض وتفنيد ونقض",
+        "url": "https://app.turath.io/book/1409",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1190": {
+    "name": "المحبوبي صدر الشريعة الأصغر",
+    "url": "https://app.turath.io/author/1190",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 1125,
+        "arabicName": "شرح الوقاية - ت أبو الحاج",
+        "url": "https://app.turath.io/book/1125",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1205": {
+    "name": "أبو المنذر المنياوي",
+    "url": "https://app.turath.io/author/1205",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 37591,
+        "arabicName": "التمهيد - شرح مختصر الأصول من علم الأصول",
+        "url": "https://app.turath.io/book/37591",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 36194,
+        "arabicName": "التحرير شرح الدليل - كتاب الطهارة",
+        "url": "https://app.turath.io/book/36194",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 36193,
+        "arabicName": "الأساليب والإطلاقات العربية",
+        "url": "https://app.turath.io/book/36193",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 37590,
+        "arabicName": "تحقيق المطالب بشرح دليل الطالب - المنياوي - قطعة من الطهارة",
+        "url": "https://app.turath.io/book/37590",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 96850,
+        "arabicName": "البدعة الشرعية",
+        "url": "https://app.turath.io/book/96850",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 37602,
+        "arabicName": "الشرح المختصر لنخبة الفكر",
+        "url": "https://app.turath.io/book/37602",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 36195,
+        "arabicName": "شرح الموقظة للذهبي",
+        "url": "https://app.turath.io/book/36195",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 8488,
+        "arabicName": "الجموع البهية للعقيدة السلفية",
+        "url": "https://app.turath.io/book/8488",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 2554,
+        "arabicName": "الشرح الكبير لمختصر الأصول",
+        "url": "https://app.turath.io/book/2554",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 2048,
+        "arabicName": "المعتصر من شرح مختصر الأصول من علم الأصول",
+        "url": "https://app.turath.io/book/2048",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1224": {
+    "name": "مقبل بن هادي الوادعي",
+    "url": "https://app.turath.io/author/1224",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 148097,
+        "arabicName": "الجامع الصحيح مما ليس في الصحيحين",
+        "url": "https://app.turath.io/book/148097",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 133366,
+        "arabicName": "الصحيح المسند مما ليس في الصحيحين",
+        "url": "https://app.turath.io/book/133366",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 96926,
+        "arabicName": "الإلحاد الخميني في أرض الحرمين",
+        "url": "https://app.turath.io/book/96926",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 96784,
+        "arabicName": "تحفة المجيب على أسئلة الحاضر والغريب",
+        "url": "https://app.turath.io/book/96784",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 96783,
+        "arabicName": "المقترح في أجوبة بعض أسئلة المصطلح",
+        "url": "https://app.turath.io/book/96783",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 96782,
+        "arabicName": "الشفاعة",
+        "url": "https://app.turath.io/book/96782",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 96785,
+        "arabicName": "ردود أهل العلم على الطاعنين في حديث السحر",
+        "url": "https://app.turath.io/book/96785",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 96842,
+        "arabicName": "الباعث على شرح الحوادث",
+        "url": "https://app.turath.io/book/96842",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 96788,
+        "arabicName": "مشاهداتي في المملكة العربية السعودية",
+        "url": "https://app.turath.io/book/96788",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 96868,
+        "arabicName": "نشر الصحيفة في ذكر الصحيح من أقوال أئمة الجرح والتعديل في أبي حنيفة",
+        "url": "https://app.turath.io/book/96868",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 96787,
+        "arabicName": "مجموعة رسائل علمية",
+        "url": "https://app.turath.io/book/96787",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 12756,
+        "arabicName": "أحاديث معلة ظاهرها الصحة",
+        "url": "https://app.turath.io/book/12756",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 11547,
+        "arabicName": "الصحيح المسند من أسباب النزول",
+        "url": "https://app.turath.io/book/11547",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1320": {
+    "name": "محمد بن سيدي محمد الأمين",
+    "url": "https://app.turath.io/author/1320",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 21557,
+        "arabicName": "الوجيز في حكم تجويد الكتاب العزيز",
+        "url": "https://app.turath.io/book/21557",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 8754,
+        "arabicName": "الإسناد عند علماء القراءات",
+        "url": "https://app.turath.io/book/8754",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1337": {
+    "name": "جعفر شرف الدين",
+    "url": "https://app.turath.io/author/1337",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 21769,
+        "arabicName": "الموسوعة القرآنية خصائص السور",
+        "url": "https://app.turath.io/book/21769",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1341": {
+    "name": "أبو زرعة الرازي",
+    "url": "https://app.turath.io/author/1341",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 816,
+        "arabicName": "أسامي الضعفاء - أبو زرعة الرازي - ت الهاشمي",
+        "url": "https://app.turath.io/book/816",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 817,
+        "arabicName": "أسامي الضعفاء - أبو زرعة الرازي - ت الأزهري",
+        "url": "https://app.turath.io/book/817",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1347": {
+    "name": "أبو معاوية البيروتي",
+    "url": "https://app.turath.io/author/1347",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 1005,
+        "arabicName": "تاريخ نيسابور «طبقة شيوخ الحاكم» - جمع البيروتي",
+        "url": "https://app.turath.io/book/1005",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1354": {
+    "name": "الترمذي، أبو جعفر",
+    "url": "https://app.turath.io/author/1354",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 26470,
+        "arabicName": "جزء فيه تفسير القرآن برواية أبي جعفر الترمذي",
+        "url": "https://app.turath.io/book/26470",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1384": {
+    "name": "السيد الجميلى",
+    "url": "https://app.turath.io/author/1384",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 23687,
+        "arabicName": "نساء النبي",
+        "url": "https://app.turath.io/book/23687",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 23654,
+        "arabicName": "غزوات النبي",
+        "url": "https://app.turath.io/book/23654",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1385": {
+    "name": "عبد الكريم بيارة",
+    "url": "https://app.turath.io/author/1385",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 23661,
+        "arabicName": "القصيدة الوردية في سيرة خير البرية",
+        "url": "https://app.turath.io/book/23661",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1386": {
+    "name": "محمد حميد الله",
+    "url": "https://app.turath.io/author/1386",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 23667,
+        "arabicName": "مجموعة الوثائق السياسية للعهد النبوي والخلافة الراشدة",
+        "url": "https://app.turath.io/book/23667",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1399": {
+    "name": "ا. د. / ناظم رشيد",
+    "url": "https://app.turath.io/author/1399",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 23672,
+        "arabicName": "المدائح النبوية في أدب القرنين السادس والسابع للهجرة",
+        "url": "https://app.turath.io/book/23672",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1407": {
+    "name": "أنور الجندي",
+    "url": "https://app.turath.io/author/1407",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 148530,
+        "arabicName": "تاريخ الغزو الفكري والتعريب خلال مرحلة ما بين الحربين العالميتين",
+        "url": "https://app.turath.io/book/148530",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 26697,
+        "arabicName": "السنة النبوية في مواجهة شبهات الاستشراق - أنور الجندي",
+        "url": "https://app.turath.io/book/26697",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 11546,
+        "arabicName": "المعارك الأدبية",
+        "url": "https://app.turath.io/book/11546",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1442": {
+    "name": "أحمد شلبي",
+    "url": "https://app.turath.io/author/1442",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 8661,
+        "arabicName": "كيف تكتب بحثا أو رسالة دراسة منهجية لكتابة البحوث وإعداد رسائل الماجستير والدكتوراة",
+        "url": "https://app.turath.io/book/8661",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1476": {
+    "name": "عبد الرزاق بن فراج الصاعدي",
+    "url": "https://app.turath.io/author/1476",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 22640,
+        "arabicName": "أبو تراب اللغوي وكتابه الاعتقاب",
+        "url": "https://app.turath.io/book/22640",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 11986,
+        "arabicName": "تداخل الأصول اللغوية وأثره في بناء المعجم",
+        "url": "https://app.turath.io/book/11986",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 11191,
+        "arabicName": "أصول علم العربية في المدينة",
+        "url": "https://app.turath.io/book/11191",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 1539,
+        "arabicName": "موت الألفاظ في العربية",
+        "url": "https://app.turath.io/book/1539",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1493": {
+    "name": "السيد رزق الطويل",
+    "url": "https://app.turath.io/author/1493",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 7323,
+        "arabicName": "مقدمة في أصول البحث العلمي وتحقيق التراث",
+        "url": "https://app.turath.io/book/7323",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 8633,
+        "arabicName": "مدخل في علوم القراءات",
+        "url": "https://app.turath.io/book/8633",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1528": {
+    "name": "آمال بنت عبد العزيز العمرو",
+    "url": "https://app.turath.io/author/1528",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 7547,
+        "arabicName": "الألفاظ والمصطلحات المتعلقة بتوحيد الربوبية",
+        "url": "https://app.turath.io/book/7547",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1538": {
+    "name": "خلدون الأحدب",
+    "url": "https://app.turath.io/author/1538",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 183,
+        "arabicName": "زوائد تاريخ بغداد على الكتب الستة",
+        "url": "https://app.turath.io/book/183",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 7580,
+        "arabicName": "التصنيف في السنة النبوية",
+        "url": "https://app.turath.io/book/7580",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1545": {
+    "name": "عبد الحميد بن علي فقيهي",
+    "url": "https://app.turath.io/author/1545",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 11139,
+        "arabicName": "جهود العلماء في تصنيف السيرة النبوية في القرنين الثامن والتاسع الهجريين",
+        "url": "https://app.turath.io/book/11139",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1549": {
+    "name": "فرحانة بنت علي شويتة",
+    "url": "https://app.turath.io/author/1549",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 11154,
+        "arabicName": "حجية خبر الآحاد في العقائد والأحكام - فرحانة بنت علي شويتة",
+        "url": "https://app.turath.io/book/11154",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1552": {
+    "name": "عبد الله بن سعد الرويشد",
+    "url": "https://app.turath.io/author/1552",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 11164,
+        "arabicName": "حقيقة دعوة الإمام الشيخ محمد بن عبد الوهاب السلفية",
+        "url": "https://app.turath.io/book/11164",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1577": {
+    "name": "عهود بنت عيسى بعيطي",
+    "url": "https://app.turath.io/author/1577",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 1108,
+        "arabicName": "المسائل التي قيل فيها لا فرق عند الحنابلة في العبادات",
+        "url": "https://app.turath.io/book/1108",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1625": {
+    "name": "علم الدين البرزالي",
+    "url": "https://app.turath.io/author/1625",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 1161,
+        "arabicName": "تاريخ البرزالي المقتفي لتاريخ أبي شامة - ت العثيمين",
+        "url": "https://app.turath.io/book/1161",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 28,
+        "arabicName": "تاريخ البرزالي المقتفي لتاريخ أبي شامة - ت تدمري",
+        "url": "https://app.turath.io/book/28",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1634": {
+    "name": "نازك الملائكة",
+    "url": "https://app.turath.io/author/1634",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 2097,
+        "arabicName": "قضايا الشعر المعاصر",
+        "url": "https://app.turath.io/book/2097",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1646": {
+    "name": "محمد السيد الجليند",
+    "url": "https://app.turath.io/author/1646",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 10903,
+        "arabicName": "الوحي والإنسان - قراءة معرفية",
+        "url": "https://app.turath.io/book/10903",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 10004,
+        "arabicName": "الاستشراق والتبشير",
+        "url": "https://app.turath.io/book/10004",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1692": {
+    "name": "البركتي",
+    "url": "https://app.turath.io/author/1692",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 13939,
+        "arabicName": "التعريفات الفقهية",
+        "url": "https://app.turath.io/book/13939",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 6284,
+        "arabicName": "قواعد الفقه",
+        "url": "https://app.turath.io/book/6284",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1803": {
+    "name": "علي الريسوني",
+    "url": "https://app.turath.io/author/1803",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 1203,
+        "arabicName": "فقه الدعوة الإسلامية في الغرب ووجوب تجديدها على الحكمة والوسطية والاعتدال",
+        "url": "https://app.turath.io/book/1203",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1829": {
+    "name": "أبو المجد سيد نوفل",
+    "url": "https://app.turath.io/author/1829",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 22748,
+        "arabicName": "أساليب الدعوة إلى الله في القرآن الكريم",
+        "url": "https://app.turath.io/book/22748",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1836": {
+    "name": "أبو نصر الغازي",
+    "url": "https://app.turath.io/author/1836",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 24229,
+        "arabicName": "مجلس أبي نصر الغازي",
+        "url": "https://app.turath.io/book/24229",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1854": {
+    "name": "الطوسي، أبو الحسن",
+    "url": "https://app.turath.io/author/1854",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 26490,
+        "arabicName": "الأربعون للمؤيد بن محمد الطوسي",
+        "url": "https://app.turath.io/book/26490",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1859": {
+    "name": "الحرفي",
+    "url": "https://app.turath.io/author/1859",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 26533,
+        "arabicName": "فوائد أبي القاسم الحرفي رواية الثقفي",
+        "url": "https://app.turath.io/book/26533",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 26584,
+        "arabicName": "فوائد أبي القاسم الحرفي رواية الأنصاري",
+        "url": "https://app.turath.io/book/26584",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1911": {
+    "name": "أبو بكر الوراق",
+    "url": "https://app.turath.io/author/1911",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 27097,
+        "arabicName": "فضل يوم عرفة لأبي بكر الوراق",
+        "url": "https://app.turath.io/book/27097",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1916": {
+    "name": "البياني، ابن إمام الصخرة",
+    "url": "https://app.turath.io/author/1916",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 27103,
+        "arabicName": "مشيخة ابن إمام الصخرة",
+        "url": "https://app.turath.io/book/27103",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1923": {
+    "name": "محمد يوسف الكاندهلوي",
+    "url": "https://app.turath.io/author/1923",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 8528,
+        "arabicName": "حياة الصحابة",
+        "url": "https://app.turath.io/book/8528",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1947": {
+    "name": "كريسي موريسون",
+    "url": "https://app.turath.io/author/1947",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 4312,
+        "arabicName": "العلم يدعو للإيمان",
+        "url": "https://app.turath.io/book/4312",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1958": {
+    "name": "أبو أويس الكردي",
+    "url": "https://app.turath.io/author/1958",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 1146,
+        "arabicName": "سلسة الفوائد الحديثية والفقهية",
+        "url": "https://app.turath.io/book/1146",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "1986": {
+    "name": "نادية شريف العمري",
+    "url": "https://app.turath.io/author/1986",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 8669,
+        "arabicName": "أضواء على الثقافة الاسلامية",
+        "url": "https://app.turath.io/book/8669",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2021": {
+    "name": "رقية بنت نصر الله نياز",
+    "url": "https://app.turath.io/author/2021",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 7587,
+        "arabicName": "السنة النبوية ومكانتها - رقية نياز",
+        "url": "https://app.turath.io/book/7587",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2027": {
+    "name": "آمنة محمد نصير",
+    "url": "https://app.turath.io/author/2027",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 7656,
+        "arabicName": "الشيخ الإمام محمد بن عبد الوهاب ومنهجه في مباحث العقيدة",
+        "url": "https://app.turath.io/book/7656",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2078": {
+    "name": "طارق بن عبد الله حجار",
+    "url": "https://app.turath.io/author/2078",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 10034,
+        "arabicName": "تاريخ المدارس الوقفية في المدينة المنورة",
+        "url": "https://app.turath.io/book/10034",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 2583,
+        "arabicName": "واقع الترويح المعاصر لدى الطفل المسلم من وجهة نظر الآباء والأمهات",
+        "url": "https://app.turath.io/book/2583",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2097": {
+    "name": "عبد الله السوالمة",
+    "url": "https://app.turath.io/author/2097",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 8795,
+        "arabicName": "البركة في الرزق والأسباب الجالبة لها في ضوء الكتاب والسنة",
+        "url": "https://app.turath.io/book/8795",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2132": {
+    "name": "علي أحمد محمد بابكر",
+    "url": "https://app.turath.io/author/2132",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 10208,
+        "arabicName": "دراسات في أصول الفقه",
+        "url": "https://app.turath.io/book/10208",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2134": {
+    "name": "محمد أحمد عبد القادر الشنقيطي المدني",
+    "url": "https://app.turath.io/author/2134",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 10098,
+        "arabicName": "تنبيه الحذاق على بطلان ما شاع بين الأنام من حديث النور المنسوب لمصنف عبد الرزاق",
+        "url": "https://app.turath.io/book/10098",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2142": {
+    "name": "محمد بن ناصر السحيباني",
+    "url": "https://app.turath.io/author/2142",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 10226,
+        "arabicName": "دفاع عن العقوبات الإسلامية",
+        "url": "https://app.turath.io/book/10226",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2143": {
+    "name": "أحمد جمال العمري",
+    "url": "https://app.turath.io/author/2143",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 8858,
+        "arabicName": "القاضي عياض ومفهومه للإعجاز القرآني",
+        "url": "https://app.turath.io/book/8858",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 12162,
+        "arabicName": "أبو بكر الباقلاني ومفهومه للإعجاز القرآني",
+        "url": "https://app.turath.io/book/12162",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 10420,
+        "arabicName": "الصولي شاعرا دراسة فنية تحليلية لأهم أغراض الشعر عنده",
+        "url": "https://app.turath.io/book/10420",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2156": {
+    "name": "محمد السيد الوكيل",
+    "url": "https://app.turath.io/author/2156",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 3924,
+        "arabicName": "مدرسة الدعوة",
+        "url": "https://app.turath.io/book/3924",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 8979,
+        "arabicName": "الهجرة النبوية - دراسة وتحليل-",
+        "url": "https://app.turath.io/book/8979",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 4109,
+        "arabicName": "موقعة اليرموك دراسة وتحليل",
+        "url": "https://app.turath.io/book/4109",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2170": {
+    "name": "دخيل بن صالح اللحيدان",
+    "url": "https://app.turath.io/author/2170",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 4067,
+        "arabicName": "طرق التخريج بحسب الراوي الأعلى",
+        "url": "https://app.turath.io/book/4067",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 4262,
+        "arabicName": "زيادات القطيعي على مسند الإمام أحمد دراسة وتخريجا",
+        "url": "https://app.turath.io/book/4262",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2187": {
+    "name": "أبو الطاهر الذهلي",
+    "url": "https://app.turath.io/author/2187",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 30375,
+        "arabicName": "الجزء ١٣ من حديث أبي الطاهر الذهلي انتقاء الدارقطني",
+        "url": "https://app.turath.io/book/30375",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 13097,
+        "arabicName": "الجزء ٢٣ من حديث أبي الطاهر الذهلي انتقاء الدارقطني",
+        "url": "https://app.turath.io/book/13097",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2194": {
+    "name": "أبو بكر الطريثيثي",
+    "url": "https://app.turath.io/author/2194",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 29777,
+        "arabicName": "أحاديث مسلسلات",
+        "url": "https://app.turath.io/book/29777",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2201": {
+    "name": "أبو بكر البزاز",
+    "url": "https://app.turath.io/author/2201",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 21638,
+        "arabicName": "حديث شعبة لمحمد بن العباس بن نجيح البغدادي",
+        "url": "https://app.turath.io/book/21638",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2286": {
+    "name": "خالد الحسينان",
+    "url": "https://app.turath.io/author/2286",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 37311,
+        "arabicName": "هكذا كان الصالحون",
+        "url": "https://app.turath.io/book/37311",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 37582,
+        "arabicName": "أكثر من ١٠٠٠ سنة في اليوم والليلة",
+        "url": "https://app.turath.io/book/37582",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 36546,
+        "arabicName": "كيف تسبق",
+        "url": "https://app.turath.io/book/36546",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 3034,
+        "arabicName": "دروس تربوية من الأحاديث النبوية",
+        "url": "https://app.turath.io/book/3034",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2290": {
+    "name": "أسماء بنت راشد الرويشد",
+    "url": "https://app.turath.io/author/2290",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 36349,
+        "arabicName": "طريقك إلى تقوية إيمانك",
+        "url": "https://app.turath.io/book/36349",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2297": {
+    "name": "عبد الحميد البلالي",
+    "url": "https://app.turath.io/author/2297",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 35115,
+        "arabicName": "البيان في مداخل الشيطان",
+        "url": "https://app.turath.io/book/35115",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2319": {
+    "name": "أحمد آل إبراهيم العنقري",
+    "url": "https://app.turath.io/author/2319",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 36497,
+        "arabicName": "الأربعون القرآنية",
+        "url": "https://app.turath.io/book/36497",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2359": {
+    "name": "صالح المغامسي",
+    "url": "https://app.turath.io/author/2359",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 37731,
+        "arabicName": "التعليق على الدرة المضيئة في السيرة النبوية للمقدسي",
+        "url": "https://app.turath.io/book/37731",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 37732,
+        "arabicName": "شرح كتاب الرقاق من صحيح البخاري - المغامسي",
+        "url": "https://app.turath.io/book/37732",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 37737,
+        "arabicName": "شرح المدائح النبوية",
+        "url": "https://app.turath.io/book/37737",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 37742,
+        "arabicName": "القطوف الدانية",
+        "url": "https://app.turath.io/book/37742",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 37743,
+        "arabicName": "معالم بيانية في آيات قرآنية",
+        "url": "https://app.turath.io/book/37743",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 37746,
+        "arabicName": "آيات الحج في القران الكريم",
+        "url": "https://app.turath.io/book/37746",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 37741,
+        "arabicName": "الأيام النضرة في السيرة العطرة",
+        "url": "https://app.turath.io/book/37741",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 37747,
+        "arabicName": "أعلام القرآن",
+        "url": "https://app.turath.io/book/37747",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 37738,
+        "arabicName": "بريق المواعظ المنبرية",
+        "url": "https://app.turath.io/book/37738",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 37748,
+        "arabicName": "لطائف المعارف",
+        "url": "https://app.turath.io/book/37748",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 37455,
+        "arabicName": "سلسلة محاسن التأويل - المغامسي",
+        "url": "https://app.turath.io/book/37455",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 37454,
+        "arabicName": "تأملات قرآنية - المغامسي",
+        "url": "https://app.turath.io/book/37454",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 37431,
+        "arabicName": "دروس للشيخ صالح المغامسي",
+        "url": "https://app.turath.io/book/37431",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2364": {
+    "name": "عبد الرحيم السلمي",
+    "url": "https://app.turath.io/author/2364",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 37799,
+        "arabicName": "شرح العقيدة الطحاوية - عبد الرحيم السلمي",
+        "url": "https://app.turath.io/book/37799",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 37802,
+        "arabicName": "شرح العقيدة الواسطية - عبد الرحيم السلمي",
+        "url": "https://app.turath.io/book/37802",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 37805,
+        "arabicName": "شرح القصيدة اللامية لابن تيمية - عبد الرحيم السلمي",
+        "url": "https://app.turath.io/book/37805",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 37804,
+        "arabicName": "أصول العقيدة - عبد الرحيم السلمي",
+        "url": "https://app.turath.io/book/37804",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 37803,
+        "arabicName": "شرح كتاب التوحيد - عبد الرحيم السلمي",
+        "url": "https://app.turath.io/book/37803",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 37800,
+        "arabicName": "تأصيل علم العقيدة - عبد الرحيم السلمي",
+        "url": "https://app.turath.io/book/37800",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 37798,
+        "arabicName": "شرح الحموية - عبد الرحيم السلمي",
+        "url": "https://app.turath.io/book/37798",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 37796,
+        "arabicName": "شرح القواعد المثلى - عبد الرحيم السلمي",
+        "url": "https://app.turath.io/book/37796",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 37795,
+        "arabicName": "دراسة موضوعية للحائية ولمعة الاعتقاد والواسطية",
+        "url": "https://app.turath.io/book/37795",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 36581,
+        "arabicName": "شرح رسالة العبودية لابن تيمية - عبد الرحيم السلمي",
+        "url": "https://app.turath.io/book/36581",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2366": {
+    "name": "خالد الراشد",
+    "url": "https://app.turath.io/author/2366",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 37421,
+        "arabicName": "دروس الشيخ خالد الراشد",
+        "url": "https://app.turath.io/book/37421",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2402": {
+    "name": "أبو نصية التميمي",
+    "url": "https://app.turath.io/author/2402",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 36074,
+        "arabicName": "العتاب بين الأصدقاء",
+        "url": "https://app.turath.io/book/36074",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2441": {
+    "name": "حسين العوايشة",
+    "url": "https://app.turath.io/author/2441",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 35096,
+        "arabicName": "الموسوعة الفقهية الميسرة في فقه الكتاب والسنة المطهرة",
+        "url": "https://app.turath.io/book/35096",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2459": {
+    "name": "علي المنتصر الكتاني",
+    "url": "https://app.turath.io/author/2459",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 37481,
+        "arabicName": "انبعاث الإسلام في الأندلس",
+        "url": "https://app.turath.io/book/37481",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2474": {
+    "name": "منقذ السقار",
+    "url": "https://app.turath.io/author/2474",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 38152,
+        "arabicName": "الدين المعاملة",
+        "url": "https://app.turath.io/book/38152",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 38188,
+        "arabicName": "هل افتدانا المسيح على الصليب",
+        "url": "https://app.turath.io/book/38188",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 95567,
+        "arabicName": "الحوار مع أتباع الأديان - مشروعيته وآدابه",
+        "url": "https://app.turath.io/book/95567",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 95570,
+        "arabicName": "الله ﷻ واحد أم ثلاثة",
+        "url": "https://app.turath.io/book/95570",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 95574,
+        "arabicName": "تنزيه القرآن الكريم عن دعاوى المبطلين",
+        "url": "https://app.turath.io/book/95574",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 38191,
+        "arabicName": "هل بشر الكتاب المقدس بمحمد صلى الله عليه وسلم",
+        "url": "https://app.turath.io/book/38191",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 38190,
+        "arabicName": "هل العهد القديم كلمة الله",
+        "url": "https://app.turath.io/book/38190",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 38189,
+        "arabicName": "هل العهد الجديد كلمة الله",
+        "url": "https://app.turath.io/book/38189",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 38185,
+        "arabicName": "دلائل النبوة - السقار",
+        "url": "https://app.turath.io/book/38185",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 38184,
+        "arabicName": "تعرف على الإسلام",
+        "url": "https://app.turath.io/book/38184",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 38183,
+        "arabicName": "التعايش مع غير المسلمين في المجتمع المسلم",
+        "url": "https://app.turath.io/book/38183",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 38146,
+        "arabicName": "الاستعمار في العصر الحديث ودوافعه الدينية",
+        "url": "https://app.turath.io/book/38146",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2500": {
+    "name": "غانم قدوري الحمد",
+    "url": "https://app.turath.io/author/2500",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 12917,
+        "arabicName": "محاضرات في علوم القرآن - غانم قدورى",
+        "url": "https://app.turath.io/book/12917",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2508": {
+    "name": "المختار المشري المقروش",
+    "url": "https://app.turath.io/author/2508",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 38033,
+        "arabicName": "كيف تقرأ القرآن الكريم برواية الإمام قالون عن نافع المدني",
+        "url": "https://app.turath.io/book/38033",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2510": {
+    "name": "أبو مالك بن عبد الوهاب",
+    "url": "https://app.turath.io/author/2510",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 38213,
+        "arabicName": "أحكام النساء - مستخلصا من كتب الألباني",
+        "url": "https://app.turath.io/book/38213",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2512": {
+    "name": "محمد نديم فاضل",
+    "url": "https://app.turath.io/author/2512",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 95526,
+        "arabicName": "التضمين النحوي في القرآن الكريم",
+        "url": "https://app.turath.io/book/95526",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2523": {
+    "name": "محمد العيد آل خليفة",
+    "url": "https://app.turath.io/author/2523",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 95843,
+        "arabicName": "ديوان محمد العيد آل خليفة",
+        "url": "https://app.turath.io/book/95843",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2533": {
+    "name": "أبو فيصل البدراني",
+    "url": "https://app.turath.io/author/2533",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 96243,
+        "arabicName": "أحكام الهجر والهجرة في الإسلام",
+        "url": "https://app.turath.io/book/96243",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 96246,
+        "arabicName": "الولاء والبراء والعداء في الإسلام",
+        "url": "https://app.turath.io/book/96246",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 96244,
+        "arabicName": "القبلية في ميزان الشرع وحقيقة تكافؤ النسب في الزواج.",
+        "url": "https://app.turath.io/book/96244",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 96247,
+        "arabicName": "بسط القول والإسهاب في بيان حكم مودة المؤمن للكافر",
+        "url": "https://app.turath.io/book/96247",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 96252,
+        "arabicName": "معالم الطريق إلى الله",
+        "url": "https://app.turath.io/book/96252",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 96251,
+        "arabicName": "فقه الدعوة إلى الله والأمر بالمعروف والنهي عن المنكر",
+        "url": "https://app.turath.io/book/96251",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 96248,
+        "arabicName": "حكم الغناء والمعازف وآلات الملاهي والمؤثرات الصوتية",
+        "url": "https://app.turath.io/book/96248",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 96250,
+        "arabicName": "فقه الابتلاء وأقدار الله المؤلمة",
+        "url": "https://app.turath.io/book/96250",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 96249,
+        "arabicName": "شفاء الضرر بفهم التوكل والقضاء والقدر",
+        "url": "https://app.turath.io/book/96249",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 96245,
+        "arabicName": "المسلم وحقوق الآخرين",
+        "url": "https://app.turath.io/book/96245",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 96241,
+        "arabicName": "آفات اللسان",
+        "url": "https://app.turath.io/book/96241",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2538": {
+    "name": "أبو عاصم البركاتي",
+    "url": "https://app.turath.io/author/2538",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 96272,
+        "arabicName": "الولاء والبراء في الإسلام - البركاتي",
+        "url": "https://app.turath.io/book/96272",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 96270,
+        "arabicName": "تفنيد الشبهات حول ميراث المرأة في الإسلام",
+        "url": "https://app.turath.io/book/96270",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 96269,
+        "arabicName": "دلالة الاقتران ووجه الاحتجاج بها عند الأصوليين",
+        "url": "https://app.turath.io/book/96269",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2541": {
+    "name": "أحمد سحنون",
+    "url": "https://app.turath.io/author/2541",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 96335,
+        "arabicName": "ديوان الشيخ أحمد سحنون",
+        "url": "https://app.turath.io/book/96335",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 96557,
+        "arabicName": "دراسات وتوجيهات إسلامية",
+        "url": "https://app.turath.io/book/96557",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2570": {
+    "name": "عبد الله العبيلان",
+    "url": "https://app.turath.io/author/2570",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 14272,
+        "arabicName": "النكت العلمية على الروضة الندية",
+        "url": "https://app.turath.io/book/14272",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 96928,
+        "arabicName": "رد الجميل في الذب عن إرواء الغليل",
+        "url": "https://app.turath.io/book/96928",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2588": {
+    "name": "محمد المكي الناصري",
+    "url": "https://app.turath.io/author/2588",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 115129,
+        "arabicName": "التيسير في أحاديث التفسير",
+        "url": "https://app.turath.io/book/115129",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2593": {
+    "name": "أبو يعلى الزواوي",
+    "url": "https://app.turath.io/author/2593",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 115130,
+        "arabicName": "تاريخ الزواوة",
+        "url": "https://app.turath.io/book/115130",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2624": {
+    "name": "الفضيل الورتلاني",
+    "url": "https://app.turath.io/author/2624",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 123664,
+        "arabicName": "الجزائر الثائرة",
+        "url": "https://app.turath.io/book/123664",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2625": {
+    "name": "أبو القاسم سعد الله",
+    "url": "https://app.turath.io/author/2625",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 14100,
+        "arabicName": "تاريخ الجزائر الثقافي",
+        "url": "https://app.turath.io/book/14100",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 123661,
+        "arabicName": "رائد التجديد الإسلامي محمد بن العنابي",
+        "url": "https://app.turath.io/book/123661",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 123662,
+        "arabicName": "شيخ الإسلام عبد الكريم الفكون داعية السلفية",
+        "url": "https://app.turath.io/book/123662",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 123656,
+        "arabicName": "محاضرات في تاريخ الجزائر الحديث",
+        "url": "https://app.turath.io/book/123656",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2631": {
+    "name": "محمود النحال",
+    "url": "https://app.turath.io/author/2631",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 123666,
+        "arabicName": "إتحاف المرتقي بتراجم شيوخ البيهقي",
+        "url": "https://app.turath.io/book/123666",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2637": {
+    "name": "مريم محمد صالح الظفيري",
+    "url": "https://app.turath.io/author/2637",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 13225,
+        "arabicName": "مصطلحات المذاهب الفقهية وأسرار الفقه المرموز",
+        "url": "https://app.turath.io/book/13225",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2645": {
+    "name": "حليمة سال",
+    "url": "https://app.turath.io/author/2645",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 13240,
+        "arabicName": "القراءات روايتا ورش وحفص دراسة تحليلية مقارنة",
+        "url": "https://app.turath.io/book/13240",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2706": {
+    "name": "أحمد الطويل",
+    "url": "https://app.turath.io/author/2706",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 17049,
+        "arabicName": "اتقاء الحرام والشبهات في طلب الرزق",
+        "url": "https://app.turath.io/book/17049",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2719": {
+    "name": "محمد بن عبد العزيز الخضيري",
+    "url": "https://app.turath.io/author/2719",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 14531,
+        "arabicName": "السراج في بيان غريب القرآن",
+        "url": "https://app.turath.io/book/14531",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2727": {
+    "name": "سعود العقيلي",
+    "url": "https://app.turath.io/author/2727",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 35622,
+        "arabicName": "الاعتداء في الدعاء صور وضوابط ونماذج من الدعاء الصحيح",
+        "url": "https://app.turath.io/book/35622",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2748": {
+    "name": "ظاهر شوكت البياتي",
+    "url": "https://app.turath.io/author/2748",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 17418,
+        "arabicName": "أدوات الإعراب",
+        "url": "https://app.turath.io/book/17418",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2750": {
+    "name": "عبد المحسن القاسم",
+    "url": "https://app.turath.io/author/2750",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 46,
+        "arabicName": "المسبوك على منحة السلوك في شرح تحفة الملوك",
+        "url": "https://app.turath.io/book/46",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 1090,
+        "arabicName": "متون طالب العلم - المستوى الخامس - ٢",
+        "url": "https://app.turath.io/book/1090",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 17074,
+        "arabicName": "خطوات إلى السعادة",
+        "url": "https://app.turath.io/book/17074",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 1101,
+        "arabicName": "متون طالب العلم - الإضافية - ٨",
+        "url": "https://app.turath.io/book/1101",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 1099,
+        "arabicName": "متون طالب العلم - الإضافية - ٦",
+        "url": "https://app.turath.io/book/1099",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 1103,
+        "arabicName": "متون طالب العلم - الإضافية - ١٠",
+        "url": "https://app.turath.io/book/1103",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 1097,
+        "arabicName": "متون طالب العلم - الإضافية - ٤",
+        "url": "https://app.turath.io/book/1097",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 1095,
+        "arabicName": "متون طالب العلم - الإضافية - ٢",
+        "url": "https://app.turath.io/book/1095",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 1098,
+        "arabicName": "متون طالب العلم - الإضافية - ٥",
+        "url": "https://app.turath.io/book/1098",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 1096,
+        "arabicName": "متون طالب العلم - الإضافية - ٣",
+        "url": "https://app.turath.io/book/1096",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 1091,
+        "arabicName": "متون طالب العلم - المستوى الخامس - ٣",
+        "url": "https://app.turath.io/book/1091",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 1092,
+        "arabicName": "متون طالب العلم - الإضافية - ١",
+        "url": "https://app.turath.io/book/1092",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 961,
+        "arabicName": "متون طالب العلم - المستوى الخامس - ١",
+        "url": "https://app.turath.io/book/961",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 576,
+        "arabicName": "مختصر الأذكار والآداب",
+        "url": "https://app.turath.io/book/576",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 574,
+        "arabicName": "متون طالب العلم - المستوى الرابع",
+        "url": "https://app.turath.io/book/574",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 573,
+        "arabicName": "متون طالب العلم - المستوى الثالث",
+        "url": "https://app.turath.io/book/573",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 571,
+        "arabicName": "متون طالب العلم - المستوى الثاني",
+        "url": "https://app.turath.io/book/571",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 570,
+        "arabicName": "متون طالب العلم - المستوى الأول",
+        "url": "https://app.turath.io/book/570",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 568,
+        "arabicName": "متون طالب العلم - المستوى التمهيدي",
+        "url": "https://app.turath.io/book/568",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2764": {
+    "name": "الكشناوي، أبو بكر",
+    "url": "https://app.turath.io/author/2764",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 17682,
+        "arabicName": "أسهل المدارك «شرح إرشاد السالك في مذهب إمام الأئمة مالك»",
+        "url": "https://app.turath.io/book/17682",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2784": {
+    "name": "فهد العجلان",
+    "url": "https://app.turath.io/author/2784",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 14435,
+        "arabicName": "معركة النص",
+        "url": "https://app.turath.io/book/14435",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2785": {
+    "name": "جهاد الترباني",
+    "url": "https://app.turath.io/author/2785",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 14132,
+        "arabicName": "مائة من عظماء أمة الإسلام غيروا مجرى التاريخ",
+        "url": "https://app.turath.io/book/14132",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2795": {
+    "name": "عبد المحسن الزامل",
+    "url": "https://app.turath.io/author/2795",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 16820,
+        "arabicName": "شرح القواعد السعدية",
+        "url": "https://app.turath.io/book/16820",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2813": {
+    "name": "ليلى عطار",
+    "url": "https://app.turath.io/author/2813",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 17901,
+        "arabicName": "آراء ابن الجوزي التربوية",
+        "url": "https://app.turath.io/book/17901",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2900": {
+    "name": "العزيزي",
+    "url": "https://app.turath.io/author/2900",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 18272,
+        "arabicName": "السراج المنير شرح الجامع الصغير في حديث البشير النذير",
+        "url": "https://app.turath.io/book/18272",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2930": {
+    "name": "عبد الرقيب الشامي",
+    "url": "https://app.turath.io/author/2930",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 132388,
+        "arabicName": "الكفارات أحكام وضوابط",
+        "url": "https://app.turath.io/book/132388",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2934": {
+    "name": "مجمول الجدعاني",
+    "url": "https://app.turath.io/author/2934",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 132414,
+        "arabicName": "الاستدراك الفقهي تأصيلا وتطبيقا",
+        "url": "https://app.turath.io/book/132414",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2950": {
+    "name": "إيمان بنت سالم قبوس",
+    "url": "https://app.turath.io/author/2950",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 133372,
+        "arabicName": "الاستدراك الأصولي دراسة تأصيلية تطبيقية",
+        "url": "https://app.turath.io/book/133372",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2952": {
+    "name": "حصة بنت عبد العزيز الصغير",
+    "url": "https://app.turath.io/author/2952",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 133370,
+        "arabicName": "إفراد أحاديث اسماء الله وصفاته",
+        "url": "https://app.turath.io/book/133370",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2977": {
+    "name": "العصام الأسفراييني",
+    "url": "https://app.turath.io/author/2977",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 13680,
+        "arabicName": "الأطول شرح تلخيص مفتاح العلوم",
+        "url": "https://app.turath.io/book/13680",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2978": {
+    "name": "محمد مطيع الحافظ",
+    "url": "https://app.turath.io/author/2978",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 147072,
+        "arabicName": "إضافات للنعت الأكمل لأصحاب الإمام أحمد بن حنبل",
+        "url": "https://app.turath.io/book/147072",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2979": {
+    "name": "كمال الدين الغزي",
+    "url": "https://app.turath.io/author/2979",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 147073,
+        "arabicName": "النعت الأكمل لأصحاب الإمام أحمد بن حنبل",
+        "url": "https://app.turath.io/book/147073",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2980": {
+    "name": "سليمان الحمدان",
+    "url": "https://app.turath.io/author/2980",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 147066,
+        "arabicName": "كشف النقاب عن مؤلفات الأصحاب",
+        "url": "https://app.turath.io/book/147066",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2989": {
+    "name": "أنس بن عادل اليتامى",
+    "url": "https://app.turath.io/author/2989",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 147663,
+        "arabicName": "منية الساجد بشرح بداية العابد وكفاية الزاهد",
+        "url": "https://app.turath.io/book/147663",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2993": {
+    "name": "الشربيني بن فايق الشربيني",
+    "url": "https://app.turath.io/author/2993",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 147909,
+        "arabicName": "الوصايا العشر مع فضائل العشر",
+        "url": "https://app.turath.io/book/147909",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "2999": {
+    "name": "خلود شاكر فهيد العبدلي",
+    "url": "https://app.turath.io/author/2999",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 750,
+        "arabicName": "استنباطات الشوكاني في تفسيره فتح القدير",
+        "url": "https://app.turath.io/book/750",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "3000": {
+    "name": "زيغريد هونكه",
+    "url": "https://app.turath.io/author/3000",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 148532,
+        "arabicName": "شمس الله تشرق على الغرب = فضل العرب على أوروبا",
+        "url": "https://app.turath.io/book/148532",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "3058": {
+    "name": "عبد المنان التالبي",
+    "url": "https://app.turath.io/author/3058",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 62,
+        "arabicName": "المسائل الجلية في أحكام الأضحية",
+        "url": "https://app.turath.io/book/62",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 58,
+        "arabicName": "العمل بالأغلبية",
+        "url": "https://app.turath.io/book/58",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 53,
+        "arabicName": "الاغتيالات",
+        "url": "https://app.turath.io/book/53",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 85,
+        "arabicName": "واحفظوا أيمانكم",
+        "url": "https://app.turath.io/book/85",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 79,
+        "arabicName": "إبرام عقود النكاح عبر وسائل الاتصالات الحديثة - دراسة فقهية حديثية",
+        "url": "https://app.turath.io/book/79",
+        "usulUrl": ""
+      },
+      {
+        "turathId": 72,
+        "arabicName": "النجوم الزاهرات في فضائل الباقيات الصالحات",
+        "url": "https://app.turath.io/book/72",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "3062": {
+    "name": "لولوة بنت صالح السنيدي",
+    "url": "https://app.turath.io/author/3062",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 87,
+        "arabicName": "مسائل العبادات المختصة بالزوجين",
+        "url": "https://app.turath.io/book/87",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "3068": {
+    "name": "أبو بكر الدشتي",
+    "url": "https://app.turath.io/author/3068",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 98,
+        "arabicName": "جامع الورع وقامع البدع",
+        "url": "https://app.turath.io/book/98",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "3082": {
+    "name": "البلنسي",
+    "url": "https://app.turath.io/author/3082",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 168,
+        "arabicName": "تفسير مبهمات القرآن",
+        "url": "https://app.turath.io/book/168",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "3098": {
+    "name": "أبو المعاطي الشبراوي",
+    "url": "https://app.turath.io/author/3098",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 279,
+        "arabicName": "إتحاف الأريب بشرح الغاية والتقريب",
+        "url": "https://app.turath.io/book/279",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "3113": {
+    "name": "محمد بن محمد بن المصطفى اليعقوبي",
+    "url": "https://app.turath.io/author/3113",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 607,
+        "arabicName": "عون المتين على نظم رسالة القرويين",
+        "url": "https://app.turath.io/book/607",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "3123": {
+    "name": "أبو بكر الهاملي",
+    "url": "https://app.turath.io/author/3123",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 628,
+        "arabicName": "در المهتدي وذخر المقتدي نظم بداية المبتدي المعروف بالهاملية - ضمن مجموع «الرفعة»",
+        "url": "https://app.turath.io/book/628",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "3126": {
+    "name": "أبو بكر الجوزقي",
+    "url": "https://app.turath.io/author/3126",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 95,
+        "arabicName": "الصحيح من الأخبار المجتمع على صحته - مخطوط",
+        "url": "https://app.turath.io/book/95",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "3128": {
+    "name": "أبو على البرداني",
+    "url": "https://app.turath.io/author/3128",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 190,
+        "arabicName": "الفوائد المنتقاة على شرط الإمامين",
+        "url": "https://app.turath.io/book/190",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "3129": {
+    "name": "أبو بكر الجياني",
+    "url": "https://app.turath.io/author/3129",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 186,
+        "arabicName": "الأربعين من رواية المحمدين المخرج ذلك من صحيح البخاري",
+        "url": "https://app.turath.io/book/186",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "3138": {
+    "name": "إسحاق بن إبراهيم البستي",
+    "url": "https://app.turath.io/author/3138",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 30609,
+        "arabicName": "تفسير إسحاق البستي",
+        "url": "https://app.turath.io/book/30609",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "3146": {
+    "name": "عبد الحق التركماني",
+    "url": "https://app.turath.io/author/3146",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 687,
+        "arabicName": "الدخول في أمان غير المسلمين وآثاره في الفقه الإسلامي",
+        "url": "https://app.turath.io/book/687",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "3149": {
+    "name": "القطب الحلبي",
+    "url": "https://app.turath.io/author/3149",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 653,
+        "arabicName": "حديث إنما الأعمال بالنيات - من البدر المنير الساري في الكلام على صحيح البخاري",
+        "url": "https://app.turath.io/book/653",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "3150": {
+    "name": "نادية بنت إبراهيم النفيسة",
+    "url": "https://app.turath.io/author/3150",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 713,
+        "arabicName": "أقوال الحسين بن الفضل في التفسير",
+        "url": "https://app.turath.io/book/713",
+        "usulUrl": ""
+      }
+    ]
+  },
+  "3165": {
+    "name": "أبو الفضل التميمي",
+    "url": "https://app.turath.io/author/3165",
+    "usulUrl": "",
+    "books": [
+      {
+        "turathId": 6498,
+        "arabicName": "العقيدة التي حكاها أبو الفضل التميمي عن الإمام أحمد - ت السيروان",
+        "url": "https://app.turath.io/book/6498",
+        "usulUrl": ""
+      }
+    ]
+  }
+}

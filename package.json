@@ -10,8 +10,8 @@
     "db:generate": "prisma generate",
     "db:deploy": "prisma migrate deploy",
     "db:migrate": "prisma migrate dev",
-    "with-env": "dotenv -e ../../.env --",
-    "run:script": "pnpm with-env pnpm dlx tsx"
+    "with-env": "dotenv --",
+    "run:script": "pnpm dlx tsx --env-file=.env"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.709.0",
@@ -37,8 +37,10 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/cheerio": "^0.22.35",
     "@types/node": "^20.11.17",
     "airtable": "^0.12.2",
+    "cheerio": "^1.0.0",
     "dotenv-cli": "^7.4.2",
     "openai": "^4.72.0",
     "prisma": "^5.20.0",
