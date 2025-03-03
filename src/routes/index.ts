@@ -50,7 +50,17 @@ routes.post('/reset-cache', bearerAuth({ token: env.DASHBOARD_PASSWORD }), async
   await populateAuthors();
   await populateBooks();
 
-  return c.json({ message: 'Cache reset done' });
+  return c.json({ status: 'success' });
 });
+
+routes.post(
+  '/reset-cache/slugs',
+  bearerAuth({ token: env.DASHBOARD_PASSWORD }),
+  async c => {
+    await populateAlternateSlugs();
+
+    return c.json({ status: 'success' });
+  },
+);
 
 export default routes;
