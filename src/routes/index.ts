@@ -16,6 +16,7 @@ import { populateLocations } from '@/services/location';
 import { getBookCount, populateBooks } from '@/services/book';
 import { getGenreCount } from '@/services/genre';
 import { getRegionCount } from '@/services/region';
+import searchRoutes from './search';
 
 const routes = new Hono();
 
@@ -24,6 +25,7 @@ routes.route('/', bookRoutes);
 routes.route('/', authorRoutes);
 routes.route('/', regionRoutes);
 routes.route('/', genreRoutes);
+routes.route('/', searchRoutes);
 
 routes.get('/total', async c => {
   const [bookCount, authorCount, regionCount, genreCount] = await Promise.all([

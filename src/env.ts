@@ -21,6 +21,8 @@ export const env = createEnv({
     R2_ACCESS_KEY_ID: z.string(),
     R2_SECRET_KEY: z.string(),
     R2_BUCKET: z.string(),
+    TYPESENSE_URL: z.string(),
+    TYPESENSE_API_KEY: z.string(),
   },
   runtimeEnv: process.env,
   emptyStringAsUndefined: true,

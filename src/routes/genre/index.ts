@@ -19,26 +19,25 @@ const homepageGenres = [
     pattern: 1,
   },
   {
-    id: 'ulum-al-hadith',
+    id: 'hadith',
     color: 'red',
     pattern: 2,
   },
-  {
-    id: 'fiqh',
-    color: 'green',
-    pattern: 3,
-  },
-  {
-    id: 'creeds-and-sects',
-    color: 'yellow',
-    pattern: 4,
-  },
+  // {
+  //   id: 'fiqh',
+  //   color: 'green',
+  //   pattern: 3,
+  // },
   {
     id: 'history',
     color: 'indigo',
     pattern: 5,
   },
-
+  {
+    id: 'ilm-al-kalam',
+    color: 'yellow',
+    pattern: 4,
+  },
   {
     id: 'philosophy',
     color: 'green',
