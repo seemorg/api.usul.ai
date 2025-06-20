@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "types": ["node", "react", "react-dom"],
+    "skipLibCheck": true,
+    "noEmit": true
+  },
+  "include": ["./**/*"],
+  "exclude": ["node_modules", ".react-email"]
+}

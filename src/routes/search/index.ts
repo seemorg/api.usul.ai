@@ -5,7 +5,7 @@ import authorSearchRoutes from './authors';
 import genresSearchRoutes from './genres';
 import regionsSearchRoutes from './regions';
 
-const searchRoutes = new Hono().basePath('/search');
+const searchRoutes = new Hono();
 
 searchRoutes.route('/', bookSearchRoutes);
 searchRoutes.route('/', authorSearchRoutes);

@@ -10,7 +10,7 @@ import { Hono } from 'hono';
 import { HTTPException } from 'hono/http-exception';
 import { z } from 'zod';
 
-const genreRoutes = new Hono().basePath('/genre');
+const genreRoutes = new Hono();
 
 const homepageGenres = [
   {

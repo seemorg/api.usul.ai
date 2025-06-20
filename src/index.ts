@@ -5,8 +5,6 @@ import { setUptime } from './lib/uptime';
 import { populateAuthors } from './services/author';
 import { populateGenres } from './services/genre';
 import { populateBooks } from './services/book';
-import { createKeywordSearchIndexIfNotExists } from './lib/keyword-search';
-import { createIndexIfNotExists } from './vector/vector-store';
 import { populateRegions } from './services/region';
 import { populateLocations } from './services/location';
 import { populateAlternateSlugs } from './services/alternate-slugs';
@@ -22,9 +20,6 @@ if (env.NODE_ENV === 'production') {
   await populateAuthors();
   await populateBooks();
 }
-
-await createKeywordSearchIndexIfNotExists();
-await createIndexIfNotExists();
 
 serve(
   {

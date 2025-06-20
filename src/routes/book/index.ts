@@ -6,7 +6,7 @@ import bySlugRoutes from './by-slug';
 import homepageSectionsRoutes from './homepage-sections';
 import { getBookCount } from '@/services/book';
 
-const bookRoutes = new Hono().basePath('/book');
+const bookRoutes = new Hono();
 
 bookRoutes.route('/', bookDetailsRoutes);
 bookRoutes.route('/', homepageSectionsRoutes);

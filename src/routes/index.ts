@@ -21,11 +21,11 @@ import searchRoutes from './search';
 const routes = new Hono();
 
 routes.route('/', uptimeRoutes);
-routes.route('/', bookRoutes);
-routes.route('/', authorRoutes);
-routes.route('/', regionRoutes);
-routes.route('/', genreRoutes);
-routes.route('/', searchRoutes);
+routes.route('/book', bookRoutes);
+routes.route('/region', regionRoutes);
+routes.route('/genre', genreRoutes);
+routes.route('/author', authorRoutes);
+routes.route('/search', searchRoutes);
 
 routes.get('/total', async c => {
   const [bookCount, authorCount, regionCount, genreCount] = await Promise.all([

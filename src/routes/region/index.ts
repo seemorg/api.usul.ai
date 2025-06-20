@@ -5,7 +5,7 @@ import { Hono } from 'hono';
 import { HTTPException } from 'hono/http-exception';
 import { z } from 'zod';
 
-const regionRoutes = new Hono().basePath('/region');
+const regionRoutes = new Hono();
 
 regionRoutes.get('/', localeQueryValidator, c => {
   const { locale } = c.req.valid('query');
