@@ -18,7 +18,7 @@ import { SearchResponse } from 'typesense/lib/Typesense/Documents';
 
 const bookSearchRoutes = new Hono();
 
-const booksQueryWeights = {
+export const booksQueryWeights = {
   4: ['primaryNames.text'],
   3: ['_nameVariations', 'otherNames.texts'],
   2: ['author.primaryNames.text'],

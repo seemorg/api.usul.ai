@@ -1,0 +1,19 @@
+enum CollectionVisibility {
+  PUBLIC
+  UNLISTED
+}
+
+model Collection {
+  id          String               @id @default(cuid())
+  name        String
+  description String
+  slug        String               @unique
+  visibility  CollectionVisibility @default(PUBLIC)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  books  Book[] @relation("CollectionBooks")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

@@ -5,9 +5,11 @@ import { env } from '@/env';
 import { magicLink } from 'better-auth/plugins';
 import LoginEmail from '../../emails/templates/login';
 import { sendEmail } from './resend';
+import { allowedOrigins } from '../config';
 
 export const auth = betterAuth({
   appName: 'Usul',
+  trustedOrigins: allowedOrigins,
   socialProviders: {
     google: {
       clientId: env.GOOGLE_CLIENT_ID,

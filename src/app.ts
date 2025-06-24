@@ -7,6 +7,7 @@ import { HTTPException } from 'hono/http-exception';
 import routes from './routes';
 import { env } from './env';
 import { auth } from './lib/auth';
+import { allowedOrigins } from './config';
 
 // if (env.NODE_ENV === 'production') {
 //   console.log('Starting workers');
@@ -15,21 +16,22 @@ import { auth } from './lib/auth';
 
 const app = new Hono();
 
+if (env.NODE_ENV === 'development') {
+  const { logger } = await import('hono/logger');
+  app.use(logger());
+}
+
 app.use(secureHeaders());
 app.use(compress());
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'https://usul.ai'],
+    origin: allowedOrigins,
     credentials: true,
-    // allowHeaders: ['Content-Type', 'Authorization'],
-    // allowMethods: ['POST', 'GET', 'OPTIONS'],
-    // exposeHeaders: ['Content-Length'],
-    // maxAge: 600,
   }),
 );
 
-app.on(['POST', 'GET'], '/api/auth/**', c => auth.handler(c.req.raw));
 app.route('/', routes);
+app.on(['POST', 'GET'], '/api/auth/*', c => auth.handler(c.req.raw));
 
 app.onError(err => {
   let extra = {};
