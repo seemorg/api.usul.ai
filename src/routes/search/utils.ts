@@ -11,7 +11,7 @@ import { DocumentSchema, SearchResponse } from 'typesense/lib/Typesense/Document
 import { z } from 'zod';
 
 export const commonSearchSchema = z.object({
-  q: z.string(),
+  q: z.string().optional().default(''),
   limit: z.coerce.number().optional().default(20),
   page: z.coerce.number().optional().default(1),
   locale: localeSchema,
