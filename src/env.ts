@@ -28,6 +28,18 @@ export const env = createEnv({
     GOOGLE_CLIENT_SECRET: z.string(),
 
     RESEND_API_KEY: z.string(),
+
+    AZURE_ENDPOINT_URL: z.string().url(),
+    AZURE_SECRET_KEY: z.string(),
+    AZURE_4_1_DEPLOYMENT: z.string(),
+
+    AZURE_SEARCH_ENDPOINT: z.string().url(),
+    AZURE_SEARCH_KEY: z.string(),
+    AZURE_VECTOR_SEARCH_INDEX: z.string(),
+    AZURE_KEYWORD_SEARCH_INDEX: z.string(),
+
+    LANGFUSE_SECRET_KEY: z.string(),
+    LANGFUSE_PUBLIC_KEY: z.string(),
   },
   runtimeEnv: process.env,
   emptyStringAsUndefined: true,

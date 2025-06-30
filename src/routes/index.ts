@@ -18,6 +18,7 @@ import { getGenreCount } from '@/services/genre';
 import { getRegionCount } from '@/services/region';
 import searchRoutes from './search';
 import collectionsRoutes from './collections';
+import chatRoutes from './chat';
 
 const routes = new Hono();
 
@@ -29,6 +30,7 @@ routes.route('/author', authorRoutes);
 routes.route('/search', searchRoutes);
 
 routes.route('/collections', collectionsRoutes);
+routes.route('/chat', chatRoutes);
 
 routes.get('/total', async c => {
   const [bookCount, authorCount, regionCount, genreCount] = await Promise.all([

@@ -9,17 +9,33 @@ import { populateRegions } from './services/region';
 import { populateLocations } from './services/location';
 import { populateAlternateSlugs } from './services/alternate-slugs';
 
+import { NodeSDK } from '@opentelemetry/sdk-node';
+import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
+import { LangfuseExporter } from 'langfuse-vercel';
+import { langfuseConfig } from './lib/langfuse';
+
 // before the server starts, we need to populate the cache
 console.log('🔄 Populating cache...');
 
+await populateGenres();
 if (env.NODE_ENV === 'production') {
-  await populateGenres();
   await populateLocations();
   await populateRegions();
   await populateAlternateSlugs();
   await populateAuthors();
   await populateBooks();
 }
+
+const sdk = new NodeSDK({
+  traceExporter: new LangfuseExporter(langfuseConfig),
+  instrumentations: [getNodeAutoInstrumentations()],
+});
+
+sdk.start();
+
+process.on('SIGTERM', () => {
+  sdk.shutdown().finally(() => process.exit(0));
+});
 
 serve(
   {
