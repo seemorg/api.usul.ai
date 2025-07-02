@@ -5,4 +5,5 @@ export const allowedOrigins = [
   'https://usul.ai',
   'https://beta.usul.ai',
   'https://staging.usul.ai',
+  'https://chat.usul.ai',
 ];
