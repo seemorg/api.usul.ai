@@ -12,8 +12,8 @@ import { z } from 'zod';
 
 export const commonSearchSchema = z.object({
   q: z.string().optional().default(''),
-  limit: z.coerce.number().optional().default(20),
-  page: z.coerce.number().optional().default(1),
+  limit: z.coerce.number().min(1).max(100).optional().default(20),
+  page: z.coerce.number().min(1).optional().default(1),
   locale: localeSchema,
 });
 

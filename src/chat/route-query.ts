@@ -1,6 +1,6 @@
 import { langfuse } from '@/lib/langfuse';
-import { model } from '@/lib/llm';
-import { generateObject, generateText, type CoreMessage } from 'ai';
+import { getLangfuseArgs, model } from '@/lib/llm';
+import { generateObject, type CoreMessage } from 'ai';
 
 export async function routeQuery(
   history: CoreMessage[],
@@ -13,17 +13,6 @@ export async function routeQuery(
   const response = await generateObject({
     model,
     output: 'no-schema',
-    experimental_telemetry: {
-      isEnabled: true,
-      functionId: 'Chat.OpenAI.Router', // Trace name
-      metadata: {
-        // langfuseTraceId: "trace-123", // Langfuse trace
-        // tags: ["story", "cat"], // Custom tags
-        // userId: "user-123", // Langfuse user
-        sessionId,
-        langfusePrompt: prompt.toJSON(),
-      },
-    },
     system: compiledPrompt,
     messages: [
       ...history,
@@ -32,6 +21,11 @@ export async function routeQuery(
         content: query,
       },
     ],
+    ...getLangfuseArgs({
+      name: 'Chat.OpenAI.Router', // Trace name
+      sessionId,
+      prompt,
+    }),
   });
 
   const result = response.object as {

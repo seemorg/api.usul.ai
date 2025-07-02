@@ -1,9 +1,9 @@
 import { AzureSearchResult } from '@/book-search/search';
 
 import { langfuse } from '@/lib/langfuse';
-import { model } from '@/lib/llm';
+import { streamText } from '@/lib/llm';
 import { BookDetailsResponse } from '@/routes/book/details';
-import { smoothStream, streamText, type CoreMessage } from 'ai';
+import { type CoreMessage } from 'ai';
 
 function formatSources(sources: AzureSearchResult[]) {
   return sources
@@ -39,10 +39,8 @@ export async function answerRagQuery({
   const compiledPrompt = prompt.compile();
 
   const response = streamText({
-    model,
     temperature: 0.5,
     system: compiledPrompt,
-    experimental_transform: smoothStream(),
     messages: [
       ...history,
       {
@@ -65,14 +63,66 @@ ${query}
         ],
       },
     ],
-    experimental_telemetry: {
-      isEnabled: true,
-      functionId: `Chat.OpenAI.RAG${isRetry ? '.Retry' : ''}`, // Trace name
-      metadata: {
-        sessionId,
-        langfuseTraceId: traceId,
-        langfusePrompt: prompt.toJSON(),
+    langfuse: {
+      name: `Chat.OpenAI.RAG${isRetry ? '.Retry' : ''}`,
+      sessionId,
+      traceId,
+      prompt,
+    },
+  });
+
+  return response;
+}
+
+export async function answerMultiBookRagQuery({
+  history,
+  query,
+  sources,
+  isRetry,
+  traceId,
+  sessionId,
+}: {
+  isRetry?: boolean;
+  history: CoreMessage[];
+  sources: AzureSearchResult[];
+  query: string;
+  traceId: string;
+  sessionId: string;
+}) {
+  const prompt = await langfuse.getPrompt('multi-rag');
+
+  const compiledPrompt = prompt.compile();
+
+  const response = streamText({
+    temperature: 0.5,
+    system: compiledPrompt,
+    messages: [
+      ...history,
+      {
+        role: 'user',
+        content: [
+          {
+            type: 'text',
+            text: `
+Most relevant search results from multiple books:
+${formatSources(sources)}
+        `.trim(),
+          },
+          {
+            type: 'text',
+            text: `
+User's query:
+${query}
+        `.trim(),
+          },
+        ],
       },
+    ],
+    langfuse: {
+      name: `Chat.OpenAI.MultiBookRAG${isRetry ? '.Retry' : ''}`,
+      sessionId,
+      traceId,
+      prompt,
     },
   });
 

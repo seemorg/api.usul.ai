@@ -1,6 +1,6 @@
 import { langfuse } from '@/lib/langfuse';
-import { model } from '@/lib/llm';
-import { generateText, type CoreMessage } from 'ai';
+import { generateText } from '@/lib/llm';
+import { type CoreMessage } from 'ai';
 
 export async function condenseMessageHistory({
   chatHistory,
@@ -23,16 +23,12 @@ export async function condenseMessageHistory({
   });
 
   const response = await generateText({
-    model,
     messages: compiledPrompt as CoreMessage[],
     temperature: isRetry ? 0.3 : 0,
-    experimental_telemetry: {
-      isEnabled: true,
-      functionId: `Chat.OpenAI.RAG.Condense${isRetry ? '.Retry' : ''}`, // Trace name
-      metadata: {
-        sessionId,
-        langfusePrompt: prompt.toJSON(),
-      },
+    langfuse: {
+      name: `Chat.OpenAI.RAG.Condense${isRetry ? '.Retry' : ''}`,
+      sessionId,
+      prompt,
     },
   });
 

@@ -5,8 +5,10 @@ import {
   SearchResult,
   SelectFields,
 } from '@azure/search-documents';
-import { KeywordSearchBookChunk, keywordSearchClient } from './keyword-search';
-import { VectorSearchBookChunk, vectorSearchClient } from './vector-search';
+
+import { vectorSearchClient, keywordSearchClient } from './client';
+import { KeywordSearchBookChunk, VectorSearchBookChunk } from '@/types/search';
+import { rerankChunks } from '@/lib/cohere';
 
 async function asyncIterableToArray<T extends object>(
   iterable: SearchIterator<T, SelectFields<T>>,
@@ -21,12 +23,14 @@ async function asyncIterableToArray<T extends object>(
 interface SearchParams {
   books?: {
     id: string;
-    sourceAndVersion?: string; // source:version
+    sourceAndVersion?: string; // source:version, like turath:692
   }[];
   query: string;
   type: 'vector' | 'text';
   limit?: number;
+  rerankLimit?: number;
   page?: number;
+  rerank?: boolean;
 }
 
 export async function searchBook({
@@ -34,7 +38,9 @@ export async function searchBook({
   query,
   type = 'vector',
   limit = 5,
+  rerankLimit,
   page = 1,
+  rerank = true,
 }: SearchParams) {
   let filter: string | undefined;
   if (books) {
@@ -94,6 +100,11 @@ export async function searchBook({
   const total = results.count!;
   const totalPages = Math.ceil(total / limit);
 
+  let formattedResults = await formatResults(results.results);
+  if (rerank) {
+    formattedResults = await rerankChunks(query, formattedResults, { topK: rerankLimit });
+  }
+
   return {
     total,
     totalPages,
@@ -101,47 +112,56 @@ export async function searchBook({
     currentPage: page,
     hasNextPage: page < totalPages,
     hasPreviousPage: page > 1,
-    results: (await asyncIterableToArray(results.results)).map(r => {
-      if ('chunk_content' in r.document) {
-        return {
-          score: r.score,
-          node: {
-            id: r.document.id,
-            text: r.document.chunk_content,
-            highlights: r.highlights?.chunk_content ?? [],
-            metadata: {
-              bookId: r.document.book_id,
-              sourceAndVersion: r.document.book_version_id,
-              pages: r.document.pages,
-              chapters: r.document.chapters,
-            },
-          },
-        };
-      }
+    results: formattedResults,
+  };
+}
 
+const formatResults = async (
+  results: SearchIterator<
+    KeywordSearchBookChunk | VectorSearchBookChunk,
+    SelectFields<KeywordSearchBookChunk | VectorSearchBookChunk>
+  >,
+) => {
+  return (await asyncIterableToArray(results)).map(r => {
+    if ('chunk_content' in r.document) {
       return {
         score: r.score,
         node: {
           id: r.document.id,
-          text: r.document.content,
-          highlights: r.highlights?.content ?? [],
+          text: r.document.chunk_content,
+          highlights: r.highlights?.chunk_content ?? [],
           metadata: {
             bookId: r.document.book_id,
             sourceAndVersion: r.document.book_version_id,
-            pages: [
-              {
-                index: r.document.index,
-                page: r.document.page,
-                volume: r.document.volume,
-              },
-            ],
+            pages: r.document.pages,
             chapters: r.document.chapters,
           },
         },
       };
-    }),
-  };
-}
+    }
+
+    return {
+      score: r.score,
+      node: {
+        id: r.document.id,
+        text: r.document.content,
+        highlights: r.highlights?.content ?? [],
+        metadata: {
+          bookId: r.document.book_id,
+          sourceAndVersion: r.document.book_version_id,
+          pages: [
+            {
+              index: r.document.index,
+              page: r.document.page,
+              volume: r.document.volume,
+            },
+          ],
+          chapters: r.document.chapters,
+        },
+      },
+    };
+  });
+};
 
 export type AzureSearchResponse = Awaited<ReturnType<typeof searchBook>>;
-export type AzureSearchResult = AzureSearchResponse['results'][number];
+export type AzureSearchResult = Awaited<ReturnType<typeof formatResults>>[number];
