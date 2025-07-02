@@ -32,14 +32,16 @@ export async function answerBookQuery({
     genres: book.genres
       .map(g => `  * Name: ${g.name}, Secondary Name: ${g.secondaryName}`)
       .join('\n'),
-    tableOfContent: (
-      truncateHeadings(bookDetails.headings) as (
-        | { volume?: number; page?: number; title: string; level: number }
-        | { page?: { vol: string; page: number }; title: string; level: number }
-      )[]
-    )
-      .map((h, idx) => `${idx + 1}. ${h.title}`)
-      .join('\n'),
+    tableOfContent: bookDetails.headings
+      ? (
+          truncateHeadings(bookDetails.headings) as (
+            | { volume?: number; page?: number; title: string; level: number }
+            | { page?: { vol: string; page: number }; title: string; level: number }
+          )[]
+        )
+          .map((h, idx) => `${idx + 1}. ${h.title}`)
+          .join('\n')
+      : '-',
   });
 
   const response = streamText({
@@ -105,9 +107,15 @@ ${book.genres
   .join('\n')}
 
 - Table of Contents: 
-${(truncateHeadings(bookDetails.headings, 5) as any[])
-  .map((h, idx) => `${idx + 1}. ${h.title}`)
-  .join('\n')}${bookDetails.headings.length > 5 ? '\n...' : ''}`;
+${
+  bookDetails.headings
+    ? (truncateHeadings(bookDetails.headings, 5) as any[])
+        .map((h, idx) => `${idx + 1}. ${h.title}`)
+        .join('\n')
+    : '-'
+}
+${bookDetails.headings?.length > 5 ? '...' : ''}
+`;
   })
   .join('\n\n')}  
 `;

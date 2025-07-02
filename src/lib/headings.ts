@@ -12,12 +12,12 @@ function _getHeadings(headings: BookDetailsResponse['headings'], levels: number[
   return newHeadings;
 }
 
-export const truncateHeadings = (details: BookDetailsResponse, max = 50) => {
+export const truncateHeadings = (headings: BookDetailsResponse['headings'], max = 50) => {
   const currentLevels = [1];
   let newHeadings = [];
 
-  while (newHeadings.length === details.headings.length) {
-    const newLevelHeadings = _getHeadings(details.headings, currentLevels);
+  while (newHeadings.length === headings.length) {
+    const newLevelHeadings = _getHeadings(headings, currentLevels);
     if (newLevelHeadings.length > max) {
       if (currentLevels.length === 1) {
         newHeadings = newLevelHeadings;
