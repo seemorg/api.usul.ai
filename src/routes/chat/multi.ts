@@ -8,7 +8,6 @@ import { BookDetailsResponse, getBookDetails } from '../book/details';
 import { answerMultiBookAuthorQuery } from '@/chat/author-chat';
 import { answerMultiBookQuery } from '@/chat/book-chat';
 import { condenseMessageHistory } from '@/chat/condense-chat';
-import { HTTPException } from 'hono/http-exception';
 import { AzureSearchResult, searchBook } from '@/book-search/search';
 import { answerMultiBookRagQuery } from '@/chat/rag';
 import { dataStreamToResponse } from '@/lib/stream';
@@ -41,8 +40,8 @@ multiChatRoutes.post(
 
     let bookDetailsArray = body.bookIds
       .map(async bookId => {
-        const details = await getBookDetails(bookId);
-        if ('type' in details) return null;
+        const details = await getBookDetails(bookId).catch(() => null);
+        if (!details || 'type' in details) return null;
         return details;
       })
       .filter(Boolean) as Promise<BookDetailsResponse>[];
@@ -86,7 +85,8 @@ multiChatRoutes.post(
           })),
           query: ragQuery,
           type: 'vector',
-          limit: 30,
+          limit: 50,
+          rerank: true,
           rerankLimit: 15,
         }).then(r => r.results);
 
@@ -115,7 +115,8 @@ multiChatRoutes.post(
       sources = (await searchBook({
         query: ragQuery,
         type: 'vector',
-        limit: 30,
+        limit: 50,
+        rerank: true,
         rerankLimit: 15,
       }).then(r => r.results))!;
 
@@ -139,8 +140,10 @@ multiChatRoutes.post(
             // load books so that we can reference them
             bookDetailsArray = sources
               .map(async source => {
-                const details = await getBookDetails(source.node.metadata.bookId);
-                if ('type' in details) return null;
+                const details = await getBookDetails(source.node.metadata.bookId).catch(
+                  () => null,
+                );
+                if (!details || 'type' in details) return null;
                 return details;
               })
               .filter(Boolean) as Promise<BookDetailsResponse>[];

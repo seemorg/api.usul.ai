@@ -91,7 +91,8 @@ singleChatRoutes.post(
         ],
         query: ragQuery,
         type: 'vector',
-        limit: 30,
+        limit: 50,
+        rerank: true,
         rerankLimit: 10,
       }).then(r => r.results);
 
