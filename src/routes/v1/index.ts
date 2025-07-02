@@ -7,7 +7,6 @@ import { BookDetailsResponse, getBookDetails } from '../book/details';
 import { searchBook } from '@/book-search/search';
 
 const v1Routes = new Hono();
-v1Routes.use(bearerAuth({ token: env.ANSARI_API_KEY }));
 
 const schema = z.object({
   q: z.string().min(1),
@@ -189,6 +188,7 @@ const booksSchema = z
 
 v1Routes.get(
   '/vector-search/:bookId/:versionId',
+  bearerAuth({ token: env.ANSARI_API_KEY }),
   zValidator('query', schema),
   async c => {
     const bookId = c.req.param('bookId');
