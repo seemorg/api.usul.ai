@@ -23,11 +23,11 @@ const homepageGenres = [
     color: 'red',
     pattern: 2,
   },
-  // {
-  //   id: 'fiqh',
-  //   color: 'green',
-  //   pattern: 3,
-  // },
+  {
+    id: 'fiqh',
+    color: 'green',
+    pattern: 3,
+  },
   {
     id: 'history',
     color: 'indigo',
