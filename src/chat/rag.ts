@@ -43,7 +43,7 @@ export async function answerRagQuery({
   const compiledPrompt = prompt.compile();
 
   const response = streamText({
-    temperature: 0.5,
+    temperature: isRetry ? 0.5 : 0,
     system: compiledPrompt,
     messages: [
       ...history,
@@ -100,7 +100,7 @@ export async function answerMultiBookRagQuery({
   const compiledPrompt = prompt.compile();
 
   const response = streamText({
-    temperature: 0.5,
+    temperature: isRetry ? 0.5 : 0,
     system: compiledPrompt,
     messages: [
       ...history,
