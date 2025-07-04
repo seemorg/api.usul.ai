@@ -1,6 +1,9 @@
 import { makeLocationDto } from '@/dto/location.dto';
 import { db } from '@/lib/db';
 import { PathLocale } from '@/lib/locale';
+import { env } from '@/env';
+import fs from 'fs';
+import path from 'path';
 
 export const getLocationById = (id: string, locale: PathLocale = 'en') => {
   const location = locationIdToLocation?.[id];
@@ -26,7 +29,23 @@ type RawLocation = Awaited<ReturnType<typeof get>>[number];
 let locationIdToLocation: Record<string, RawLocation> | null = null;
 let regionIdToLocations: Record<string, RawLocation[]> | null = null;
 export const populateLocations = async () => {
-  const locations = await get();
+  let locations: Awaited<ReturnType<typeof get>> | undefined;
+  const filePath = path.resolve('.cache/locations.json');
+  if (env.NODE_ENV === 'development') {
+    // load from local
+    if (fs.existsSync(filePath)) {
+      locations = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+    }
+  }
+
+  if (!locations) {
+    locations = await get();
+    if (env.NODE_ENV === 'development') {
+      // write to cache
+      fs.mkdirSync(path.dirname(filePath), { recursive: true });
+      fs.writeFileSync(filePath, JSON.stringify(locations), 'utf-8');
+    }
+  }
 
   locationIdToLocation = {};
   regionIdToLocations = {};

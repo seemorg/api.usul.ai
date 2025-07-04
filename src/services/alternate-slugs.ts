@@ -1,4 +1,7 @@
 import { db } from '@/lib/db';
+import { env } from '@/env';
+import fs from 'fs';
+import path from 'path';
 
 export const getBookByAlternateSlug = (slug: string) => {
   const bookId = bookSlugToId?.[slug];
@@ -19,7 +22,25 @@ let bookSlugToId: Record<string, string> | null = null;
 let authorSlugToId: Record<string, string> | null = null;
 
 export const populateAlternateSlugs = async () => {
-  const [bookSlugs, authorSlugs] = await get();
+  let data: Awaited<ReturnType<typeof get>> | undefined;
+  const filePath = path.resolve('.cache/alternate-slugs.json');
+  if (env.NODE_ENV === 'development') {
+    // load from local
+    if (fs.existsSync(filePath)) {
+      data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+    }
+  }
+
+  if (!data) {
+    data = await get();
+    if (env.NODE_ENV === 'development') {
+      // write to cache
+      fs.mkdirSync(path.dirname(filePath), { recursive: true });
+      fs.writeFileSync(filePath, JSON.stringify(data), 'utf-8');
+    }
+  }
+
+  const [bookSlugs, authorSlugs] = data;
 
   bookSlugToId = {};
   authorSlugToId = {};

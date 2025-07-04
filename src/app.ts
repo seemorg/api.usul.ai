@@ -2,6 +2,7 @@ import { Hono } from 'hono';
 import { compress } from 'hono/compress';
 import { cors } from 'hono/cors';
 import { secureHeaders } from 'hono/secure-headers';
+import { logger } from 'hono/logger';
 import { HTTPException } from 'hono/http-exception';
 
 import routes from './routes';
@@ -16,10 +17,7 @@ import { allowedOrigins } from './config';
 
 const app = new Hono();
 
-if (env.NODE_ENV === 'development') {
-  const { logger } = await import('hono/logger');
-  app.use(logger());
-}
+if (env.NODE_ENV === 'development') app.use(logger());
 
 app.use(secureHeaders());
 app.use(compress());
@@ -33,7 +31,7 @@ app.use(
 app.route('/', routes);
 app.on(['POST', 'GET'], '/api/auth/*', c => auth.handler(c.req.raw));
 
-app.onError(err => {
+app.onError((err, c) => {
   let extra = {};
   if (env.NODE_ENV === 'development') {
     extra = {
@@ -44,7 +42,7 @@ app.onError(err => {
   }
 
   if (err instanceof HTTPException) {
-    return Response.json(
+    return c.json(
       {
         status: err.status,
         message: err.message,
@@ -54,7 +52,7 @@ app.onError(err => {
     );
   }
 
-  return Response.json(
+  return c.json(
     {
       status: 500,
       message: 'Internal Server Error',

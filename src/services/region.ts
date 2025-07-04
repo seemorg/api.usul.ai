@@ -2,6 +2,9 @@ import { makeRegionDto, RegionDto } from '@/dto/region.dto';
 import { db } from '@/lib/db';
 import { PathLocale } from '@/lib/locale';
 import { getLocationsByRegionId } from './location';
+import { env } from '@/env';
+import fs from 'fs';
+import path from 'path';
 
 export const getRegionById = (
   id: string,
@@ -63,7 +66,23 @@ type RawRegion = Awaited<ReturnType<typeof get>>[number];
 let regionIdToRegion: Record<string, RawRegion> | null = null;
 let regionSlugToRegion: Record<string, RawRegion> | null = null;
 export const populateRegions = async () => {
-  const regions = await get();
+  let regions: Awaited<ReturnType<typeof get>> | undefined;
+  const filePath = path.resolve('.cache/regions.json');
+  if (env.NODE_ENV === 'development') {
+    // load from local
+    if (fs.existsSync(filePath)) {
+      regions = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+    }
+  }
+
+  if (!regions) {
+    regions = await get();
+    if (env.NODE_ENV === 'development') {
+      // write to cache
+      fs.mkdirSync(path.dirname(filePath), { recursive: true });
+      fs.writeFileSync(filePath, JSON.stringify(regions), 'utf-8');
+    }
+  }
 
   regionIdToRegion = {};
   regionSlugToRegion = {};

@@ -2,36 +2,18 @@ import { makeAuthorDto } from '@/dto/author.dto';
 import { env } from '@/env';
 import { db } from '@/lib/db';
 import { PathLocale } from '@/lib/locale';
+import fs from 'fs';
+import path from 'path';
 
 export const getAuthorById = async (id: string, locale: PathLocale = 'en') => {
-  const author =
-    env.NODE_ENV === 'development'
-      ? await db.author.findUnique({
-          where: { id },
-          include: {
-            primaryNameTranslations: true,
-            otherNameTranslations: true,
-            bioTranslations: true,
-          },
-        })
-      : authorIdToAuthor?.[id];
+  const author = authorIdToAuthor?.[id];
   if (!author) return null;
 
   return makeAuthorDto(author, locale);
 };
 
 export const getAuthorBySlug = async (slug: string, locale: PathLocale = 'en') => {
-  const author =
-    env.NODE_ENV === 'development'
-      ? await db.author.findUnique({
-          where: { slug },
-          include: {
-            primaryNameTranslations: true,
-            otherNameTranslations: true,
-            bioTranslations: true,
-          },
-        })
-      : authorSlugToAuthor?.[slug];
+  const author = authorSlugToAuthor?.[slug];
   if (!author) return null;
 
   return makeAuthorDto(author, locale);
@@ -59,7 +41,23 @@ type RawAuthor = Awaited<ReturnType<typeof get>>[number];
 let authorIdToAuthor: Record<string, RawAuthor> | null = null;
 let authorSlugToAuthor: Record<string, RawAuthor> | null = null;
 export const populateAuthors = async () => {
-  const authors = await get();
+  let authors: Awaited<ReturnType<typeof get>> | undefined;
+  const filePath = path.resolve('.cache/authors.json');
+  if (env.NODE_ENV === 'development') {
+    // load from local
+    if (fs.existsSync(filePath)) {
+      authors = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+    }
+  }
+
+  if (!authors) {
+    authors = await get();
+    if (env.NODE_ENV === 'development') {
+      // write to cache
+      fs.mkdirSync(path.dirname(filePath), { recursive: true });
+      fs.writeFileSync(filePath, JSON.stringify(authors), 'utf-8');
+    }
+  }
 
   authorIdToAuthor = {};
   authorSlugToAuthor = {};

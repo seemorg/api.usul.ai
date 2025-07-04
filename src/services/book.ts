@@ -3,43 +3,18 @@ import type { PathLocale } from '@/lib/locale';
 import { env } from '@/env';
 import { makeBookDto } from '@/dto/book.dto';
 import type { FetchBookResponse } from '@/book-fetchers';
+import fs from 'fs';
+import path from 'path';
 
 export const getBookBySlug = async (slug: string, locale: PathLocale = 'en') => {
-  const book =
-    env.NODE_ENV === 'development'
-      ? await db.book.findFirst({
-          where: { slug },
-          include: {
-            genres: {
-              select: { id: true },
-            },
-
-            primaryNameTranslations: true,
-            otherNameTranslations: true,
-          },
-        })
-      : bookSlugToBook?.[slug];
-
+  const book = bookSlugToBook?.[slug];
   if (!book) return null;
 
   return makeBookDto(book, locale);
 };
 
 export const getBookById = async (id: string, locale: PathLocale = 'en') => {
-  const book =
-    env.NODE_ENV === 'development'
-      ? await db.book.findFirst({
-          where: { id },
-          include: {
-            genres: {
-              select: { id: true },
-            },
-            primaryNameTranslations: true,
-            otherNameTranslations: true,
-          },
-        })
-      : bookIdToBook?.[id];
-
+  const book = bookIdToBook?.[id];
   if (!book) return null;
 
   return makeBookDto(book, locale);
@@ -69,7 +44,23 @@ type RawBook = Awaited<ReturnType<typeof get>>[number];
 let bookSlugToBook: Record<string, RawBook> | null = null;
 let bookIdToBook: Record<string, RawBook> | null = null;
 export const populateBooks = async () => {
-  const books = await get();
+  let books: Awaited<ReturnType<typeof get>> | undefined;
+  const filePath = path.resolve('.cache/books.json');
+  if (env.NODE_ENV === 'development') {
+    // load from local
+    if (fs.existsSync(filePath)) {
+      books = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+    }
+  }
+
+  if (!books) {
+    books = await get();
+    if (env.NODE_ENV === 'development') {
+      // write to cache
+      fs.mkdirSync(path.dirname(filePath), { recursive: true });
+      fs.writeFileSync(filePath, JSON.stringify(books), 'utf-8');
+    }
+  }
 
   bookSlugToBook = {};
   bookIdToBook = {};
