@@ -9,7 +9,11 @@ function formatSources(sources: AzureSearchResult[]) {
   return sources
     .map((s, idx) => {
       const text = s.node.text;
-      return `[${idx + 1}]: ${text}`;
+      return `
+<chunk_${idx + 1}>
+${text}
+</chunk_${idx + 1}>
+`.trim();
     })
     .join('\n\n');
 }
@@ -57,7 +61,9 @@ ${formatSources(sources)}
             type: 'text',
             text: `
 User's query:
+<query>
 ${query}
+</query>
         `.trim(),
           },
         ],

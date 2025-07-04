@@ -12,11 +12,20 @@ import { AzureSearchResult, searchBook } from '@/book-search/search';
 import { answerMultiBookRagQuery } from '@/chat/rag';
 import { dataStreamToResponse } from '@/lib/stream';
 import { messagesSchema } from '@/validators/chat';
+import { getBookById } from '@/services/book';
+import { BookDto } from '@/dto/book.dto';
+import { localeSchema } from '@/validators/locale';
 
 const multiChatRoutes = new Hono();
 
 multiChatRoutes.post(
   '/multi',
+  zValidator(
+    'query',
+    z.object({
+      locale: localeSchema,
+    }),
+  ),
   zValidator(
     'json',
     z.object({
@@ -27,6 +36,7 @@ multiChatRoutes.post(
   ),
   async c => {
     const body = c.req.valid('json');
+    const { locale } = c.req.valid('query');
     const chatId = uuidv4();
     const sessionId = uuidv4();
 
@@ -38,16 +48,16 @@ multiChatRoutes.post(
     let streamResult: StreamTextResult<ToolSet, never>;
     let sources: AzureSearchResult[] | null = null;
 
-    let bookDetailsArray = body.bookIds
-      .map(async bookId => {
-        const details = await getBookDetails(bookId).catch(() => null);
-        if (!details || 'type' in details) return null;
-        return details;
-      })
-      .filter(Boolean) as Promise<BookDetailsResponse>[];
+    let bookDetailsArray = body.bookIds.map(async bookId => {
+      const details = await getBookDetails(bookId, locale).catch(() => null);
+      if (!details || 'type' in details) return null;
+      return details;
+    });
 
     if (bookDetailsArray.length > 0) {
-      const resolved = await Promise.all(bookDetailsArray);
+      const resolved = (await Promise.all(bookDetailsArray)).filter(
+        Boolean,
+      ) as BookDetailsResponse[];
       const routerResult = await routeQuery(chatHistory, lastMessage, sessionId);
 
       if (routerResult === 'author') {
@@ -136,26 +146,28 @@ multiChatRoutes.post(
         streamResult.mergeIntoDataStream(writer);
 
         if (sources) {
+          let books: BookDto[] | null = null;
           if (bookDetailsArray.length === 0) {
             // load books so that we can reference them
-            bookDetailsArray = sources
-              .map(async source => {
-                const details = await getBookDetails(source.node.metadata.bookId).catch(
-                  () => null,
-                );
-                if (!details || 'type' in details) return null;
-                return details;
-              })
-              .filter(Boolean) as Promise<BookDetailsResponse>[];
+            books = (
+              await Promise.all(
+                sources.map(async source => {
+                  return getBookById(source.node.metadata.bookId, locale);
+                }),
+              )
+            ).filter(Boolean) as BookDto[];
           }
-          const resolved = await Promise.all(bookDetailsArray);
+
+          const resolved = (
+            (await Promise.all(bookDetailsArray)).filter(Boolean) as BookDetailsResponse[]
+          ).map(b => b.book);
 
           writer.writeMessageAnnotation({
             type: 'SOURCES',
             value: sources.map(source => {
-              const book = resolved.find(
-                b => b.book.id === source.node.metadata.bookId,
-              )?.book;
+              const book = (books ?? resolved).find(
+                b => b.id === source.node.metadata.bookId,
+              );
 
               return {
                 score: source.score,
