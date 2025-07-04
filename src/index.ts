@@ -16,14 +16,17 @@ import { langfuseConfig } from './lib/langfuse';
 
 // before the server starts, we need to populate the cache
 console.log('🔄 Populating cache...');
-await populateGenres();
+await Promise.all([
+  populateGenres(),
+  populateLocations(),
+  populateRegions(),
+  populateAlternateSlugs(),
+]);
 console.log('✅ Populated genres');
-await populateLocations();
 console.log('✅ Populated locations');
-await populateRegions();
 console.log('✅ Populated regions');
-await populateAlternateSlugs();
 console.log('✅ Populated alternate slugs');
+
 await populateAuthors();
 console.log('✅ Populated authors');
 await populateBooks();

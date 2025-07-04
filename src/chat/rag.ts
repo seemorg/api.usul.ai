@@ -4,19 +4,11 @@ import { langfuse } from '@/lib/langfuse';
 import { streamText } from '@/lib/llm';
 import { BookDetailsResponse } from '@/routes/book/details';
 import { type CoreMessage } from 'ai';
+import { formatSources } from './utils';
 
-function formatSources(sources: AzureSearchResult[]) {
-  return sources
-    .map((s, idx) => {
-      const text = s.node.text;
-      return `
-<chunk_${idx + 1}>
-${text}
-</chunk_${idx + 1}>
+const SOURCE_FORMAT = `
+When citing a source, use the following format: [number]. So for example, <source_1>, should be cited as [1].
 `.trim();
-    })
-    .join('\n\n');
-}
 
 export async function answerRagQuery({
   bookDetails,
@@ -40,7 +32,11 @@ export async function answerRagQuery({
   const bookName = bookDetails.book.primaryName;
   const authorName = bookDetails.book.author.primaryName;
 
-  const compiledPrompt = prompt.compile();
+  const compiledPrompt = `
+${prompt.compile()}
+
+${SOURCE_FORMAT}
+`.trim();
 
   const response = streamText({
     temperature: isRetry ? 0.5 : 0,
@@ -97,7 +93,11 @@ export async function answerMultiBookRagQuery({
 }) {
   const prompt = await langfuse.getPrompt('multi-rag');
 
-  const compiledPrompt = prompt.compile();
+  const compiledPrompt = `
+${prompt.compile()}
+
+${SOURCE_FORMAT}
+`.trim();
 
   const response = streamText({
     temperature: isRetry ? 0.5 : 0,
