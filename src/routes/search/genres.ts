@@ -28,11 +28,11 @@ genresSearchRoutes.get(
   zValidator(
     'query',
     commonSearchSchema.extend({
-      sort: z.enum(['relevance', 'texts-asc', 'texts-desc']).optional(),
+      sortBy: z.enum(['relevance', 'texts-asc', 'texts-desc']).optional(),
     }),
   ),
   async c => {
-    const { q, limit, page, sort, locale } = c.req.valid('query');
+    const { q, limit, page, sortBy, locale } = c.req.valid('query');
 
     const results = await typesense
       .collections<TypesenseGenreDocument>(GENRES_COLLECTION.INDEX)
@@ -44,13 +44,12 @@ genresSearchRoutes.get(
         prioritize_token_position: true,
         limit,
         page,
-
-        ...(sort &&
-          sort !== 'relevance' && {
+        ...(sortBy &&
+          sortBy !== 'relevance' && {
             sort_by: {
               'texts-asc': 'booksCount:asc',
               'texts-desc': 'booksCount:desc',
-            }[sort],
+            }[sortBy],
           }),
       });
 

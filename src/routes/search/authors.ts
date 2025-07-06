@@ -44,13 +44,13 @@ authorSearchRoutes.get(
         .transform(val => val.split(','))
         .pipe(z.array(z.string()))
         .optional(),
-      sort: z
+      sortBy: z
         .enum(['relevance', 'year-asc', 'year-desc', 'texts-asc', 'texts-desc'])
         .optional(),
     }),
   ),
   async c => {
-    const { q, limit, page, sort, regions, yearRange, ids, locale } =
+    const { q, limit, page, sortBy, regions, yearRange, ids, locale } =
       c.req.valid('query');
 
     const filters: string[] = [];
@@ -65,6 +65,18 @@ authorSearchRoutes.get(
       filters.push(`id:[${ids.map(id => `\`${id}\``).join(', ')}]`);
     }
 
+    console.log(
+      sortBy &&
+        sortBy !== 'relevance' && {
+          sort_by: {
+            'year-asc': 'year:asc',
+            'year-desc': 'year:desc',
+            'texts-asc': 'booksCount:asc',
+            'texts-desc': 'booksCount:desc',
+          }[sortBy],
+        },
+    );
+
     const results = await typesense
       .collections<TypesenseAuthorDocument>(AUTHORS_COLLECTION.INDEX)
       .documents()
@@ -76,14 +88,14 @@ authorSearchRoutes.get(
         limit,
         page,
         ...(filters.length > 0 && { filter_by: filters.join(' && ') }),
-        ...(sort &&
-          sort !== 'relevance' && {
+        ...(sortBy &&
+          sortBy !== 'relevance' && {
             sort_by: {
               'year-asc': 'year:asc',
               'year-desc': 'year:desc',
               'texts-asc': 'booksCount:asc',
               'texts-desc': 'booksCount:desc',
-            }[sort],
+            }[sortBy],
           }),
       });
 

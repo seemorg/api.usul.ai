@@ -115,7 +115,7 @@ collectionsRoutes.get(
         .transform(val => val.split(','))
         .pipe(z.tuple([z.coerce.number(), z.coerce.number()]))
         .optional(),
-      sort: z.enum(['relevance', 'year-asc', 'year-desc']).optional(),
+      sortBy: z.enum(['relevance', 'year-asc', 'year-desc']).optional(),
     }),
   ),
   async c => {
@@ -126,7 +126,7 @@ collectionsRoutes.get(
       throw new HTTPException(404, { message: 'Collection not found' });
     }
 
-    const { q, limit, page, sort, genres, authors, regions, yearRange, locale } =
+    const { q, limit, page, sortBy, genres, authors, regions, yearRange, locale } =
       c.req.valid('query');
 
     const filters: string[] = [];
@@ -158,12 +158,12 @@ collectionsRoutes.get(
           limit,
           page,
           ...(filters.length > 0 && { filter_by: filters.join(' && ') }),
-          ...(sort && sort !== 'relevance'
+          ...(sortBy && sortBy !== 'relevance'
             ? {
                 sort_by: {
                   'year-asc': 'year:asc',
                   'year-desc': 'year:desc',
-                }[sort],
+                }[sortBy],
               }
             : {}),
         },

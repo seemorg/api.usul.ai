@@ -60,11 +60,11 @@ bookSearchRoutes.get(
         .transform(val => val.split(','))
         .pipe(z.array(z.string()))
         .optional(),
-      sort: z.enum(['relevance', 'year-asc', 'year-desc']).optional(),
+      sortBy: z.enum(['relevance', 'year-asc', 'year-desc']).optional(),
     }),
   ),
   async c => {
-    const { q, limit, page, sort, genres, authors, regions, yearRange, ids, locale } =
+    const { q, limit, page, sortBy, genres, authors, regions, yearRange, ids, locale } =
       c.req.valid('query');
 
     const filters: string[] = [];
@@ -98,12 +98,12 @@ bookSearchRoutes.get(
           limit,
           page,
           ...(filters.length > 0 && { filter_by: filters.join(' && ') }),
-          ...(sort && sort !== 'relevance'
+          ...(sortBy && sortBy !== 'relevance'
             ? {
                 sort_by: {
                   'year-asc': 'year:asc',
                   'year-desc': 'year:desc',
-                }[sort],
+                }[sortBy],
               }
             : {}),
         },

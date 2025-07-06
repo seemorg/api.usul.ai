@@ -31,13 +31,13 @@ regionsSearchRoutes.get(
   zValidator(
     'query',
     commonSearchSchema.extend({
-      sort: z
+      sortBy: z
         .enum(['relevance', 'texts-asc', 'texts-desc', 'authors-asc', 'authors-desc'])
         .optional(),
     }),
   ),
   async c => {
-    const { q, limit, page, sort, locale } = c.req.valid('query');
+    const { q, limit, page, sortBy, locale } = c.req.valid('query');
 
     const results = await typesense
       .collections<TypesenseRegionDocument>(REGIONS_COLLECTION.INDEX)
@@ -49,15 +49,14 @@ regionsSearchRoutes.get(
         prioritize_token_position: true,
         limit,
         page,
-
-        ...(sort &&
-          sort !== 'relevance' && {
+        ...(sortBy &&
+          sortBy !== 'relevance' && {
             sort_by: {
               'texts-asc': 'booksCount:asc',
               'texts-desc': 'booksCount:desc',
               'authors-asc': 'authorsCount:asc',
               'authors-desc': 'authorsCount:desc',
-            }[sort],
+            }[sortBy],
           }),
       });
 
