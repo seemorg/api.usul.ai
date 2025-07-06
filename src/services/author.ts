@@ -5,14 +5,14 @@ import { PathLocale } from '@/lib/locale';
 import fs from 'fs';
 import path from 'path';
 
-export const getAuthorById = async (id: string, locale: PathLocale = 'en') => {
+export const getAuthorById = (id: string, locale: PathLocale = 'en') => {
   const author = authorIdToAuthor?.[id];
   if (!author) return null;
 
   return makeAuthorDto(author, locale);
 };
 
-export const getAuthorBySlug = async (slug: string, locale: PathLocale = 'en') => {
+export const getAuthorBySlug = (slug: string, locale: PathLocale = 'en') => {
   const author = authorSlugToAuthor?.[slug];
   if (!author) return null;
 

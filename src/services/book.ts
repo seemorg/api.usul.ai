@@ -6,18 +6,32 @@ import type { FetchBookResponse } from '@/book-fetchers';
 import fs from 'fs';
 import path from 'path';
 
-export const getBookBySlug = async (slug: string, locale: PathLocale = 'en') => {
+export const getBookBySlug = (slug: string, locale: PathLocale = 'en') => {
   const book = bookSlugToBook?.[slug];
   if (!book) return null;
 
   return makeBookDto(book, locale);
 };
 
-export const getBookById = async (id: string, locale: PathLocale = 'en') => {
+export const getBookById = (id: string, locale: PathLocale = 'en') => {
   const book = bookIdToBook?.[id];
   if (!book) return null;
 
   return makeBookDto(book, locale);
+};
+
+export const getBooksByAuthorId = (authorId: string, locale: PathLocale = 'en') => {
+  const entries = authorIdToBooks?.[authorId];
+  if (!entries) return [];
+
+  return entries.map(book => makeBookDto(book, locale));
+};
+
+export const getBooksByGenreId = (genreId: string, locale: PathLocale = 'en') => {
+  const entries = genreIdToBooks?.[genreId];
+  if (!entries) return [];
+
+  return entries.map(book => makeBookDto(book, locale));
 };
 
 export const getBookCount = async () => {
@@ -43,6 +57,9 @@ type RawBook = Awaited<ReturnType<typeof get>>[number];
 
 let bookSlugToBook: Record<string, RawBook> | null = null;
 let bookIdToBook: Record<string, RawBook> | null = null;
+let authorIdToBooks: Record<string, RawBook[]> | null = null;
+let genreIdToBooks: Record<string, RawBook[]> | null = null;
+
 export const populateBooks = async () => {
   let books: Awaited<ReturnType<typeof get>> | undefined;
   const filePath = path.resolve('.cache/books.json');
@@ -64,10 +81,17 @@ export const populateBooks = async () => {
 
   bookSlugToBook = {};
   bookIdToBook = {};
+  authorIdToBooks = {};
+  genreIdToBooks = {};
 
   for (const book of books) {
     bookSlugToBook[book.slug] = book;
     bookIdToBook[book.id] = book;
+
+    authorIdToBooks[book.authorId] = [...(authorIdToBooks[book.authorId] ?? []), book];
+    book.genres.forEach(genre => {
+      genreIdToBooks![genre.id] = [...(genreIdToBooks![genre.id] ?? []), book];
+    });
   }
 };
 

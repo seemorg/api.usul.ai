@@ -6,14 +6,14 @@ import { Book, BookOtherNames, BookPrimaryName } from '@prisma/client';
 
 export type BookDto = Awaited<ReturnType<typeof makeBookDto>>;
 
-export const makeBookDto = async (
+export const makeBookDto = (
   book: Book & {
     primaryNameTranslations: BookPrimaryName[];
     otherNameTranslations: BookOtherNames[];
   } & { genres: { id: string }[] },
   locale: PathLocale,
 ) => {
-  const author = (await getAuthorById(book.authorId, locale))!;
+  const author = getAuthorById(book.authorId, locale)!;
 
   return {
     id: book.id,

@@ -12,7 +12,7 @@ import { AzureSearchResult, searchBook } from '@/book-search/search';
 import { answerMultiBookRagQuery } from '@/chat/rag';
 import { dataStreamToResponse } from '@/lib/stream';
 import { messagesSchema } from '@/validators/chat';
-import { getBookById } from '@/services/book';
+import { getBookById, getBooksByAuthorId, getBooksByGenreId } from '@/services/book';
 import { BookDto } from '@/dto/book.dto';
 import { localeSchema } from '@/validators/locale';
 import { generateQueries } from '@/chat/generate-queries';
@@ -57,7 +57,9 @@ multiChatRoutes.post(
     'json',
     z.object({
       isRetry: z.boolean().optional(),
-      bookIds: z.array(z.string()).optional().default([]), // Limit to 10 books for performance
+      bookIds: z.array(z.string()).optional().default([]),
+      authorIds: z.array(z.string()).optional().default([]),
+      genreIds: z.array(z.string()).optional().default([]),
       messages: messagesSchema,
     }),
   ),
@@ -72,95 +74,28 @@ multiChatRoutes.post(
     // get last 6 messages
     const chatHistory = messages.slice(-6);
 
-    const bookDetailsArray = (
-      await Promise.all(
-        body.bookIds.map(async bookId => {
-          const details = await getBookDetails(bookId, locale).catch(() => null);
-          if (!details || 'type' in details) return null;
-          return details;
-        }),
-      )
-    ).filter(Boolean) as BookDetailsResponse[];
-
-    if (bookDetailsArray.length > 0) {
-      let streamResult: StreamTextResult<ToolSet, never>;
-      let sources: AzureSearchResult[] | null = null;
-
-      const routerResult = await routeQuery(chatHistory, lastMessage, sessionId);
-
-      if (routerResult === 'author') {
-        streamResult = await answerMultiBookAuthorQuery({
-          bookDetailsArray,
-          history: chatHistory,
-          query: lastMessage,
-          traceId: chatId,
-          sessionId,
-        });
-      } else if (routerResult === 'summary') {
-        streamResult = await answerMultiBookQuery({
-          bookDetailsArray,
-          history: chatHistory,
-          query: lastMessage,
-          traceId: chatId,
-          sessionId,
-        });
-      } else if (routerResult === 'content') {
-        let ragQuery: string;
-        // If there are no messages, don't condense the history
-        if (chatHistory.length === 0) ragQuery = lastMessage;
-        else {
-          ragQuery = await condenseMessageHistory({
-            chatHistory,
-            query: lastMessage,
-            isRetry: body.isRetry,
-            sessionId,
-          });
-        }
-
-        sources = await searchBook({
-          books: bookDetailsArray.map(bookDetails => ({
-            id: bookDetails.book.id,
-          })),
-          query: ragQuery,
-          type: 'vector',
-          limit: 50,
-          rerank: true,
-          rerankLimit: 15,
-        }).then(r => r.results);
-
-        streamResult = await answerMultiBookRagQuery({
-          history: chatHistory,
-          query: lastMessage, // use last message and not ragQuery to preserve context
-          sources: sources!,
-          isRetry: body.isRetry,
-          traceId: chatId,
-          sessionId,
-        });
-      }
-
-      const dataStream = createDataStream({
-        execute: async writer => {
-          writer.writeMessageAnnotation({ type: 'CHAT_ID', value: chatId });
-          streamResult.mergeIntoDataStream(writer);
-
-          if (sources) {
-            const resolved = (
-              (await Promise.all(bookDetailsArray)).filter(
-                Boolean,
-              ) as BookDetailsResponse[]
-            ).map(b => b.book);
-
-            writeSources(writer, sources, resolved);
-          }
-        },
-        onError: error => {
-          console.log(error);
-          return error instanceof Error ? error.message : String(error);
-        },
-      });
-
-      return dataStreamToResponse(c, dataStream);
+    const resolvedBookIds = new Set<string>();
+    if (body.bookIds.length > 0) {
+      body.bookIds.forEach(bookId => resolvedBookIds.add(bookId));
     }
+
+    if (body.authorIds.length > 0) {
+      body.authorIds.forEach(authorId => {
+        const books = getBooksByAuthorId(authorId, locale);
+        books.forEach(book => resolvedBookIds.add(book.id));
+      });
+    }
+
+    if (body.genreIds.length > 0) {
+      body.genreIds.forEach(genreId => {
+        const books = getBooksByGenreId(genreId, locale);
+        books.forEach(book => resolvedBookIds.add(book.id));
+      });
+    }
+
+    const books = [...resolvedBookIds]
+      .map(id => getBookById(id, locale))
+      .filter(Boolean) as BookDto[];
 
     const dataStream = createDataStream({
       execute: async writer => {
@@ -183,6 +118,8 @@ multiChatRoutes.post(
             [...queries, lastMessage].map(async query => {
               const result = await searchBook({
                 query,
+                books:
+                  books.length > 0 ? books.map(book => ({ id: book.id })) : undefined,
                 type: 'vector',
                 limit: 20,
                 rerank: false,
@@ -217,15 +154,14 @@ multiChatRoutes.post(
         });
         result.mergeIntoDataStream(writer);
 
-        const books = (
-          await Promise.all(
-            sources.map(async source => {
-              return getBookById(source.node.metadata.bookId, locale);
-            }),
-          )
-        ).filter(Boolean) as BookDto[];
+        const sourcesBooks =
+          books.length > 0
+            ? books
+            : (sources
+                .map(source => getBookById(source.node.metadata.bookId, locale))
+                .filter(Boolean) as BookDto[]);
 
-        writeSources(writer, sources, books);
+        writeSources(writer, sources, sourcesBooks);
       },
       onError: error => {
         console.log(error);
