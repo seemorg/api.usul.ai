@@ -2,13 +2,9 @@ import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
 import { z } from 'zod';
 import { v4 as uuidv4 } from 'uuid';
-import { createDataStream, DataStreamWriter, StreamTextResult, ToolSet } from 'ai';
-import { routeQuery } from '@/chat/route-query';
-import { BookDetailsResponse, getBookDetails } from '../book/details';
-import { answerMultiBookAuthorQuery } from '@/chat/author-chat';
-import { answerMultiBookQuery } from '@/chat/book-chat';
-import { condenseMessageHistory } from '@/chat/condense-chat';
-import { AzureSearchResult, searchBook } from '@/book-search/search';
+import { createDataStream } from 'ai';
+
+import { searchQueriesInParallel } from '@/book-search/search';
 import { answerMultiBookRagQuery } from '@/chat/rag';
 import { dataStreamToResponse } from '@/lib/stream';
 import { messagesSchema } from '@/validators/chat';
@@ -17,33 +13,10 @@ import { BookDto } from '@/dto/book.dto';
 import { localeSchema } from '@/validators/locale';
 import { generateQueries } from '@/chat/generate-queries';
 import { rerankChunks } from '@/lib/cohere';
+import { writeSourcesToStream } from '@/chat/utils';
+import { condenseMessageHistory } from '@/chat/condense-chat';
 
 const multiChatRoutes = new Hono();
-
-const writeSources = (
-  writer: DataStreamWriter,
-  sources: AzureSearchResult[],
-  books: BookDto[],
-) => {
-  writer.writeMessageAnnotation({
-    type: 'SOURCES',
-    value: sources.map(source => {
-      const book = books.find(b => b.id === source.node.metadata.bookId);
-
-      return {
-        score: source.score,
-        text: source.node.text,
-        metadata: source.node.metadata,
-        book: book
-          ? {
-              primaryName: book.primaryName!,
-              slug: book.slug,
-            }
-          : null,
-      };
-    }),
-  });
-};
 
 multiChatRoutes.post(
   '/multi',
@@ -113,29 +86,24 @@ multiChatRoutes.post(
         });
 
         // search the queries in parallel
-        const searchResults = (
-          await Promise.all(
-            [...queries, lastMessage].map(async query => {
-              const result = await searchBook({
-                query,
-                books:
-                  books.length > 0 ? books.map(book => ({ id: book.id })) : undefined,
-                type: 'vector',
-                limit: 20,
-                rerank: false,
-              });
-              return result.results;
-            }),
-          )
-        ).flat();
+        const [searchResults, rerankQuery] = await Promise.all([
+          searchQueriesInParallel([...queries, lastMessage], {
+            books: books.length > 0 ? books.map(book => ({ id: book.id })) : undefined,
+          }),
+          (async () => {
+            if (chatHistory.length === 0) return lastMessage;
 
-        const idToSource: Record<string, AzureSearchResult> = {};
-        for (const result of searchResults) {
-          idToSource[result.node.id] = result;
-        }
+            return condenseMessageHistory({
+              chatHistory,
+              query: lastMessage,
+              isRetry: body.isRetry,
+              sessionId,
+            });
+          })(),
+        ]);
 
         // pass de-duplicated sources to rerank
-        const sources = await rerankChunks(lastMessage, Object.values(idToSource), {
+        const sources = await rerankChunks(rerankQuery, searchResults, {
           topK: 20,
         });
 
@@ -154,14 +122,15 @@ multiChatRoutes.post(
         });
         result.mergeIntoDataStream(writer);
 
+        // if there are books specified in filters, use them to get book details, otherwise use sources to get book details
         const sourcesBooks =
           books.length > 0
             ? books
-            : (sources
-                .map(source => getBookById(source.node.metadata.bookId, locale))
+            : ([...new Set(sources.map(source => source.node.metadata.bookId))]
+                .map(bookId => getBookById(bookId, locale))
                 .filter(Boolean) as BookDto[]);
 
-        writeSources(writer, sources, sourcesBooks);
+        writeSourcesToStream(writer, sources, sourcesBooks);
       },
       onError: error => {
         console.log(error);

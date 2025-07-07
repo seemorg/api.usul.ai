@@ -165,3 +165,31 @@ const formatResults = async (
 
 export type AzureSearchResponse = Awaited<ReturnType<typeof searchBook>>;
 export type AzureSearchResult = Awaited<ReturnType<typeof formatResults>>[number];
+
+export const searchQueriesInParallel = async (
+  queries: string[],
+  params?: Omit<SearchParams, 'query' | 'type'>,
+) => {
+  // search the queries in parallel
+  const searchResults = (
+    await Promise.all(
+      queries.map(async query => {
+        const result = await searchBook({
+          query,
+          type: 'vector',
+          limit: 20,
+          rerank: false,
+          ...params,
+        });
+        return result.results;
+      }),
+    )
+  ).flat();
+
+  const idToSource: Record<string, AzureSearchResult> = {};
+  for (const result of searchResults) {
+    idToSource[result.node.id] = result;
+  }
+
+  return Object.values(idToSource); // return de-duplicated sources
+};
