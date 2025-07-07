@@ -1,45 +1,34 @@
 import { makeRegionDto, RegionDto } from '@/dto/region.dto';
 import { db } from '@/lib/db';
 import { PathLocale } from '@/lib/locale';
-import { getLocationsByRegionId } from './location';
 import { env } from '@/env';
 import fs from 'fs';
 import path from 'path';
 
 export const getRegionById = (
   id: string,
-  { includeLocations }: { includeLocations?: boolean } = {},
   locale: PathLocale = 'en',
-) => {
+  params: { includeLocations?: boolean } = {},
+): RegionDto | null => {
   const region = regionIdToRegion?.[id];
   if (!region) return null;
 
-  const result = makeRegionDto(region, locale) as RegionDto;
-  if (includeLocations) {
-    result.locations = getLocationsByRegionId(region.id, locale);
-  }
-
-  return result;
+  return makeRegionDto(region, locale, params);
 };
 
 export const getRegionBySlug = (
   slug: string,
-  { includeLocations }: { includeLocations?: boolean } = {},
   locale: PathLocale = 'en',
-) => {
+  params: { includeLocations?: boolean } = {},
+): RegionDto | null => {
   const region = regionSlugToRegion?.[slug];
 
   if (!region) return null;
 
-  const result = makeRegionDto(region, locale) as RegionDto;
-  if (includeLocations) {
-    result.locations = getLocationsByRegionId(region.id, locale);
-  }
-
-  return result;
+  return makeRegionDto(region, locale, params);
 };
 
-export const getAllRegions = (locale: PathLocale = 'en') => {
+export const getAllRegions = (locale: PathLocale = 'en'): RegionDto[] => {
   const regions = Object.values(regionIdToRegion ?? {});
   return regions.map(region => makeRegionDto(region, locale));
 };

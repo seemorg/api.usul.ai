@@ -5,16 +5,24 @@ import { env } from '@/env';
 import fs from 'fs';
 import path from 'path';
 
-export const getLocationById = (id: string, locale: PathLocale = 'en') => {
+export const getLocationById = (
+  id: string,
+  locale: PathLocale = 'en',
+  params: { includeRegion?: boolean } = {},
+) => {
   const location = locationIdToLocation?.[id];
   if (!location) return null;
 
-  return makeLocationDto(location, locale);
+  return makeLocationDto(location, locale, params);
 };
 
-export const getLocationsByRegionId = (regionId: string, locale: PathLocale = 'en') => {
+export const getLocationsByRegionId = (
+  regionId: string,
+  locale: PathLocale = 'en',
+  params: { includeRegion?: boolean } = {},
+) => {
   const locations = regionIdToLocations?.[regionId] ?? [];
-  return locations.map(location => makeLocationDto(location, locale));
+  return locations.map(location => makeLocationDto(location, locale, params));
 };
 
 const get = () =>

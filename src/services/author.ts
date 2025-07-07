@@ -5,18 +5,26 @@ import { PathLocale } from '@/lib/locale';
 import fs from 'fs';
 import path from 'path';
 
-export const getAuthorById = (id: string, locale: PathLocale = 'en') => {
+export const getAuthorById = (
+  id: string,
+  locale: PathLocale = 'en',
+  params: { includeLocations?: boolean } = {},
+) => {
   const author = authorIdToAuthor?.[id];
   if (!author) return null;
 
-  return makeAuthorDto(author, locale);
+  return makeAuthorDto(author, locale, params);
 };
 
-export const getAuthorBySlug = (slug: string, locale: PathLocale = 'en') => {
+export const getAuthorBySlug = (
+  slug: string,
+  locale: PathLocale = 'en',
+  params: { includeLocations?: boolean } = {},
+) => {
   const author = authorSlugToAuthor?.[slug];
   if (!author) return null;
 
-  return makeAuthorDto(author, locale);
+  return makeAuthorDto(author, locale, params);
 };
 
 export const getAuthorCount = async () => {
@@ -33,6 +41,9 @@ const get = () =>
       primaryNameTranslations: true,
       otherNameTranslations: true,
       bioTranslations: true,
+      locations: {
+        select: { id: true },
+      },
     },
   });
 

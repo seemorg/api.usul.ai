@@ -1,11 +1,7 @@
 import { PathLocale } from '@/lib/locale';
 import { getPrimaryLocalizedText, getSecondaryLocalizedText } from '@/lib/localization';
+import { getLocationsByRegionId } from '@/services/location';
 import { Region, RegionName, RegionCurrentName, RegionOverview } from '@prisma/client';
-import { LocationDto } from './location.dto';
-
-export type RegionDto = ReturnType<typeof makeRegionDto> & {
-  locations?: LocationDto[];
-};
 
 export const makeRegionDto = (
   region: Region & {
@@ -14,7 +10,20 @@ export const makeRegionDto = (
     overviewTranslations: RegionOverview[];
   },
   locale: PathLocale,
-) => {
+  { includeLocations = false }: { includeLocations?: boolean } = {},
+): {
+  id: string;
+  slug: string;
+  transliteration: string | null;
+  name: string | undefined;
+  secondaryName: string | undefined;
+  currentName: string | undefined;
+  secondaryCurrentName: string | undefined;
+  overview: string | undefined;
+  numberOfAuthors: number;
+  numberOfBooks: number;
+  locations?: any[];
+} => {
   return {
     id: region.id,
     slug: region.slug,
@@ -32,5 +41,11 @@ export const makeRegionDto = (
     overview: getPrimaryLocalizedText(region.overviewTranslations, locale),
     numberOfAuthors: region.numberOfAuthors,
     numberOfBooks: region.numberOfBooks,
+
+    ...(includeLocations && {
+      locations: getLocationsByRegionId(region.id, locale),
+    }),
   };
 };
+
+export type RegionDto = ReturnType<typeof makeRegionDto>;

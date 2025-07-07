@@ -26,11 +26,14 @@ authorRoutes.get(
     const { slug } = c.req.valid('param');
     const { locale } = c.req.valid('query');
 
-    const author = await getAuthorBySlug(slug, locale);
+    const author =
+      getAuthorBySlug(slug, locale, { includeLocations: true }) ||
+      getAuthorById(slug, locale, { includeLocations: true });
+
     if (!author) {
       const alternateSlugAuthorId = getAuthorByAlternateSlug(slug);
       if (alternateSlugAuthorId) {
-        const primarySlug = (await getAuthorById(alternateSlugAuthorId, locale))?.slug;
+        const primarySlug = getAuthorById(alternateSlugAuthorId, locale)?.slug;
         if (primarySlug) {
           return c.json({ type: 'alternate-slug', primarySlug });
         }

@@ -33,7 +33,7 @@ regionRoutes.get(
     const { slug } = c.req.valid('param');
     const { locale, locations } = c.req.valid('query');
 
-    const region = getRegionBySlug(slug, { includeLocations: locations }, locale);
+    const region = getRegionBySlug(slug, locale, { includeLocations: locations });
     if (!region) {
       throw new HTTPException(404, { message: 'Region not found' });
     }
