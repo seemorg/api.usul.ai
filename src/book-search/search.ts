@@ -51,14 +51,16 @@ export async function searchBook({
         filter += ` and book_version_id eq '${firstBook.sourceAndVersion}'`;
       }
     } else {
-      filter = books
-        .map(
-          b =>
-            odata`(book_id eq '${b.id}'${
-              b.sourceAndVersion ? ` and book_version_id eq '${b.sourceAndVersion}'` : ''
-            })`,
-        )
-        .join(' or ');
+      // filter = books
+      //   .map(
+      //     b =>
+      //       odata`(book_id eq '${b.id}'${
+      //         b.sourceAndVersion ? ` and book_version_id eq '${b.sourceAndVersion}'` : ''
+      //       })`,
+      //   )
+      //   .join(' or ');
+      const bookIds = books.map(b => b.id);
+      filter = odata`search.in(book_id, '${bookIds.join(', ')}')`;
     }
   }
 
