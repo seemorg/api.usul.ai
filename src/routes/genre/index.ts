@@ -61,12 +61,32 @@ genreRoutes.get('/homepage', localeQueryValidator, c => {
   return c.json(genres);
 });
 
-genreRoutes.get('/', localeQueryValidator, c => {
-  const { locale } = c.req.valid('query');
-  const genres = getAllGenres(locale);
+genreRoutes.get(
+  '/',
+  localeQueryValidator,
+  zValidator(
+    'query',
+    z.object({
+      bookIds: z
+        .string()
+        .transform(val => val.split(','))
+        .optional(),
+      yearRange: z
+        .string()
+        .transform(val => val.split(','))
+        .pipe(z.tuple([z.coerce.number(), z.coerce.number()]))
+        .optional(),
+      authorId: z.string().optional(),
+      regionId: z.string().optional(),
+    }),
+  ),
+  c => {
+    const { locale, bookIds, yearRange, authorId, regionId } = c.req.valid('query');
+    const genres = getAllGenres(locale, { bookIds, yearRange, authorId, regionId });
 
-  return c.json(genres);
-});
+    return c.json(genres);
+  },
+);
 
 genreRoutes.get('/count', async c => {
   const count = await getGenreCount();

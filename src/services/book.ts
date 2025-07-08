@@ -4,6 +4,7 @@ import { env } from '@/env';
 import { makeBookDto } from '@/dto/book.dto';
 import type { FetchBookResponse } from '@/book-fetchers';
 import fs from 'fs';
+import centuries from '../data/centuries.json';
 import path from 'path';
 
 export const getBookBySlug = (slug: string, locale: PathLocale = 'en') => {
@@ -40,6 +41,85 @@ export const getBookCount = async () => {
   }
 
   return db.book.count();
+};
+
+export const getAllCenturies = () => {
+  if (!bookIdToBook) return [];
+  const books = Object.values(bookIdToBook).map(book => makeBookDto(book, 'en'));
+
+  const results: Record<number, number> = {};
+  for (const book of books) {
+    if (!book.author.year || book.author.year <= -1 || book.author.year > 1500) continue;
+    const century = Math.floor(book.author.year / 100) + 1;
+
+    results[century] = (results[century] ?? 0) + 1;
+  }
+
+  return Object.entries(results).map(([century, count]) => {
+    const centuryNumber = Number(century);
+
+    return {
+      yearFrom: (centuryNumber - 1) * 100,
+      yearTo: centuryNumber * 100,
+      description:
+        (centuries as Record<string, { summary: string }>)[century]?.summary ?? null,
+      centuryNumber,
+      totalBooks: count,
+    };
+  });
+};
+
+export const getAllBooks = (
+  locale: PathLocale = 'en',
+  params?: {
+    authorId?: string;
+    bookIds?: string[];
+    yearRange?: [number, number];
+    regionId?: string;
+    genreId?: string;
+  },
+  dtoParams: { includeLocations?: boolean } = {},
+) => {
+  let books = Object.values(bookIdToBook ?? {}).map(book =>
+    makeBookDto(
+      book,
+      locale,
+      (params && params.regionId) || dtoParams.includeLocations
+        ? { includeLocations: true }
+        : {},
+    ),
+  );
+
+  if (params) {
+    if (params.authorId) {
+      books = books.filter(book => book.author.id === params.authorId);
+    }
+    if (params.bookIds) {
+      books = books.filter(book => params.bookIds!.includes(book.id));
+    }
+    if (params.yearRange) {
+      books = books.filter(
+        book =>
+          book.author.year !== undefined &&
+          book.author.year !== null &&
+          book.author.year >= 0 &&
+          book.author.year >= params.yearRange![0] &&
+          book.author.year <= params.yearRange![1],
+      );
+    }
+    if (params.regionId) {
+      books = books.filter(book =>
+        book.author.locations?.some(location => location?.regionId === params.regionId),
+      );
+    }
+    if (params.genreId) {
+      books = books.filter(book =>
+        book.genres.some(genre => genre.id === params.genreId),
+      );
+    }
+  }
+
+  return books;
 };
 
 const get = () =>

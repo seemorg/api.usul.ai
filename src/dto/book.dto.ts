@@ -12,8 +12,9 @@ export const makeBookDto = (
     otherNameTranslations: BookOtherNames[];
   } & { genres: { id: string }[] },
   locale: PathLocale,
+  params?: { includeLocations?: boolean },
 ) => {
-  const author = getAuthorById(book.authorId, locale)!;
+  const author = getAuthorById(book.authorId, locale, params)!;
 
   return {
     id: book.id,

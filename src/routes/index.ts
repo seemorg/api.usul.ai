@@ -20,11 +20,13 @@ import searchRoutes from './search';
 import collectionsRoutes from './collections';
 import chatRoutes from './chat';
 import v1Routes from './v1';
+import centuryRoutes from './century';
 
 const routes = new Hono();
 
 routes.route('/', uptimeRoutes);
 routes.route('/book', bookRoutes);
+routes.route('/century', centuryRoutes);
 routes.route('/region', regionRoutes);
 routes.route('/genre', genreRoutes);
 routes.route('/author', authorRoutes);

@@ -65,18 +65,6 @@ authorSearchRoutes.get(
       filters.push(`id:[${ids.map(id => `\`${id}\``).join(', ')}]`);
     }
 
-    console.log(
-      sortBy &&
-        sortBy !== 'relevance' && {
-          sort_by: {
-            'year-asc': 'year:asc',
-            'year-desc': 'year:desc',
-            'texts-asc': 'booksCount:asc',
-            'texts-desc': 'booksCount:desc',
-          }[sortBy],
-        },
-    );
-
     const results = await typesense
       .collections<TypesenseAuthorDocument>(AUTHORS_COLLECTION.INDEX)
       .documents()

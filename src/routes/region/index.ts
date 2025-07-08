@@ -7,12 +7,27 @@ import { z } from 'zod';
 
 const regionRoutes = new Hono();
 
-regionRoutes.get('/', localeQueryValidator, c => {
-  const { locale } = c.req.valid('query');
-  const regions = getAllRegions(locale);
+regionRoutes.get(
+  '/',
+  localeQueryValidator,
+  zValidator(
+    'query',
+    z.object({
+      yearRange: z
+        .string()
+        .transform(val => val.split(','))
+        .pipe(z.tuple([z.coerce.number(), z.coerce.number()]))
+        .optional(),
+      genreId: z.string().optional(),
+    }),
+  ),
+  c => {
+    const { locale, yearRange, genreId } = c.req.valid('query');
+    const regions = getAllRegions(locale, { yearRange, genreId });
 
-  return c.json(regions);
-});
+    return c.json(regions);
+  },
+);
 
 regionRoutes.get('/count', async c => {
   const count = await getRegionCount();

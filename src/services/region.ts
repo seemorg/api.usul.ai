@@ -4,6 +4,7 @@ import { PathLocale } from '@/lib/locale';
 import { env } from '@/env';
 import fs from 'fs';
 import path from 'path';
+import { getAllBooks } from './book';
 
 export const getRegionById = (
   id: string,
@@ -28,8 +29,41 @@ export const getRegionBySlug = (
   return makeRegionDto(region, locale, params);
 };
 
-export const getAllRegions = (locale: PathLocale = 'en'): RegionDto[] => {
-  const regions = Object.values(regionIdToRegion ?? {});
+export const getAllRegions = (
+  locale: PathLocale = 'en',
+  params?: {
+    yearRange?: [number, number];
+    genreId?: string;
+  },
+): RegionDto[] => {
+  let regions = Object.values(regionIdToRegion ?? {});
+  if (params && (params.yearRange || params.genreId)) {
+    const books = getAllBooks(locale, params, { includeLocations: true });
+
+    const regionIdsToCount: Record<string, number> = {};
+    const regionIdsToAuthorIds: Record<string, Set<string>> = {};
+
+    for (const book of books) {
+      const regionIds = book.author.locations?.map(location => location?.regionId) ?? [];
+
+      for (const regionId of regionIds) {
+        if (!regionId) continue;
+        regionIdsToCount[regionId] = (regionIdsToCount[regionId] ?? 0) + 1;
+        regionIdsToAuthorIds[regionId] = (
+          regionIdsToAuthorIds[regionId] ?? new Set()
+        ).add(book.author.id);
+      }
+    }
+
+    regions = regions
+      .filter(region => regionIdsToCount[region.id] !== undefined)
+      .map(region => ({
+        ...region,
+        numberOfBooks: regionIdsToCount[region.id] ?? 0,
+        numberOfAuthors: regionIdsToAuthorIds[region.id]?.size ?? 0,
+      }));
+  }
+
   return regions.map(region => makeRegionDto(region, locale));
 };
 
