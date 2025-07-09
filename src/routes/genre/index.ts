@@ -34,7 +34,7 @@ const homepageGenres = [
     pattern: 5,
   },
   {
-    id: 'ilm-al-kalam',
+    id: 'creeds-and-sects',
     color: 'yellow',
     pattern: 4,
   },
