@@ -24,9 +24,10 @@ export const makeBookDto = (
     versions: book.versions,
     numberOfVersions: book.versions.length,
     primaryName: getPrimaryLocalizedText(book.primaryNameTranslations, locale),
-    otherNames: getPrimaryLocalizedText(book.otherNameTranslations, locale),
+    otherNames: getPrimaryLocalizedText(book.otherNameTranslations, locale) ?? [],
     secondaryName: getSecondaryLocalizedText(book.primaryNameTranslations, locale),
-    secondaryOtherNames: getSecondaryLocalizedText(book.otherNameTranslations, locale),
+    secondaryOtherNames:
+      getSecondaryLocalizedText(book.otherNameTranslations, locale) ?? [],
     genres: book.genres.map(genre => getGenreById(genre.id, locale)!),
     aiSupported: book.versions.some(version => version.aiSupported),
     aiVersion: book.versions.find(version => version.aiSupported)?.id ?? null,

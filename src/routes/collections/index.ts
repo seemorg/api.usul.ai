@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { requireAuth } from '@/middlewares/auth';
+import { optionalAuth, requireAuth } from '@/middlewares/auth';
 import { db } from '@/lib/db';
 import { HTTPException } from 'hono/http-exception';
 import { zValidator } from '@hono/zod-validator';
@@ -91,7 +91,7 @@ collectionsRoutes.post(
 collectionsRoutes.get(
   '/by-slug/:slug',
   disableCaching,
-
+  optionalAuth,
   zValidator(
     'query',
     commonSearchSchema.extend({
@@ -187,6 +187,8 @@ collectionsRoutes.get(
     return c.json({
       data: {
         ...collection,
+        userId: undefined,
+        isOwner: c.var.session?.user?.id === collection.userId,
         totalBooks: ids.length,
       },
       results: formatResults(

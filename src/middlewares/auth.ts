@@ -23,3 +23,17 @@ export const requireAuth = createMiddleware<{
     throw new HTTPException(401, { message: 'Unauthenticated' });
   }
 });
+
+export const optionalAuth = createMiddleware<{
+  Variables: {
+    session?: NonNullable<Awaited<ReturnType<typeof auth.api.getSession>>>;
+  };
+}>(async (c, next) => {
+  const session = await auth.api.getSession(c.req.raw).catch(() => null);
+
+  if (session) {
+    c.set('session', session);
+  }
+
+  await next();
+});

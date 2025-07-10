@@ -26,10 +26,11 @@ export const makeAuthorDto = (
     year: author.year,
     numberOfBooks: author.numberOfBooks,
     primaryName: getPrimaryLocalizedText(author.primaryNameTranslations, locale),
-    otherNames: getPrimaryLocalizedText(author.otherNameTranslations, locale),
+    otherNames: getPrimaryLocalizedText(author.otherNameTranslations, locale) ?? [],
 
     secondaryName: getSecondaryLocalizedText(author.primaryNameTranslations, locale),
-    secondaryOtherNames: getSecondaryLocalizedText(author.otherNameTranslations, locale),
+    secondaryOtherNames:
+      getSecondaryLocalizedText(author.otherNameTranslations, locale) ?? [],
 
     bio: getPrimaryLocalizedText(author.bioTranslations, locale),
 
