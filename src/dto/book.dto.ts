@@ -27,7 +27,7 @@ export const makeBookDto = (
     primaryName:
       locale === 'en' && book.transliteration ? book.transliteration : primaryName,
     otherNames:
-      locale === 'en' && book.otherNameTransliterations.length > 0
+      locale === 'en' && book.otherNameTransliterations?.length > 0
         ? book.otherNameTransliterations
         : otherNames,
     secondaryName: getSecondaryLocalizedText(book.primaryNameTranslations, locale),

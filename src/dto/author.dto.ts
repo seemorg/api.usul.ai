@@ -30,7 +30,7 @@ export const makeAuthorDto = (
     primaryName:
       locale === 'en' && author.transliteration ? author.transliteration : primaryName,
     otherNames:
-      locale === 'en' && author.otherNameTransliterations.length > 0
+      locale === 'en' && author.otherNameTransliterations?.length > 0
         ? author.otherNameTransliterations
         : otherNames,
 

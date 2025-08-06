@@ -86,7 +86,7 @@ export const formatAuthor = (author: TypesenseAuthorDocument, locale: PathLocale
     secondaryName: getSecondaryLocalizedText(author.primaryNames, locale),
 
     otherNames:
-      locale === 'en' && author.otherNameTransliterations.length > 0
+      locale === 'en' && author.otherNameTransliterations?.length > 0
         ? author.otherNameTransliterations
         : otherNames,
     secondaryOtherNames: getSecondaryLocalizedText(author.otherNames, locale),
@@ -110,7 +110,7 @@ export const formatBook = (book: TypesenseBookDocument, locale: PathLocale) => {
     secondaryName: getSecondaryLocalizedText(book.primaryNames, locale),
 
     otherNames:
-      locale === 'en' && book.otherNameTransliterations.length > 0
+      locale === 'en' && book.otherNameTransliterations?.length > 0
         ? book.otherNameTransliterations
         : otherNames,
     secondaryOtherNames: getSecondaryLocalizedText(book.otherNames, locale),
