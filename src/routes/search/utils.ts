@@ -70,48 +70,71 @@ export const formatPagination = (
 };
 
 export const formatAuthor = (author: TypesenseAuthorDocument, locale: PathLocale) => {
+  const primaryName = getPrimaryLocalizedText(author.primaryNames, locale);
+  const otherNames = getPrimaryLocalizedText(author.otherNames, locale);
+
   return {
     ...author,
+    transliteration: undefined,
+    otherNameTransliterations: undefined,
     _nameVariations: undefined,
     _popularity: undefined,
 
     primaryNames: undefined,
-    primaryName: getPrimaryLocalizedText(author.primaryNames, locale),
+    primaryName:
+      locale === 'en' && author.transliteration ? author.transliteration : primaryName,
     secondaryName: getSecondaryLocalizedText(author.primaryNames, locale),
 
-    otherNames: getPrimaryLocalizedText(author.otherNames, locale),
+    otherNames:
+      locale === 'en' && author.otherNameTransliterations.length > 0
+        ? author.otherNameTransliterations
+        : otherNames,
     secondaryOtherNames: getSecondaryLocalizedText(author.otherNames, locale),
   };
 };
 
 export const formatBook = (book: TypesenseBookDocument, locale: PathLocale) => {
+  const primaryName = getPrimaryLocalizedText(book.primaryNames, locale);
+  const otherNames = getPrimaryLocalizedText(book.otherNames, locale);
+
   return {
     ...book,
+    transliteration: undefined,
+    otherNameTransliterations: undefined,
     _nameVariations: undefined,
     _popularity: undefined,
 
     primaryNames: undefined,
-    primaryName: getPrimaryLocalizedText(book.primaryNames, locale),
+    primaryName:
+      locale === 'en' && book.transliteration ? book.transliteration : primaryName,
     secondaryName: getSecondaryLocalizedText(book.primaryNames, locale),
 
-    otherNames: getPrimaryLocalizedText(book.otherNames, locale),
+    otherNames:
+      locale === 'en' && book.otherNameTransliterations.length > 0
+        ? book.otherNameTransliterations
+        : otherNames,
     secondaryOtherNames: getSecondaryLocalizedText(book.otherNames, locale),
     author: formatAuthor(book.author as TypesenseAuthorDocument, locale),
   };
 };
 
 export const formatGenre = (genre: TypesenseGenreDocument, locale: PathLocale) => {
+  const name = getPrimaryLocalizedText(genre.nameTranslations, locale);
   return {
     ...genre,
+    transliteration: undefined,
     _popularity: undefined,
 
     nameTranslations: undefined,
-    primaryName: getPrimaryLocalizedText(genre.nameTranslations, locale),
+    primaryName: locale === 'en' && genre.transliteration ? genre.transliteration : name,
     secondaryName: getSecondaryLocalizedText(genre.nameTranslations, locale),
   };
 };
 
 export const formatRegion = (region: TypesenseRegionDocument, locale: PathLocale) => {
+  const name = getPrimaryLocalizedText(region.names, locale);
+  const currentName = getPrimaryLocalizedText(region.currentNames, locale);
+
   const subLocations = region.subLocations.filter(
     subLocation => subLocation.locale === locale,
   );
@@ -119,13 +142,18 @@ export const formatRegion = (region: TypesenseRegionDocument, locale: PathLocale
   return {
     ...region,
     names: undefined,
+    transliteration: undefined,
     _popularity: undefined,
 
-    primaryName: getPrimaryLocalizedText(region.names, locale),
+    primaryName:
+      locale === 'en' && region.transliteration ? region.transliteration : name,
     secondaryName: getSecondaryLocalizedText(region.names, locale),
 
     currentNames: undefined,
-    currentName: getPrimaryLocalizedText(region.currentNames, locale),
+    currentName:
+      locale === 'en' && region.currentNameTransliteration
+        ? region.currentNameTransliteration
+        : currentName,
 
     subLocations: (subLocations.length === 0 && locale !== 'en'
       ? region.subLocations.filter(subLocation => subLocation.locale === 'en')
@@ -138,14 +166,19 @@ export const formatGlobalSearch = (
   globalSearch: TypesenseGlobalSearchDocument,
   locale: PathLocale,
 ) => {
+  const primaryName = getPrimaryLocalizedText(globalSearch.primaryNames, locale);
   return {
     ...globalSearch,
+    transliteration: undefined,
     _nameVariations: undefined,
     _popularity: undefined,
     _rank: undefined,
 
     primaryNames: undefined,
-    primaryName: getPrimaryLocalizedText(globalSearch.primaryNames, locale),
+    primaryName:
+      locale === 'en' && globalSearch.transliteration
+        ? globalSearch.transliteration
+        : primaryName,
     secondaryName: getSecondaryLocalizedText(globalSearch.primaryNames, locale),
 
     otherNames: getPrimaryLocalizedText(globalSearch.otherNames, locale),

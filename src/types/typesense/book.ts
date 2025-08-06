@@ -7,6 +7,7 @@ export type TypesenseBookDocument = {
   transliteration?: string;
   primaryNames: LocalizedEntry[];
   otherNames: LocalizedArrayEntry[];
+  otherNameTransliterations: string[];
 
   _nameVariations: string[];
   _popularity: number;

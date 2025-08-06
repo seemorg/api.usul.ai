@@ -14,7 +14,6 @@ export const makeRegionDto = (
 ): {
   id: string;
   slug: string;
-  transliteration: string | null;
   name: string | undefined;
   secondaryName: string | undefined;
   currentName: string | undefined;
@@ -24,15 +23,20 @@ export const makeRegionDto = (
   numberOfBooks: number;
   locations?: any[];
 } => {
+  const name = getPrimaryLocalizedText(region.nameTranslations, locale);
+  const currentName = getPrimaryLocalizedText(region.currentNameTranslations, locale);
+
   return {
     id: region.id,
     slug: region.slug,
-    transliteration: region.transliteration,
 
-    name: getPrimaryLocalizedText(region.nameTranslations, locale),
+    name: locale === 'en' && region.transliteration ? region.transliteration : name,
     secondaryName: getSecondaryLocalizedText(region.nameTranslations, locale),
 
-    currentName: getPrimaryLocalizedText(region.currentNameTranslations, locale),
+    currentName:
+      locale === 'en' && region.currentNameTransliteration
+        ? region.currentNameTransliteration
+        : currentName,
     secondaryCurrentName: getSecondaryLocalizedText(
       region.currentNameTranslations,
       locale,

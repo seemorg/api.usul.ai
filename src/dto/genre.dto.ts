@@ -8,12 +8,12 @@ export const makeGenreDto = (
   genre: Genre & { nameTranslations: GenreName[] },
   locale: PathLocale,
 ) => {
+  const name = getPrimaryLocalizedText(genre.nameTranslations, locale);
   return {
     id: genre.id,
     slug: genre.slug,
-    transliteration: genre.transliteration,
     numberOfBooks: genre.numberOfBooks,
-    name: getPrimaryLocalizedText(genre.nameTranslations, locale),
+    name: locale === 'en' && genre.transliteration ? genre.transliteration : name,
     secondaryName: getSecondaryLocalizedText(genre.nameTranslations, locale),
   };
 };

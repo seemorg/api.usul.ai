@@ -12,18 +12,18 @@ export const makeLocationDto = (
 ): {
   id: string;
   slug: string;
-  transliteration: string | null;
   name: string | undefined;
   secondaryName: string | undefined;
   type: string;
   regionId: string | null;
   region?: any;
 } => {
+  const name = getPrimaryLocalizedText(location.cityNameTranslations, locale);
+
   return {
     id: location.id,
     slug: location.slug,
-    transliteration: location.transliteration,
-    name: getPrimaryLocalizedText(location.cityNameTranslations, locale),
+    name: locale === 'en' && location.transliteration ? location.transliteration : name,
     secondaryName: getSecondaryLocalizedText(location.cityNameTranslations, locale),
     type: location.type,
     regionId: location.regionId,

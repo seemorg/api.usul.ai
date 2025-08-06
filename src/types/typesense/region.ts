@@ -4,6 +4,8 @@ export type TypesenseRegionDocument = {
   id: string;
   slug: string;
 
+  transliteration?: string;
+  currentNameTransliteration?: string;
   names: LocalizedEntry[];
   currentNames: LocalizedEntry[];
 

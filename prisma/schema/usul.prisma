@@ -8,9 +8,10 @@ model Author {
   slug           String                @unique
   alternateSlugs AuthorAlternateSlug[]
 
-  primaryNameTranslations AuthorPrimaryName[]
-  otherNameTranslations   AuthorOtherNames[]
-  transliteration         String?
+  primaryNameTranslations   AuthorPrimaryName[]
+  otherNameTranslations     AuthorOtherNames[]
+  transliteration           String?
+  otherNameTransliterations String[]
 
   year            Int?
   yearStatus      AuthorYearStatus?
@@ -70,9 +71,10 @@ model Book {
   slug           String              @unique
   alternateSlugs BookAlternateSlug[]
 
-  primaryNameTranslations BookPrimaryName[]
-  otherNameTranslations   BookOtherNames[]
-  transliteration         String?
+  primaryNameTranslations   BookPrimaryName[]
+  otherNameTranslations     BookOtherNames[]
+  transliteration           String?
+  otherNameTransliterations String[]
 
   /// [BookVersion]
   versions         Json[]

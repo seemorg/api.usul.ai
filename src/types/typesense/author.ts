@@ -7,6 +7,7 @@ export type TypesenseAuthorDocument = {
   transliteration?: string;
   primaryNames: LocalizedEntry[];
   otherNames: LocalizedArrayEntry[];
+  otherNameTransliterations: string[];
   bios: LocalizedEntry[];
   _nameVariations: string[];
   _popularity: number;

@@ -19,14 +19,20 @@ export const makeAuthorDto = (
     includeLocations?: boolean;
   } = {},
 ) => {
+  const primaryName = getPrimaryLocalizedText(author.primaryNameTranslations, locale);
+  const otherNames = getPrimaryLocalizedText(author.otherNameTranslations, locale) ?? [];
+
   return {
     id: author.id,
     slug: author.slug,
-    transliteration: author.transliteration,
     year: author.year,
     numberOfBooks: author.numberOfBooks,
-    primaryName: getPrimaryLocalizedText(author.primaryNameTranslations, locale),
-    otherNames: getPrimaryLocalizedText(author.otherNameTranslations, locale) ?? [],
+    primaryName:
+      locale === 'en' && author.transliteration ? author.transliteration : primaryName,
+    otherNames:
+      locale === 'en' && author.otherNameTransliterations.length > 0
+        ? author.otherNameTransliterations
+        : otherNames,
 
     secondaryName: getSecondaryLocalizedText(author.primaryNameTranslations, locale),
     secondaryOtherNames:
