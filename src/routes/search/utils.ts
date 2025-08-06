@@ -126,7 +126,7 @@ export const formatGenre = (genre: TypesenseGenreDocument, locale: PathLocale) =
     _popularity: undefined,
 
     nameTranslations: undefined,
-    primaryName: locale === 'en' && genre.transliteration ? genre.transliteration : name,
+    primaryName: name,
     secondaryName: getSecondaryLocalizedText(genre.nameTranslations, locale),
   };
 };
@@ -145,15 +145,11 @@ export const formatRegion = (region: TypesenseRegionDocument, locale: PathLocale
     transliteration: undefined,
     _popularity: undefined,
 
-    primaryName:
-      locale === 'en' && region.transliteration ? region.transliteration : name,
+    primaryName: name,
     secondaryName: getSecondaryLocalizedText(region.names, locale),
 
     currentNames: undefined,
-    currentName:
-      locale === 'en' && region.currentNameTransliteration
-        ? region.currentNameTransliteration
-        : currentName,
+    currentName: currentName,
 
     subLocations: (subLocations.length === 0 && locale !== 'en'
       ? region.subLocations.filter(subLocation => subLocation.locale === 'en')

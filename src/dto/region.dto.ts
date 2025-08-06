@@ -30,13 +30,10 @@ export const makeRegionDto = (
     id: region.id,
     slug: region.slug,
 
-    name: locale === 'en' && region.transliteration ? region.transliteration : name,
+    name: name,
     secondaryName: getSecondaryLocalizedText(region.nameTranslations, locale),
 
-    currentName:
-      locale === 'en' && region.currentNameTransliteration
-        ? region.currentNameTransliteration
-        : currentName,
+    currentName: currentName,
     secondaryCurrentName: getSecondaryLocalizedText(
       region.currentNameTranslations,
       locale,

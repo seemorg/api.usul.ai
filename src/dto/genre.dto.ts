@@ -13,7 +13,7 @@ export const makeGenreDto = (
     id: genre.id,
     slug: genre.slug,
     numberOfBooks: genre.numberOfBooks,
-    name: locale === 'en' && genre.transliteration ? genre.transliteration : name,
+    name,
     secondaryName: getSecondaryLocalizedText(genre.nameTranslations, locale),
   };
 };
