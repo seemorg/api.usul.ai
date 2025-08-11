@@ -10,6 +10,7 @@
     "db:generate": "prisma generate",
     "db:deploy": "prisma migrate deploy",
     "db:migrate": "prisma migrate dev",
+    "db:seed": "pnpm run:script scripts/seed/index.ts",
     "with-env": "dotenv --",
     "run:script": "pnpm dlx tsx --env-file=.env",
     "emails:build": "email build",
