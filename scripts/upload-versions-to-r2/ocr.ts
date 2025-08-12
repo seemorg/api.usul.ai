@@ -52,7 +52,6 @@ const _results =
   await prisma.$queryRaw`SELECT * FROM "public"."Book" WHERE status = 'COMPLETED'`;
 const books = booksSchema.parse(_results);
 
-// const batches = chunk(finalVersions, 10);
 let i = 0;
 for (const book of books) {
   const key = makeVersionKey('ocr', book.id);
@@ -126,11 +125,8 @@ for (const book of books) {
   }
 
   // // write to file every 3 batches
-  // if (i % 3 === 0) {
-  await writeFile(OUTPUT_PATH, JSON.stringify(uploadedVersions, null, 2));
-  // }
-}
 
-// await writeFile(OUTPUT_PATH, JSON.stringify(uploadedVersions, null, 2));
+  await writeFile(OUTPUT_PATH, JSON.stringify(uploadedVersions, null, 2));
+}
 
 console.log('Done!');

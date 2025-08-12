@@ -20,6 +20,6 @@
     "isolatedModules": true,
     "noEmit": true
   },
-  "include": ["src/**/*", "emails/**/*"],
+  "include": ["src/**/*", "emails/**/*", "scripts/**/*"],
   "exclude": ["node_modules", ".react-email"]
 }
