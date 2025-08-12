@@ -28,11 +28,12 @@ bySlugRoutes.get(
     const { versionId, locale, startIndex, size, includeBook, fields } =
       c.req.valid('query');
 
-    const book = await getBookBySlug(bookSlug, locale);
+    const book = getBookBySlug(bookSlug, locale);
+
     if (!book) {
       const alternateSlugBookId = getBookByAlternateSlug(bookSlug);
       if (alternateSlugBookId) {
-        const primarySlug = (await getBookById(alternateSlugBookId, locale))?.slug;
+        const primarySlug = getBookById(alternateSlugBookId, locale)?.slug;
         if (primarySlug) {
           return c.json({ type: 'alternate-slug', primarySlug });
         }

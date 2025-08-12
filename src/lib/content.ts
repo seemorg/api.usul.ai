@@ -7,7 +7,7 @@ const contentCache = new LRUCache<string, FetchBookResponse>({
   max: 750,
   fetchMethod: async key => {
     const { bookId, versionId, locale } = parseCacheKey(key);
-    const book = await getBookById(bookId, locale);
+    const book = getBookById(bookId, locale);
 
     if (!book) {
       return;
