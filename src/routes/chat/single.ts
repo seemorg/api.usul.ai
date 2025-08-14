@@ -45,12 +45,13 @@ singleChatRoutes.post(
     z.object({
       isRetry: z.boolean().optional(),
       messages: messagesSchema,
+      chatId: z.string().optional(),
     }),
   ),
   async c => {
     const body = c.req.valid('json');
-    const chatId = uuidv4();
-    const sessionId = uuidv4();
+    const traceId = uuidv4();
+    const sessionId = body.chatId ?? uuidv4();
 
     const bookId = c.req.param('bookId');
     const versionId = c.req.param('versionId');
@@ -76,10 +77,10 @@ singleChatRoutes.post(
         author: bookDetails.book.author,
         history: chatHistory,
         query: lastMessage,
-        traceId: chatId,
+        traceId,
         sessionId,
       });
-      return getStreamResult(c, chatId, streamResult);
+      return getStreamResult(c, traceId, streamResult);
     }
 
     if (routerResult === 'summary') {
@@ -87,15 +88,16 @@ singleChatRoutes.post(
         bookDetails,
         history: chatHistory,
         query: lastMessage,
-        traceId: chatId,
+        traceId,
         sessionId,
       });
-      return getStreamResult(c, chatId, streamResult);
+      return getStreamResult(c, traceId, streamResult);
     }
 
     const dataStream = createDataStream({
       execute: async writer => {
-        writer.writeMessageAnnotation({ type: 'CHAT_ID', value: chatId });
+        // pass traceId to frontend to be able to give feedback (thumbs up/down)
+        writer.writeMessageAnnotation({ type: 'CHAT_ID', value: traceId });
         writer.writeMessageAnnotation({ type: 'STATUS', value: 'generating-queries' });
 
         const queries = (
@@ -146,7 +148,7 @@ singleChatRoutes.post(
           query: lastMessage, // use last message and not ragQuery to preserve context
           sources: sources!,
           isRetry: body.isRetry,
-          traceId: chatId,
+          traceId,
           sessionId,
         });
         result.mergeIntoDataStream(writer);

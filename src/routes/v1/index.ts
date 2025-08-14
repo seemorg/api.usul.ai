@@ -145,12 +145,10 @@ async function search(
                 slug: details.book.slug,
                 primaryName: details.book.primaryName,
                 secondaryName: details.book.secondaryName,
-                transliteration: details.book.transliteration,
                 author: {
                   slug: details.book.author.slug,
                   primaryName: details.book.author.primaryName,
                   secondaryName: details.book.author.secondaryName,
-                  transliteration: details.book.author.transliteration,
                   year: details.book.author.year,
                 },
               },

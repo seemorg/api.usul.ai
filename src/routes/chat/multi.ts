@@ -34,13 +34,15 @@ multiChatRoutes.post(
       authorIds: z.array(z.string()).optional().default([]),
       genreIds: z.array(z.string()).optional().default([]),
       messages: messagesSchema,
+      chatId: z.string().optional(),
     }),
   ),
   async c => {
     const body = c.req.valid('json');
     const { locale } = c.req.valid('query');
-    const chatId = uuidv4();
-    const sessionId = uuidv4();
+
+    const traceId = uuidv4();
+    const sessionId = body.chatId ?? uuidv4();
 
     const lastMessage = body.messages[body.messages.length - 1].content;
     const messages = body.messages.slice(0, body.messages.length - 1);
@@ -72,7 +74,8 @@ multiChatRoutes.post(
 
     const dataStream = createDataStream({
       execute: async writer => {
-        writer.writeMessageAnnotation({ type: 'CHAT_ID', value: chatId });
+        // pass traceId to frontend to be able to give feedback (thumbs up/down)
+        writer.writeMessageAnnotation({ type: 'CHAT_ID', value: traceId });
         writer.writeMessageAnnotation({ type: 'STATUS', value: 'generating-queries' });
 
         const queries = (
@@ -117,7 +120,7 @@ multiChatRoutes.post(
           query: lastMessage, // use last message and not ragQuery to preserve context
           sources,
           isRetry: body.isRetry,
-          traceId: chatId,
+          traceId,
           sessionId,
         });
         result.mergeIntoDataStream(writer);

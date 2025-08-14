@@ -34,6 +34,9 @@ const pathLocaleToSupportedBcp47LocaleMap = {
   ur: 'ur-PK',
 } as const satisfies Record<string, AppLocale>;
 
+export const pathLocaleToAppLocale = (pathLocale: PathLocale) =>
+  pathLocaleToSupportedBcp47LocaleMap[pathLocale];
+
 export const PATH_LOCALES = Object.keys(
   pathLocaleToSupportedBcp47LocaleMap,
 ) as (keyof typeof pathLocaleToSupportedBcp47LocaleMap)[];

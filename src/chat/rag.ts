@@ -6,10 +6,6 @@ import { BookDetailsResponse } from '@/routes/book/details';
 import { type CoreMessage } from 'ai';
 import { formatSources } from './utils';
 
-const SOURCE_FORMAT = `
-When citing a source, use the following format: [number]. So for example, <source_1>, should be cited as [1].
-`.trim();
-
 export async function answerRagQuery({
   bookDetails,
   history,
@@ -32,11 +28,7 @@ export async function answerRagQuery({
   const bookName = bookDetails.book.primaryName;
   const authorName = bookDetails.book.author.primaryName;
 
-  const compiledPrompt = `
-${prompt.compile()}
-
-${SOURCE_FORMAT}
-`.trim();
+  const compiledPrompt = prompt.compile();
 
   const response = streamText({
     temperature: isRetry ? 0.5 : 0,
@@ -45,24 +37,17 @@ ${SOURCE_FORMAT}
       ...history,
       {
         role: 'user',
-        content: [
-          {
-            type: 'text',
-            text: `
+        content: `
+User's query:
+
+"${query}"
+
+----
+
 Most relevant search results in "${bookName}" by "${authorName}":
+
 ${formatSources(sources)}
         `.trim(),
-          },
-          {
-            type: 'text',
-            text: `
-User's query:
-<query>
-${query}
-</query>
-        `.trim(),
-          },
-        ],
       },
     ],
     langfuse: {
@@ -91,13 +76,8 @@ export async function answerMultiBookRagQuery({
   traceId: string;
   sessionId: string;
 }) {
-  const prompt = await langfuse.getPrompt('multi-rag');
-
-  const compiledPrompt = `
-${prompt.compile()}
-
-${SOURCE_FORMAT}
-`.trim();
+  const prompt = await langfuse.getPrompt('rag');
+  const compiledPrompt = prompt.compile();
 
   const response = streamText({
     temperature: isRetry ? 0.5 : 0,
@@ -106,22 +86,17 @@ ${SOURCE_FORMAT}
       ...history,
       {
         role: 'user',
-        content: [
-          {
-            type: 'text',
-            text: `
-Most relevant search results from multiple books:
-${formatSources(sources)}
-        `.trim(),
-          },
-          {
-            type: 'text',
-            text: `
+        content: `
 User's query:
-${query}
-        `.trim(),
-          },
-        ],
+
+"${query}"
+
+----
+
+Most relevant search results from multiple books:
+
+${formatSources(sources)}
+`.trim(),
       },
     ],
     langfuse: {
