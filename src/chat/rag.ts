@@ -76,7 +76,7 @@ export async function answerMultiBookRagQuery({
   traceId: string;
   sessionId: string;
 }) {
-  const prompt = await langfuse.getPrompt('rag');
+  const prompt = await langfuse.getPrompt('multi-rag');
   const compiledPrompt = prompt.compile();
 
   const response = streamText({
