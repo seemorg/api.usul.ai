@@ -38,15 +38,14 @@ export async function answerRagQuery({
       {
         role: 'user',
         content: `
-User's query:
-
-"${query}"
-
-----
-
 Most relevant search results in "${bookName}" by "${authorName}":
 
 ${formatSources(sources)}
+
+----
+
+User's query: "${query}"
+Answer language: (inferred from the query)
         `.trim(),
       },
     ],
@@ -93,9 +92,8 @@ ${formatSources(sources)}
 
 ----
 
-User's query:
-
-"${query}"
+User's query: "${query}"
+Answer language: (inferred from the query)
 `.trim(),
       },
     ],

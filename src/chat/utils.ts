@@ -13,8 +13,7 @@ export function formatSources(sources: AzureSearchResult[]) {
       const text = s.node.text;
       const book = getBookById(s.node.metadata.bookId, 'ar');
 
-      return `
-<source_${idx + 1}>
+      return `<source_${idx + 1}>
   ${
     book
       ? `<book_name>${book.primaryName ?? book.secondaryName}</book_name>
@@ -24,8 +23,7 @@ export function formatSources(sources: AzureSearchResult[]) {
   <source_text>
   ${text}
   </source_text>
-</source_${idx + 1}>
-`;
+</source_${idx + 1}>`;
     })
     .join('\n\n');
 }
