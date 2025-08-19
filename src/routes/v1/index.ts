@@ -17,7 +17,10 @@ const schema = z.object({
   limit: z.coerce.number().min(1).max(50).optional().default(10),
 });
 
-function loadBooksDetails(books: { id: string; versionId?: string }[]) {
+function loadBooksDetails(
+  books: { id: string; versionId?: string }[],
+  type: 'text' | 'vector',
+) {
   const bookDetails = books.reduce(
     (acc, b) => {
       const book = getBookById(b.id);
@@ -25,7 +28,11 @@ function loadBooksDetails(books: { id: string; versionId?: string }[]) {
       if (!book) return acc;
 
       const version = book.versions.find(v =>
-        b.versionId ? v.id === b.versionId : v.aiSupported,
+        b.versionId
+          ? v.id === b.versionId
+          : type === 'vector'
+            ? v.aiSupported
+            : v.keywordSupported,
       );
 
       if (!version) return acc;
@@ -63,7 +70,7 @@ async function search(
   const { q: query, limit, page } = params;
 
   let detailsResult: ReturnType<typeof loadBooksDetails> | undefined;
-  if (books) detailsResult = loadBooksDetails(books);
+  if (books) detailsResult = loadBooksDetails(books, type);
 
   const results = await searchBook({
     books: detailsResult ? detailsResult.booksToSearch : undefined,
@@ -78,7 +85,10 @@ async function search(
     const booksToSearch = [
       ...new Set<string>(results.results.map(r => r.node.metadata.bookId)),
     ];
-    detailsResult = loadBooksDetails(booksToSearch.map(id => ({ id })));
+    detailsResult = loadBooksDetails(
+      booksToSearch.map(id => ({ id })),
+      type,
+    );
   }
 
   return {
@@ -166,32 +176,17 @@ v1Routes.get(
 );
 
 v1Routes.get(
-  '/keyword-search',
+  '/content-search',
   zValidator(
     'query',
     schema.extend({
       books: booksSchema,
+      type: z.enum(['text', 'vector']),
     }),
   ),
   async c => {
-    const { books, ...params } = c.req.valid('query');
-    const results = await search(params, 'text', books);
-
-    return c.json(results);
-  },
-);
-
-v1Routes.get(
-  '/vector-search',
-  zValidator(
-    'query',
-    schema.extend({
-      books: booksSchema,
-    }),
-  ),
-  async c => {
-    const { books, ...params } = c.req.valid('query');
-    const results = await search(params, 'vector', books);
+    const { books, type, ...params } = c.req.valid('query');
+    const results = await search(params, type, books);
 
     return c.json(results);
   },

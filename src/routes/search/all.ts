@@ -87,7 +87,12 @@ globalSearchRoutes.get(
             const book = getBookById(result.node.metadata.bookId, locale);
             if (!book) return null;
 
+            const version = book.versions.find(
+              v => v.value === result.node.metadata.sourceAndVersion.split(':')[1],
+            );
+
             return {
+              versionId: version?.id,
               book: {
                 id: book.id,
                 slug: book.slug,
