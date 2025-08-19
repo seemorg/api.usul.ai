@@ -78,6 +78,7 @@ async function search(
     type,
     limit,
     page,
+    rerank: false,
   });
 
   // fetch the details for the books returned
