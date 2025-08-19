@@ -17,13 +17,10 @@ export function formatSources(sources: AzureSearchResult[]) {
 <source_${idx + 1}>
   ${
     book
-      ? `
-  <book_name>${book.primaryName ?? book.secondaryName}</book_name>
-  <author_name>${book.author.primaryName ?? book.author.secondaryName}</author_name>
-`
+      ? `<book_name>${book.primaryName ?? book.secondaryName}</book_name>
+  <author_name>${book.author.primaryName ?? book.author.secondaryName}</author_name>`
       : ''
   }
-
   <source_text>
   ${text}
   </source_text>

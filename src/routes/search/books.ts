@@ -11,24 +11,13 @@ import {
   prepareQuery,
   weightsMapToQueryWeights,
 } from './utils';
-import { AUTHORS_COLLECTION } from './authors';
+import { AUTHORS_COLLECTION } from '@/lib/typesense/collections';
 import { TypesenseBookDocument } from '@/types/typesense/book';
 import { TypesenseAuthorDocument } from '@/types/typesense/author';
 import { SearchResponse } from 'typesense/lib/Typesense/Documents';
+import { BOOKS_COLLECTION, booksQueryWeights } from '@/lib/typesense/collections';
 
 const bookSearchRoutes = new Hono();
-
-export const booksQueryWeights = {
-  4: ['primaryNames.text'],
-  3: ['_nameVariations', 'otherNames.texts'],
-  2: ['author.primaryNames.text'],
-  1: ['author._nameVariations', 'author.otherNames.texts'],
-};
-
-export const BOOKS_COLLECTION = {
-  INDEX: 'books',
-  DEFAULT_PER_PAGE: 20,
-};
 
 bookSearchRoutes.get(
   '/books',

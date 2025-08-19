@@ -4,10 +4,12 @@ import globalSearchRoutes from './global';
 import authorSearchRoutes from './authors';
 import genresSearchRoutes from './genres';
 import regionsSearchRoutes from './regions';
+import allSearchRoutes from './all';
 import contentSearchRoutes from './content';
 
 const searchRoutes = new Hono();
 
+searchRoutes.route('/', allSearchRoutes);
 searchRoutes.route('/', bookSearchRoutes);
 searchRoutes.route('/', authorSearchRoutes);
 searchRoutes.route('/', genresSearchRoutes);

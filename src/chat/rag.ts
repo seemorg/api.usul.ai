@@ -87,15 +87,15 @@ export async function answerMultiBookRagQuery({
       {
         role: 'user',
         content: `
-User's query:
-
-"${query}"
-
-----
-
 Most relevant search results from multiple books:
 
 ${formatSources(sources)}
+
+----
+
+User's query:
+
+"${query}"
 `.trim(),
       },
     ],

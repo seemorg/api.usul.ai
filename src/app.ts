@@ -39,6 +39,7 @@ app.onError((err, c) => {
       cause: err.cause,
       stack: err.stack,
     };
+    console.log(err);
   }
 
   if (err instanceof HTTPException) {

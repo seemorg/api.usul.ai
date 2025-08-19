@@ -11,17 +11,9 @@ import {
 import { z } from 'zod';
 import { typesense } from '@/lib/typesense';
 import { TypesenseGenreDocument } from '@/types/typesense/genre';
+import { GENRES_COLLECTION, genresQueryWeights } from '@/lib/typesense/collections';
 
 const genresSearchRoutes = new Hono();
-
-const genresQueryWeights = {
-  1: ['nameTranslations.text'],
-};
-
-export const GENRES_COLLECTION = {
-  INDEX: 'genres',
-  DEFAULT_PER_PAGE: 5,
-};
 
 genresSearchRoutes.get(
   '/genres',

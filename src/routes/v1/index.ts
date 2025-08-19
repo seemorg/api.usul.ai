@@ -3,8 +3,9 @@ import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
 import { bearerAuth } from 'hono/bearer-auth';
 import { z } from 'zod';
-import { BookDetailsResponse, getBookDetails } from '../book/details';
 import { searchBook } from '@/book-search/search';
+import { getBookById } from '@/services/book';
+import { BookDto } from '@/dto/book.dto';
 
 const v1Routes = new Hono();
 
@@ -16,57 +17,37 @@ const schema = z.object({
   limit: z.coerce.number().min(1).max(50).optional().default(10),
 });
 
-type BookDetails = BookDetailsResponse & {
-  sourceAndVersion: string;
-  versionId: string;
-};
+function loadBooksDetails(books: { id: string; versionId?: string }[]) {
+  const bookDetails = books.reduce(
+    (acc, b) => {
+      const book = getBookById(b.id);
 
-async function loadBooksDetails(books: { id: string; versionId?: string }[]) {
-  const bookDetails: Record<string, BookDetails> = {};
+      if (!book) return acc;
+
+      const version = book.versions.find(v =>
+        b.versionId ? v.id === b.versionId : v.aiSupported,
+      );
+
+      if (!version) return acc;
+
+      acc[b.id] = {
+        ...book,
+        sourceAndVersion: `${version.source}:${version.value}`,
+        versionId: version.id,
+      };
+
+      return acc;
+    },
+    {} as Record<string, BookDto & { sourceAndVersion: string; versionId: string }>,
+  );
+
   const booksToSearch: {
     id: string;
     sourceAndVersion: string;
-  }[] = [];
-
-  const results = await Promise.all(
-    books.map(
-      async b => {
-        const data = await getBookDetails(b.id).catch(() => null);
-
-        if (!data || 'type' in data) {
-          return null;
-        }
-
-        const version = data.book.versions.find(v =>
-          b.versionId ? v.id === b.versionId : v.aiSupported,
-        );
-
-        if (!version) {
-          return null;
-        }
-
-        return {
-          ...data,
-          sourceAndVersion: `${version.source}:${version.value}`,
-          versionId: version.id,
-        };
-      },
-      {} as Record<string, BookDetails>,
-    ),
-  );
-  const filteredResults = results.filter(Boolean) as NonNullable<
-    (typeof results)[number]
-  >[];
-
-  for (const result of filteredResults) {
-    const searchEntry = {
-      id: result.book.id,
-      sourceAndVersion: result.sourceAndVersion,
-    };
-
-    bookDetails[`${result.book.id}:${result.sourceAndVersion}`] = result;
-    booksToSearch.push(searchEntry);
-  }
+  }[] = Object.values(bookDetails).map(b => ({
+    id: b.id,
+    sourceAndVersion: b.sourceAndVersion,
+  }));
 
   return { bookDetails, booksToSearch };
 }
@@ -81,10 +62,8 @@ async function search(
 ) {
   const { q: query, limit, page } = params;
 
-  let detailsResult: Awaited<ReturnType<typeof loadBooksDetails>> | undefined;
-  if (books) {
-    detailsResult = await loadBooksDetails(books);
-  }
+  let detailsResult: ReturnType<typeof loadBooksDetails> | undefined;
+  if (books) detailsResult = loadBooksDetails(books);
 
   const results = await searchBook({
     books: detailsResult ? detailsResult.booksToSearch : undefined,
@@ -95,69 +74,51 @@ async function search(
   });
 
   // fetch the details for the books returned
-  if (params.include_details && !detailsResult) {
-    const booksToSearch: string[] = [];
-
-    for (const result of results.results) {
-      const bookId = result.node.metadata.bookId;
-      if (!booksToSearch.includes(bookId)) {
-        booksToSearch.push(bookId);
-      }
-    }
-
-    detailsResult = await loadBooksDetails(booksToSearch.map(id => ({ id })));
+  if (!detailsResult) {
+    const booksToSearch = [
+      ...new Set<string>(results.results.map(r => r.node.metadata.bookId)),
+    ];
+    detailsResult = loadBooksDetails(booksToSearch.map(id => ({ id })));
   }
 
   return {
     ...results,
-    results: results.results.map(r => {
-      const includeHighlights =
-        type === 'text' && r.node.highlights && r.node.highlights.length > 0;
+    results: results.results
+      .filter(r => r.node.metadata.bookId in detailsResult.bookDetails)
+      .map(r => {
+        const includeHighlights =
+          type === 'text' && r.node.highlights && r.node.highlights.length > 0;
+        const book = detailsResult.bookDetails[r.node.metadata.bookId]!;
 
-      const sourceAndVersion = r.node.metadata.sourceAndVersion;
-      const details = detailsResult
-        ? detailsResult.bookDetails[`${r.node.metadata.bookId}:${sourceAndVersion}`]
-        : null;
-
-      return {
-        ...r,
-        node: {
-          ...r.node,
-          text: includeHighlights ? undefined : r.node.text,
-          metadata: {
-            ...r.node.metadata,
-            versionId: details ? details.versionId : undefined,
-            sourceAndVersion: undefined, // don't send it to the client
-            version: details
-              ? undefined
-              : {
-                  source: sourceAndVersion.split(':')[0],
-                  value: sourceAndVersion.split(':')[1],
-                }, // don't send it to the client
-            chapters:
-              params.include_chapters && details
-                ? r.node.metadata.chapters.map(chapterIdx => details.headings[chapterIdx])
-                : undefined,
+        return {
+          ...r,
+          versionId: book.versionId,
+          node: {
+            ...r.node,
+            text: includeHighlights ? undefined : r.node.text,
+            metadata: {
+              ...r.node.metadata,
+              sourceAndVersion: undefined, // don't send it to the client
+            },
+            highlights: includeHighlights ? r.node.highlights : undefined,
           },
-          ...(params.include_details &&
-            details && {
-              book: {
-                slug: details.book.slug,
-                primaryName: details.book.primaryName,
-                secondaryName: details.book.secondaryName,
-                author: {
-                  slug: details.book.author.slug,
-                  primaryName: details.book.author.primaryName,
-                  secondaryName: details.book.author.secondaryName,
-                  year: details.book.author.year,
-                },
+          ...(params.include_details && {
+            book: {
+              id: book.id,
+              slug: book.slug,
+              primaryName: book.primaryName,
+              secondaryName: book.secondaryName,
+              author: {
+                id: book.author.id,
+                slug: book.author.slug,
+                primaryName: book.author.primaryName,
+                secondaryName: book.author.secondaryName,
+                year: book.author.year,
               },
-              versionId: details.versionId,
-            }),
-          highlights: includeHighlights ? r.node.highlights : undefined,
-        },
-      };
-    }),
+            },
+          }),
+        };
+      }),
   };
 }
 

@@ -11,18 +11,9 @@ import {
 import { z } from 'zod';
 import { typesense } from '@/lib/typesense';
 import { TypesenseAuthorDocument } from '@/types/typesense/author';
+import { authorQueryWeights, AUTHORS_COLLECTION } from '@/lib/typesense/collections';
 
 const authorSearchRoutes = new Hono();
-
-const authorQueryWeights = {
-  2: ['primaryNames.text'],
-  1: ['_nameVariations', 'otherNames.texts'],
-};
-
-export const AUTHORS_COLLECTION = {
-  INDEX: 'authors',
-  DEFAULT_PER_PAGE: 5,
-};
 
 authorSearchRoutes.get(
   '/authors',

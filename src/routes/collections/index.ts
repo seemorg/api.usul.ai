@@ -16,7 +16,7 @@ import {
 } from '../search/utils';
 import { typesense } from '@/lib/typesense';
 import { TypesenseBookDocument } from '@/types/typesense/book';
-import { BOOKS_COLLECTION, booksQueryWeights } from '../search/books';
+import { BOOKS_COLLECTION, booksQueryWeights } from '@/lib/typesense/collections';
 import { SearchResponse } from 'typesense/lib/Typesense/Documents';
 import { LRUCache } from 'lru-cache';
 

@@ -11,20 +11,10 @@ import {
 } from './utils';
 import { z } from 'zod';
 import { typesense } from '@/lib/typesense';
-import { TypesenseGenreDocument } from '@/types/typesense/genre';
 import { TypesenseRegionDocument } from '@/types/typesense/region';
+import { REGIONS_COLLECTION, regionsQueryWeights } from '@/lib/typesense/collections';
 
 const regionsSearchRoutes = new Hono();
-
-const regionsQueryWeights = {
-  2: ['names.text', 'currentNames.text'],
-  1: ['subLocations.text'],
-};
-
-export const REGIONS_COLLECTION = {
-  INDEX: 'regions',
-  DEFAULT_PER_PAGE: 5,
-};
 
 regionsSearchRoutes.get(
   '/regions',
