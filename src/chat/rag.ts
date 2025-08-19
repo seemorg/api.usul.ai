@@ -45,8 +45,9 @@ ${formatSources(sources)}
 ----
 
 User's query: "${query}"
+
 Answer language: (inferred from the query)
-        `.trim(),
+`.trim(),
       },
     ],
     langfuse: {
@@ -93,6 +94,7 @@ ${formatSources(sources)}
 ----
 
 User's query: "${query}"
+
 Answer language: (inferred from the query)
 `.trim(),
       },
