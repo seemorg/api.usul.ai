@@ -3,6 +3,7 @@ import { createAzure } from '@ai-sdk/azure';
 import {
   streamText as baseStreamText,
   generateText as baseGenerateText,
+  generateObject as baseGenerateObject,
   smoothStream,
   ToolSet,
 } from 'ai';
@@ -15,6 +16,7 @@ const azure = createAzure({
 });
 
 export const model = azure.languageModel(env.AZURE_4_1_DEPLOYMENT);
+export const miniModel = azure.languageModel('usul-gpt-4.1-mini');
 
 export type LangfuseTracingOptions = {
   name?: string;
@@ -41,15 +43,17 @@ export const streamText = <
   PARTIAL_OUTPUT = never,
 >({
   langfuse,
+  model: modelName = 'large',
   ...params
 }: Omit<
   Parameters<typeof baseStreamText<TOOLS, OUTPUT, PARTIAL_OUTPUT>>[0],
   'model' | 'experimental_transform' | 'experimental_telemetry'
 > & {
   langfuse?: LangfuseTracingOptions;
+  model?: 'mini' | 'large';
 }) => {
   return baseStreamText({
-    model,
+    model: modelName === 'mini' ? miniModel : model,
     ...params,
     experimental_transform: smoothStream(),
     ...getLangfuseArgs(langfuse),
@@ -62,15 +66,17 @@ export const generateText = <
   PARTIAL_OUTPUT = never,
 >({
   langfuse,
+  model: modelName = 'large',
   ...params
 }: Omit<
   Parameters<typeof baseGenerateText<TOOLS, OUTPUT, PARTIAL_OUTPUT>>[0],
   'model' | 'experimental_telemetry'
 > & {
   langfuse?: LangfuseTracingOptions;
+  model?: 'mini' | 'large';
 }) => {
   return baseGenerateText({
-    model,
+    model: modelName === 'mini' ? miniModel : model,
     ...params,
     ...getLangfuseArgs(langfuse),
   });

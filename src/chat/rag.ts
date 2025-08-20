@@ -14,6 +14,7 @@ export async function answerRagQuery({
   isRetry,
   traceId,
   sessionId,
+  language,
 }: {
   isRetry?: boolean;
   bookDetails: BookDetailsResponse;
@@ -22,13 +23,14 @@ export async function answerRagQuery({
   query: string;
   traceId: string;
   sessionId: string;
+  language: string;
 }) {
   const prompt = await langfuse.getPrompt('rag');
 
   const bookName = bookDetails.book.primaryName;
   const authorName = bookDetails.book.author.primaryName;
 
-  const compiledPrompt = prompt.compile();
+  const compiledPrompt = prompt.compile({ language });
 
   const response = streamText({
     temperature: isRetry ? 0.5 : 0,
@@ -45,8 +47,6 @@ ${formatSources(sources)}
 ----
 
 User's query: "${query}"
-
-Answer language: (inferred from the query)
 `.trim(),
       },
     ],
@@ -68,6 +68,7 @@ export async function answerMultiBookRagQuery({
   isRetry,
   traceId,
   sessionId,
+  language,
 }: {
   isRetry?: boolean;
   history: CoreMessage[];
@@ -75,9 +76,10 @@ export async function answerMultiBookRagQuery({
   query: string;
   traceId: string;
   sessionId: string;
+  language: string;
 }) {
   const prompt = await langfuse.getPrompt('multi-rag');
-  const compiledPrompt = prompt.compile();
+  const compiledPrompt = prompt.compile({ language });
 
   const response = streamText({
     temperature: isRetry ? 0.5 : 0,
@@ -94,8 +96,6 @@ ${formatSources(sources)}
 ----
 
 User's query: "${query}"
-
-Answer language: (inferred from the query)
 `.trim(),
       },
     ],

@@ -15,6 +15,7 @@ import { generateQueries } from '@/chat/generate-queries';
 import { rerankChunks } from '@/lib/cohere';
 import { writeSourcesToStream } from '@/chat/utils';
 import { condenseMessageHistory } from '@/chat/condense-chat';
+import { detectLanguage } from '@/chat/detect-language';
 
 const multiChatRoutes = new Hono();
 
@@ -89,10 +90,11 @@ multiChatRoutes.post(
         });
 
         // search the queries in parallel
-        const [searchResults, rerankQuery] = await Promise.all([
+        const [searchResults, queryLanguage, rerankQuery] = await Promise.all([
           searchQueriesInParallel([...queries, lastMessage], {
             books: books.length > 0 ? books.map(book => ({ id: book.id })) : undefined,
           }),
+          detectLanguage({ query: lastMessage, sessionId }),
           (async () => {
             if (chatHistory.length === 0) return lastMessage;
 
@@ -122,6 +124,7 @@ multiChatRoutes.post(
           isRetry: body.isRetry,
           traceId,
           sessionId,
+          language: queryLanguage,
         });
         result.mergeIntoDataStream(writer);
 
