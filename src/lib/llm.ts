@@ -3,7 +3,6 @@ import { createAzure } from '@ai-sdk/azure';
 import {
   streamText as baseStreamText,
   generateText as baseGenerateText,
-  generateObject as baseGenerateObject,
   smoothStream,
   ToolSet,
 } from 'ai';
@@ -16,7 +15,7 @@ const azure = createAzure({
 });
 
 export const model = azure.languageModel(env.AZURE_4_1_DEPLOYMENT);
-export const miniModel = azure.languageModel('usul-gpt-4.1-mini');
+export const miniModel = azure.languageModel('usul-gpt-5-nano');
 
 export type LangfuseTracingOptions = {
   name?: string;

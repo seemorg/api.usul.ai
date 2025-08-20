@@ -35,6 +35,11 @@ export async function detectLanguage({
         sessionId,
         prompt,
       }),
+      providerOptions: {
+        openai: {
+          reasoningEffort: 'low',
+        },
+      },
     });
 
     return response.object.language || 'English';
