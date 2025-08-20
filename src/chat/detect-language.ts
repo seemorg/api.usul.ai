@@ -5,12 +5,7 @@ import { generateObject } from 'ai';
 import { z } from 'zod';
 
 const schema = z.object({
-  language: z
-    .string()
-    .nullable()
-    .describe(
-      "The language of the user's query. Examples: English, Spanish, French, German, Italian, Portuguese, Russian, Chinese, Japanese, Korean, Arabic, Hebrew, etc.",
-    ),
+  language: z.string(),
 });
 
 export async function detectLanguage({
@@ -26,10 +21,10 @@ export async function detectLanguage({
   try {
     const response = await generateObject({
       model: miniModel,
-      schema,
+      output: 'no-schema',
       system: compiledPrompt,
       prompt: query,
-      temperature: 0,
+      temperature: 1,
       ...getLangfuseArgs({
         name: `Chat.OpenAI.DetectLanguage`,
         sessionId,
@@ -37,13 +32,15 @@ export async function detectLanguage({
       }),
       providerOptions: {
         openai: {
-          reasoningEffort: 'low',
+          reasoningEffort: 'minimal',
         },
       },
     });
 
-    return response.object.language || 'English';
+    const object = schema.parse(response.object);
+    return object.language;
   } catch (error) {
+    console.log(error);
     return 'English';
   }
 }
