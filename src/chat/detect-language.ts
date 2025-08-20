@@ -5,7 +5,12 @@ import { generateObject } from 'ai';
 import { z } from 'zod';
 
 const schema = z.object({
-  language: z.string(),
+  language: z
+    .string()
+    .nullable()
+    .describe(
+      "The language of the user's query. Examples: English, Spanish, French, German, Italian, Portuguese, Russian, Chinese, Japanese, Korean, Arabic, Hebrew, etc.",
+    ),
 });
 
 export async function detectLanguage({
@@ -21,7 +26,7 @@ export async function detectLanguage({
   try {
     const response = await generateObject({
       model: miniModel,
-      output: 'no-schema',
+      schema,
       system: compiledPrompt,
       prompt: query,
       temperature: 1,
@@ -32,13 +37,12 @@ export async function detectLanguage({
       }),
       providerOptions: {
         openai: {
-          reasoningEffort: 'minimal',
+          reasoningEffort: 'low',
         },
       },
     });
 
-    const object = schema.parse(response.object);
-    return object.language;
+    return response.object.language || 'English';
   } catch (error) {
     console.log(error);
     return 'English';

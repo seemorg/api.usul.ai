@@ -15,7 +15,7 @@ const azure = createAzure({
 });
 
 export const model = azure.languageModel(env.AZURE_4_1_DEPLOYMENT);
-export const miniModel = azure.languageModel('usul-gpt-5-nano');
+export const miniModel = azure.languageModel('usul-gpt-5-mini');
 
 export type LangfuseTracingOptions = {
   name?: string;
