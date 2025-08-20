@@ -101,6 +101,7 @@ singleChatRoutes.post(
         writer.writeMessageAnnotation({ type: 'CHAT_ID', value: traceId });
         writer.writeMessageAnnotation({ type: 'STATUS', value: 'generating-queries' });
 
+        const queryLanguagePromise = detectLanguage({ query: lastMessage, sessionId });
         const queries = (
           await generateQueries({ chatHistory: body.messages, sessionId })
         ).map(q => q.query);
@@ -121,7 +122,7 @@ singleChatRoutes.post(
               },
             ],
           }),
-          detectLanguage({ query: lastMessage, sessionId }),
+          queryLanguagePromise,
           (async () => {
             if (chatHistory.length === 0) return lastMessage;
 

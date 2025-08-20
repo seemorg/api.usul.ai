@@ -28,7 +28,7 @@ export async function detectLanguage({
       model: miniModel,
       schema,
       system: compiledPrompt,
-      prompt: `User's query: ${query}`,
+      prompt: query,
       temperature: 0,
       ...getLangfuseArgs({
         name: `Chat.OpenAI.DetectLanguage`,
