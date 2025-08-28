@@ -9,10 +9,12 @@ import { BookDto } from '@/dto/book.dto';
 
 const v1Routes = new Hono();
 
+const stringBoolean = z.enum(['true', 'false']).transform(value => value === 'true');
+
 const schema = z.object({
   q: z.string().min(1),
-  include_chapters: z.coerce.boolean().optional().default(false),
-  include_details: z.coerce.boolean().optional().default(false),
+  include_chapters: stringBoolean.optional().default('false'),
+  include_details: stringBoolean.optional().default('false'),
   page: z.coerce.number().min(1).optional().default(1),
   limit: z.coerce.number().min(1).max(50).optional().default(10),
 });
