@@ -109,6 +109,12 @@ async function search(
             text: includeHighlights ? undefined : r.node.text,
             metadata: {
               ...r.node.metadata,
+              // don't send chapters if they are not requested
+              ...(!params.include_chapters
+                ? {
+                    chapters: undefined,
+                  }
+                : {}),
               sourceAndVersion: undefined, // don't send it to the client
             },
             highlights: includeHighlights ? r.node.highlights : undefined,
