@@ -11,18 +11,21 @@ import { z } from 'zod';
 const bookDetailsRoutes = new Hono();
 
 export const getBookDetails = async (bookSlug: string, locale?: PathLocale) => {
-  const book =
-    (await getBookBySlug(bookSlug, locale)) ?? (await getBookById(bookSlug, locale));
+  const book = getBookBySlug(bookSlug, locale) ?? getBookById(bookSlug, locale);
   if (!book) {
     const alternateSlugBookId = getBookByAlternateSlug(bookSlug);
     if (alternateSlugBookId) {
-      const primarySlug = (await getBookById(alternateSlugBookId, locale))?.slug;
+      const primarySlug = getBookById(alternateSlugBookId, locale)?.slug;
       if (primarySlug) {
         return { type: 'alternate-slug', primarySlug };
       }
     }
 
     throw new HTTPException(404, { message: 'Book not found' });
+  }
+
+  if (book.versions.length === 0) {
+    throw new HTTPException(400, { message: 'Book has no versions' });
   }
 
   const aiSupportedVersion = book.versions.find(

@@ -31,17 +31,29 @@ pageRoutes.get(
     const { bookSlug } = c.req.valid('param');
     const { versionId, locale, includeBook, fields, index } = c.req.valid('query');
 
-    const book = await getBookBySlug(bookSlug, locale);
+    const book = getBookBySlug(bookSlug, locale);
     if (!book) {
       const alternateSlugBookId = getBookByAlternateSlug(bookSlug);
       if (alternateSlugBookId) {
-        const primarySlug = (await getBookById(alternateSlugBookId, locale))?.slug;
+        const primarySlug = getBookById(alternateSlugBookId, locale)?.slug;
         if (primarySlug) {
           return c.json({ type: 'alternate-slug', primarySlug });
         }
       }
 
       throw new HTTPException(404, { message: 'Book not found' });
+    }
+
+    if (book.versions.length === 0) {
+      return c.json({
+        book: includeBook ? book : undefined,
+        content: {},
+        pagination: {
+          total: 0,
+          startIndex: index,
+          size: 0,
+        },
+      });
     }
 
     const bookContent = await getCachedBookContent(book.id, versionId, locale);

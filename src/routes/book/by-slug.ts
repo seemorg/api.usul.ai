@@ -42,6 +42,18 @@ bySlugRoutes.get(
       throw new HTTPException(404, { message: 'Book not found' });
     }
 
+    if (book.versions.length === 0) {
+      return c.json({
+        book: includeBook ? book : undefined,
+        content: {},
+        pagination: {
+          total: 0,
+          startIndex,
+          size: 0,
+        },
+      });
+    }
+
     const bookContent = await getCachedBookContent(book.id, versionId, locale);
 
     if (!bookContent) {
