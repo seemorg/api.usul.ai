@@ -1,24 +1,27 @@
 import { AppLocale, locales } from '@/lib/locale';
 import { sleep } from '@/lib/utils';
+import { createAzure } from '@ai-sdk/azure';
+import { generateObject } from 'ai';
 import { AzureOpenAI } from 'openai';
 import { z } from 'zod';
 
 if (
-  !process.env.AZURE_OPENAI_DEPLOYMENT_NAME ||
-  !process.env.AZURE_OPENAI_RESOURCE_NAME ||
-  !process.env.AZURE_OPENAI_KEY
+  !process.env.AZURE_ENDPOINT_URL ||
+  !process.env.AZURE_SECRET_KEY ||
+  !process.env.AZURE_4_1_DEPLOYMENT
 ) {
   throw new Error(
-    'AZURE_OPENAI_DEPLOYMENT_NAME, AZURE_OPENAI_RESOURCE_NAME and AZURE_OPENAI_KEY are not set',
+    'AZURE_ENDPOINT_URL, AZURE_SECRET_KEY and AZURE_4_1_DEPLOYMENT are not set',
   );
 }
 
-const openai = new AzureOpenAI({
-  deployment: process.env.AZURE_OPENAI_DEPLOYMENT_NAME,
-  apiVersion: '2024-10-21',
-  endpoint: `https://${process.env.AZURE_OPENAI_RESOURCE_NAME}.openai.azure.com/`,
-  apiKey: process.env.AZURE_OPENAI_KEY,
+const azure = createAzure({
+  baseURL: process.env.AZURE_ENDPOINT_URL,
+  apiKey: process.env.AZURE_SECRET_KEY,
+  apiVersion: '2025-01-01-preview',
 });
+
+export const model = azure.languageModel(process.env.AZURE_4_1_DEPLOYMENT);
 
 type Type = 'genre' | 'region';
 
@@ -58,19 +61,14 @@ export const translateAndTransliterateName = async (
   transliteration: string;
 } | null> => {
   try {
-    const completion = await openai.chat.completions.create({
-      model: '',
-      response_format: { type: 'json_object' },
-      messages: [
-        { role: 'system', content: SYSTEM_PROMPT(type, localeCode) },
-        { role: 'user', content: `"${name}"` },
-      ],
+    const completion = await generateObject({
+      model: model,
+      output: 'no-schema',
+      system: SYSTEM_PROMPT(type, localeCode),
+      prompt: `${name}`,
     });
 
-    const result = completion.choices[0]?.message.content;
-    if (!result) return null;
-
-    const parsedResult = schema.safeParse(JSON.parse(result));
+    const parsedResult = schema.safeParse(completion.object);
     if (!parsedResult.success) return null;
 
     return parsedResult.data;
