@@ -20,7 +20,15 @@ genresSearchRoutes.get(
   zValidator(
     'query',
     commonSearchSchema.extend({
-      sortBy: z.enum(['relevance', 'texts-asc', 'texts-desc']).optional(),
+      sortBy: z
+        .enum([
+          'relevance',
+          'texts-asc',
+          'texts-desc',
+          'alphabetical-asc',
+          'alphabetical-desc',
+        ])
+        .optional(),
     }),
   ),
   async c => {
@@ -41,6 +49,8 @@ genresSearchRoutes.get(
             sort_by: {
               'texts-asc': 'booksCount:asc',
               'texts-desc': 'booksCount:desc',
+              'alphabetical-asc': 'transliteration:asc',
+              'alphabetical-desc': 'transliteration:desc',
             }[sortBy],
           }),
       });

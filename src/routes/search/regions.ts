@@ -22,7 +22,15 @@ regionsSearchRoutes.get(
     'query',
     commonSearchSchema.extend({
       sortBy: z
-        .enum(['relevance', 'texts-asc', 'texts-desc', 'authors-asc', 'authors-desc'])
+        .enum([
+          'relevance',
+          'texts-asc',
+          'texts-desc',
+          'authors-asc',
+          'authors-desc',
+          'alphabetical-asc',
+          'alphabetical-desc',
+        ])
         .optional(),
     }),
   ),
@@ -46,6 +54,8 @@ regionsSearchRoutes.get(
               'texts-desc': 'booksCount:desc',
               'authors-asc': 'authorsCount:asc',
               'authors-desc': 'authorsCount:desc',
+              'alphabetical-asc': 'transliteration:asc',
+              'alphabetical-desc': 'transliteration:desc',
             }[sortBy],
           }),
       });

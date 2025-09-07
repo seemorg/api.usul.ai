@@ -36,7 +36,15 @@ authorSearchRoutes.get(
         .pipe(z.array(z.string()))
         .optional(),
       sortBy: z
-        .enum(['relevance', 'year-asc', 'year-desc', 'texts-asc', 'texts-desc'])
+        .enum([
+          'relevance',
+          'year-asc',
+          'year-desc',
+          'texts-asc',
+          'texts-desc',
+          'alphabetical-asc',
+          'alphabetical-desc',
+        ])
         .optional(),
     }),
   ),
@@ -74,6 +82,8 @@ authorSearchRoutes.get(
               'year-desc': 'year:desc',
               'texts-asc': 'booksCount:asc',
               'texts-desc': 'booksCount:desc',
+              'alphabetical-asc': 'transliteration:asc',
+              'alphabetical-desc': 'transliteration:desc',
             }[sortBy],
           }),
       });

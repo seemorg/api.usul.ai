@@ -49,7 +49,15 @@ bookSearchRoutes.get(
         .transform(val => val.split(','))
         .pipe(z.array(z.string()))
         .optional(),
-      sortBy: z.enum(['relevance', 'year-asc', 'year-desc']).optional(),
+      sortBy: z
+        .enum([
+          'relevance',
+          'year-asc',
+          'year-desc',
+          'alphabetical-asc',
+          'alphabetical-desc',
+        ])
+        .optional(),
     }),
   ),
   async c => {
@@ -92,6 +100,8 @@ bookSearchRoutes.get(
                 sort_by: {
                   'year-asc': 'year:asc',
                   'year-desc': 'year:desc',
+                  'alphabetical-asc': 'transliteration:asc',
+                  'alphabetical-desc': 'transliteration:desc',
                 }[sortBy],
               }
             : {}),
